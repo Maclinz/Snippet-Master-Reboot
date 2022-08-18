@@ -1,0 +1,59 @@
+// You could write comments in cortex.json.
+{
+  "name": "jade-env",
+  "version": "0.1.0",
+  "description": "jade in client runtimejs with Cortex module",
+  "main": "index.js",
+
+  // // By default, all javascript modules of the current package will be bundled
+  // // into a single file.
+  // // But we could define more entries.
+  // // `cortex.entries` could be an array of filenames or glob patterns.
+  // "entries": [
+  //   "entries/**/*.js"
+  // ],
+
+  // // Defines an array of stylesheets
+  // "css": [
+  //   "css/style.css"
+  // ],
+
+  "devDependencies": {
+    "assert": "*"
+  },
+
+  // The dependencies of the current package:
+  // ALWAYS use `cortex install xxx --save` to save dependencies
+  // rather than editing this field manually.
+  "dependencies": {},
+
+  // "scripts": {
+  //   // `scripts.prebuild` runs at the beginning of the `cortex build` process.
+  //   // If you wanna use gulp, remember to `npm install gulp --save-dev`
+  //   "prebuild": "gulp"
+  // },
+
+  // "directories": {
+  //   // By default, only `cortex.main`, `cortex.css`, `cortex.entries` are treated as 
+  //   // the resources of the package.
+  //   // To include more files, 
+  //   // they should be put into a folder named the value of `directories.src`
+  //   "src": "src"
+  // },
+
+  "repository": "git://github.com/elrrrrrrr/jade-env.git",
+  "keywords": [
+    "cortex",
+    "jade",
+    "runtime"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "elrrrrrrr",
+    "email": "elrrrrrrr@gmail.com"
+  },
+  "bugs": {
+    "url": "http://github.com/elr-mbp/jade-env/issues"
+  },
+  "homepage": "http://github.com/elr-mbp/jade-env"
+}

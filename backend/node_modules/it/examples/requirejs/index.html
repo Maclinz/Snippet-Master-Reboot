@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>It Tests Requirejs</title>
+    <link rel="stylesheet" type="text/css" href="../../it.css">
+</head>
+<body>
+<div id="it"></div>
+<script data-main="scripts/main" src="scripts/require.js"></script>
+<script>
+    require([
+        'it',
+        'tests/it-bdd.test',
+        'tests/it-tdd.test'
+    ], function (it) {
+        it.run();
+    });
+</script>
+</body>
+</html>

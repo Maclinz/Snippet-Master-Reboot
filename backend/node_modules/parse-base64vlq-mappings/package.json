@@ -1,0 +1,35 @@
+{
+  "name": "parse-base64vlq-mappings",
+  "version": "0.1.4",
+  "description": "Parses out base64 VLQ encoded mappings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thlorenz/parse-base64vlq-mappings.git"
+  },
+  "homepage": "https://github.com/thlorenz/parse-base64vlq-mappings",
+  "dependencies": {},
+  "devDependencies": {
+    "source-map": "~0.1.9",
+    "tap": "~0.4.3"
+  },
+  "keywords": [
+    "base64",
+    "vlq",
+    "parse",
+    "sourcemap",
+    "mappings"
+  ],
+  "author": {
+    "name": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "http://thlorenz.com"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.6"
+  }
+}

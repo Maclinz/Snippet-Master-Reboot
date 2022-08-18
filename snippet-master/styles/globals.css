@@ -1,0 +1,79 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  font-family: 'Nunito', sans-serif;
+}
+
+body{
+  background-color: #181818;
+  color: #e5e7eb;
+  font-size: 17px;
+}
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #282c34;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(110.42deg, #CF57A3 29.2%, #4731B6 63.56%);
+  border-radius: 15px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(11.42deg, #CF57A3 29.2%, #4731B6 63.56%);
+}
+
+
+button, textarea, input{
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+pre::-webkit-scrollbar-track {
+  background: #282c34;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+/* Handle */
+pre::-webkit-scrollbar-thumb {
+  background: linear-gradient(110.42deg, rgba(207, 87, 163, 0.63) 29.2%, rgba(71, 49, 182, 0.63) 63.56%);
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+pre::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(110.42deg, #CF57A3 29.2%, #4731B6 63.56%);
+}
+
+

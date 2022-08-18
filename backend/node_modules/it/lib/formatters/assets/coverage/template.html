@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Coverage</title>
+<style type="text/css">
+
+body {
+    margin: 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+ol {
+    padding: 0px;
+}
+
+pre.prettyprint {
+    margin-bottom: 20px;
+}
+
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 10px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: pre-wrap;
+    background-color: whiteSmoke;
+    border: 1px solid #CCC;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+code, pre {
+    padding: 0 3px 2px;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    color: #333;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.prettyprint {
+    padding: 8px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8
+}
+
+.prettyprint.linenums {
+    -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 81px 0 0 #ececf0;
+    -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 81px 0 0 #ececf0;
+    box-shadow: inset 40px 0 0 #fbfbfc, inset 81px 0 0 #ececf0
+}
+
+ol.linenums {
+    margin: 0 0 0 40px
+}
+
+ol.linenums li {
+    padding-bottom: 2px;
+    padding-top: 2px;
+    vertical-align: middle;
+    color: #bebec5;
+    line-height: 0px;
+    text-shadow: 0 1px 0 #fff
+}
+
+ol.linenums li span {
+    padding-right: 40px !important;
+    width: 30px;
+    display: inline-block;
+    text-align: right;
+}
+
+pre code {
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+    border: 0;
+}
+
+ol li.red {
+    background-color: lightCoral;
+    color: black;
+    text-shadow: none;
+    line-height: 5px;
+}
+
+.prettyprint li span.hits {
+    padding: 5px 0 5px;
+    color: #26ca4f;
+}
+
+.prettyprint li span.nohits {
+    padding: 5px 0 5px;
+}
+
+h2 {
+    font-size: 30px;
+    line-height: 40px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 10px 0;
+    font-family: inherit;
+    font-weight: bold;
+    line-height: 1;
+    color: inherit;
+    text-rendering: optimizelegibility;
+}
+
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #EEE;
+    border-bottom: 1px solid white;
+}
+
+.table-bordered {
+    border: 1px solid #DDD;
+    border-collapse: separate;
+    border-left: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.table {
+    width: 325px;
+    margin-bottom: 20px;
+}
+
+table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+    background-color: #F9F9F9;
+}
+
+.table-bordered th, .table-bordered td {
+    border-left: 1px solid #DDD;
+}
+
+.table th, .table td {
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid #DDD;
+}
+
+span.cov-label {
+    font-weight: bold;
+    width: 70px;
+    display: inline-block;
+    color: teal;
+}
+
+span.cov-value {
+    width: 50px;
+    display: inline-block;
+    text-align: right;
+    color: gray;
+}
+
+.cov-section-header {
+    font-size: 16pt;
+    font-weight: bold;
+    color: darkOrange;
+    padding: 10px;
+}
+
+.inline {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.cov-section {
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 80%;
+}
+
+.cov-section .source{
+    display: none;
+}
+
+.cov-section-all .cov-section-header{
+    color: #adff2f;
+}
+
+.cov-section-high .cov-section-header{
+    color: #008080;
+}
+
+.cov-section-med .cov-section-header{
+     color : #FFCC66;
+}
+
+.cov-section-low .cov-section-header{
+    color: lightCoral;
+
+}
+
+.cov-section-hover {
+    background-color: whiteSmoke;
+    cursor: pointer;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.cov-section-hover:hover {
+    -moz-box-shadow: 0px 0px 12px #707070;
+    -webkit-box-shadow: 0px 0px 12px #707070;
+    box-shadow: 0px 0px 12px #707070;
+
+}
+
+.section-table {
+    width: 100%;
+}
+
+td.cov-stats {
+    text-align: right;
+}
+
+.overview{
+    color : #797979;
+    font-size: 18pt;
+}
+</style>
+</head>
+<body>
+{body}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //$(".source").hide();
+        $(".cov-section").click(function () {
+            var id = this.id;
+            $(document.getElementById(id + "-source")).slideToggle();
+        });
+    });
+</script>
+</body>
+</html>
