@@ -47,10 +47,9 @@ function Tags() {
                     selector={'btn-login'}
                     padding={'.5rem 2rem'}
                     borderRad={'2rem'}
-                    fw={'bold'}
                     fs={'1.2rem'}
                     key={tag._id}
-                    backgound={theme.colorGradient}
+                    backgound={theme.buttonGradient8}
                     blob={'blob'}
                     dClick={() => { deleteTag(tag.slug) }}
                 />

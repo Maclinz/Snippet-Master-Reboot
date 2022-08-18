@@ -25,13 +25,13 @@ function user_reducer(state, action) {
     if(action.type === SHOW_MODAL) {
         return {
             ...state,
-            showModal: true
+            modal: true
         }
     }
     if(action.type === HIDE_MODAL) {
         return {
             ...state,
-            showModal: false
+            modal: false
         }
     }
 

@@ -18,7 +18,7 @@ function Header() {
     const header = useRef()
 
     //context
-    const { collapsed, collapseNavbar, showMenuPanel } = useUserContext()
+    const { collapseNavbar, showMenuPanel, hideTopPanel, showModal } = useUserContext()
 
     /*useEffect(() => {
         const tl = gsap.timeline()
@@ -32,7 +32,10 @@ function Header() {
         <HeaderStyled theme={theme} ref={header} suppressHydrationWarning={true}>
             <div className="logo-con">
                 <div className="h-menu">
-                    <button type='button' onClick={collapseNavbar}>
+                    <button type='button' onClick={()=>{
+                        collapseNavbar()
+                        hideTopPanel()
+                    }}>
                         {bars}
                     </button>
                 </div>
@@ -63,6 +66,10 @@ function Header() {
                                 borderRad={theme.borderRadiusSm}
                                 fw={500}
                                 fs={'18px'}
+                                click={() =>{
+                                    hideTopPanel()
+                                    showModal()
+                                }}
                             /> :
                             <Button
                                 name={'Login'}

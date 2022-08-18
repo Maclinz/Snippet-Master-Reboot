@@ -2,13 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { useUserContext } from '../../context/context';
 import { useThemeContext } from '../../context/themeContext';
+import { add } from '../../utils/Icons';
+import Button from '../Button/Button';
 import Tags from '../Tags/Tags'
 
 function ModalFull() {
     const theme = useThemeContext()
     const {hideModal} = useUserContext()
     return (
-        <ModalFullStyled theme={theme} onClick={hideModal}>
+        <ModalFullStyled theme={theme}>
             <div className="modal-content">
                 <form action="">
                     <div className="input-control">
@@ -25,6 +27,21 @@ function ModalFull() {
                     </div>
                 </form>
                 <Tags />
+                <div className="create-snippet">
+                    <Button
+                        name={'Create Snippet'}
+                        type={'submit'}
+                        selector={'btn-login'}
+                        padding={'.9rem 1.2rem'}
+                        borderRad={'0.5rem'}
+                        fs={'1.2rem'}
+                        backgound={theme.colorButton}
+                        icon={add}
+                        blob={'blob'}
+                    />
+                </div>
+            </div>
+            <div className="modal-hider" onClick={hideModal}>
             </div>
         </ModalFullStyled>
     )
@@ -34,9 +51,15 @@ const ModalFullStyled = styled.div`
     height: 100vh;
     z-index: 10;
     position: fixed;
-    background-color: ${props => props.theme.colorIcons4};
     top: 0;
-    backdrop-filter: blur(3px);
+    .modal-hider{
+        width: 100%;
+        height: 100%;
+        background-color: ${props => props.theme.colorIcons4};
+        position: absolute;
+        top: 0;
+        backdrop-filter: blur(3px);
+    }
     .modal-content{
         position: absolute;
         width: 60%;
@@ -47,6 +70,7 @@ const ModalFullStyled = styled.div`
         padding: 2rem;
         border-radius: ${props => props.theme.borderRadiusSm};
         box-shadow: ${props => props.theme.shadow3};
+        z-index: 15;
         .input-control{
             margin: 1.5rem 0;
             input, textarea{
@@ -58,6 +82,11 @@ const ModalFullStyled = styled.div`
                 resize: none;
             }
         }
+    }
+
+    .create-snippet{
+        display: flex;
+        justify-content: flex-end;
     }
 `;
 
