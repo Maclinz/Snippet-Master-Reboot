@@ -9,7 +9,7 @@ function index() {
         <Admin>
             <Layout>
                 <MainContent>
-                    <CreateCategories />
+                    
                 </MainContent>
             </Layout>
         </Admin>

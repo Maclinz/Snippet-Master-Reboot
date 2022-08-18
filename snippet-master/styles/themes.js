@@ -63,6 +63,7 @@ const themes = [
         colorIcons: 'rgba(249,249,249, 0.35)',
         colorIcons2: 'rgba(249,249,249, 0.75)',
         colorIcons3: 'rgba(249,249,249, 0.08)',
+        colorIcons4: 'rgba(0,0,0, 0.3)',
         marLRSm: '0 1rem',
     }
 ]

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useUserContext } from '../../context/context'
 import { useThemeContext } from '../../context/themeContext'
-import Button from '../Button/Button'
 import styled from 'styled-components';
-import { useTagContext } from '../../context/tagsContext'
+import { useTagContext } from '../../context/tagsContext';
+import Button from '../../Components/Button/Button';
+import { add } from '../../utils/Icons';
 
 function Tags() {
 
@@ -18,12 +19,20 @@ function Tags() {
         return (
             <form onSubmit={handleSubmit}>
                 <div className="form-group" >
-                    <input type="text" name='name' placeholder='Create Category' className="form-control" value={name} onChange={handleChange} autoFocus />
+                    <input type="text" name='name' placeholder='Add Tags...' className="form-control" value={name} onChange={handleChange} autoFocus />
                 </div>
                 <div>
-                    <button className="btn btn-primary" type="submit">
-                        Create
-                    </button>
+                    <Button
+                        name={'Create Tag'}
+                        type={'submit'}
+                        selector={'btn-login'}
+                        padding={'.7rem 1.2rem'}
+                        borderRad={'0.5rem'}
+                        fs={'1.2rem'}
+                        backgound={theme.colorButton}
+                        icon={add}
+                        blob={'blob'}
+                    />
                 </div>
             </form>
         )
@@ -77,6 +86,7 @@ const CategoryStyled = styled.div`
             &:not(:last-child){
                 margin-right: .5rem;
             }
+            margin-bottom: .5rem;
         }
     }
     .categ-form{
@@ -85,16 +95,27 @@ const CategoryStyled = styled.div`
             .form-group{
                 position: relative;
                 margin-bottom: 1rem;
+                width: 30%;
                 input{
                     width: 100%;
                     border: none;
-                    padding-left: 1rem;
-                    padding-right: 2rem;
-                    padding-top: 1.5rem;
-                    padding-bottom: 1.5rem;
-                    background-color: ${props => props.theme.colorGreyDark};
+                    padding: .7rem 1.2rem;
                     border-radius: ${props => props.theme.borderRadiusSm};
                     color: ${props => props.theme.colorGrey2};
+                    border: 1px solid ${props => props.theme.colorIcons};
+                }
+            }
+            button{
+                margin-left: 1rem;
+                color: ${props => props.theme.colorGrey0};
+                i{
+                    color: ${props => props.theme.colorGrey0};
+                }
+                &:hover{
+                    color: ${props => props.theme.colorIcons2};
+                    i{
+                        color: ${props => props.theme.colorIcons2};
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-import { COLLAPSE_SIDEBAR, SHOW_MENU_PANEL, HIDE_MENU_PANEL } from "../utils/actions";
+import { COLLAPSE_SIDEBAR, SHOW_MENU_PANEL, HIDE_MENU_PANEL, SHOW_MODAL, HIDE_MODAL } from "../utils/actions";
 
 
 function user_reducer(state, action) {
@@ -20,6 +20,18 @@ function user_reducer(state, action) {
         return {
             ...state,
             showTopPanel: false
+        }
+    }
+    if(action.type === SHOW_MODAL) {
+        return {
+            ...state,
+            showModal: true
+        }
+    }
+    if(action.type === HIDE_MODAL) {
+        return {
+            ...state,
+            showModal: false
         }
     }
 

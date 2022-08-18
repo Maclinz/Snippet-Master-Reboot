@@ -9,10 +9,11 @@ import panelMenu from "../utils/panelMenu"
 import Link from "next/link"
 import Router, { useRouter } from 'next/router';
 import { signout } from "../actions/auth"
+import ModalFull from "./ModalFull/ModalFull"
 
 
 function Layout({children}) {
-    const { showTopPanel, hideTopPanel } =  useUserContext()
+    const { showTopPanel, hideTopPanel,modal } =  useUserContext()
     const theme = useThemeContext()
 
     const router = useRouter();
@@ -26,6 +27,7 @@ function Layout({children}) {
     return (
         <LayoutStyled theme={theme} showTopPanel={showTopPanel}>
             <Header />
+            {modal && <ModalFull />}
             <div className="menu-panel">
                 {
                     panelMenu.map(item => {

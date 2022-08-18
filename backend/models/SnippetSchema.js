@@ -25,6 +25,10 @@ const SnippetSchema = new mongoose.Schema({
     mdesc: {
         type: String,
     },
+    public: {
+        type: Boolean,
+        default: false,
+    },
     photo: {
         data: Buffer,
         contentType: String,

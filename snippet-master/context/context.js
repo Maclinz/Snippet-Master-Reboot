@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, useState } from "react"
 import user_reducer from "../reducers/user_reducer"
-import{ COLLAPSE_SIDEBAR, HIDE_MENU_PANEL, SHOW_MENU_PANEL, UPDATE_INPUTS } from "../utils/actions"
+import{ COLLAPSE_SIDEBAR, HIDE_MENU_PANEL, HIDE_MODAL, SHOW_MENU_PANEL, SHOW_MODAL, UPDATE_INPUTS } from "../utils/actions"
 
 const UserContext = React.createContext()
 const UserUpdateContext = React.createContext()
@@ -11,6 +11,7 @@ export const UserProvider = ({children}) => {
         collapsed: true,
         showTopPanel: false,
         hideTopPanel: false,
+        modal: true,
     }
     const [state, dispatch] = useReducer(user_reducer, initialState)
     const [values, setValues] = useState({
@@ -41,6 +42,18 @@ export const UserProvider = ({children}) => {
         })
     }
 
+    const showModal = () => {
+        dispatch({
+            type: SHOW_MODAL
+        })
+    }
+
+    const hideModal = () => {
+        dispatch({
+            type: HIDE_MODAL
+        })
+    }
+
     const angryEmojies = [
         //10 eomjies
         '😡', '😠', '😞', '😟', '😤', '😥', '😦', '😧', '😨', '😩',
@@ -53,7 +66,7 @@ export const UserProvider = ({children}) => {
     }
 
     return(
-        <UserContext.Provider value={{ ...state, collapseNavbar, showMenuPanel, hideTopPanel, randomEmojie }}>
+        <UserContext.Provider value={{ ...state, collapseNavbar, showMenuPanel, hideTopPanel, randomEmojie, showModal, hideModal }}>
             <UserUpdateContext.Provider value={{setValues, values}}>
                 {children}
             </UserUpdateContext.Provider>

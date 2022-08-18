@@ -4,7 +4,7 @@ const { create} = require('../controllers/snippet');
 const { runValidation } = require('../validations');
 const router = exppress.Router();
 
-router.post('/create-snippet',  requireSignIn, create)
+router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
 
 
 
