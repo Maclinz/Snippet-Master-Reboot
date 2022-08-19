@@ -33,6 +33,7 @@ export const SnipetProvider = ({ children }) => {
                 dispatch({
                     type: GET_SNIPPETS_SUCCESS, payload: data.snippets
                 })
+                //reload
             })
             .catch(err => {
                 dispatch({
@@ -41,13 +42,14 @@ export const SnipetProvider = ({ children }) => {
             }
         )
     }
+    
 
     useEffect(() => {
         listSnippets()
     } , [])
 
     return (
-        <SnippeContext.Provider value={{...snippetValues,...state, snippetValues, setSnippetValues}}>
+        <SnippeContext.Provider value={{...snippetValues,...state, snippetValues, setSnippetValues, listSnippets}}>
             {children}
         </SnippeContext.Provider>
     )

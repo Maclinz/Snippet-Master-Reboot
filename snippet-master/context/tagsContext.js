@@ -76,7 +76,6 @@ export const CrudTagsProvider = ({ children }) => {
     useEffect(() => {
         loadTags()
     }, [reload])
-    console.log('tags', tags);
 
     return (
         <CrudTagContext.Provider value={{ ...values, values, tags, handleChange, handleSubmit, deleteTag, showError }}>

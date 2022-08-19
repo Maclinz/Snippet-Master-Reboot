@@ -63,12 +63,23 @@ function ModalFull({router}) {
         })
     }
 
-    const handleChange = name => (e) => {
-        setSnippetValues({ ...snippetValues, [name]: e.target.value, errors: '', loading: false })
+    const handleSnippetChange = name => (e) => {
+        setSnippetValues({
+            ...snippetValues, 
+            [name]: e.target.value, errors: '', 
+            loading: false 
+        })
+    }
+    const titleSnippetChange = name => (e) => {
+        setSnippetValues({
+            ...snippetValues, 
+            [name]: e.target.value, errors: '', 
+            loading: false 
+        })
     }
 
     //handle tag toggle
-    const handleToggle = (tag) => () => {
+    const handleSnippetToggle = (tag) => () => {
         // add or remove tag from array
         const clickedTag = checkedTag.indexOf(tag);
         const newCheckedTag = [...checkedTag];
@@ -98,7 +109,7 @@ function ModalFull({router}) {
                             type="text" 
                             id="title" 
                             placeholder='Title...' 
-                            onChange={handleChange('title')}
+                            onChange={handleSnippetChange('title')}
                             value={title}
                         />
                     </div>
@@ -112,7 +123,7 @@ function ModalFull({router}) {
                                         cols="30" 
                                         rows="10" 
                                         placeholder='Add Your Code Here...'
-                                        onChange={handleChange('code')}
+                                        onChange={handleSnippetChange('code')}
                                         value={code}
                                     >
 
@@ -139,7 +150,7 @@ function ModalFull({router}) {
                                     checkedTag.includes(tag._id) ? theme.colorGradient : theme.buttonGradient5
                                 }
                                 blob={'blob'}
-                                click={handleToggle(tag._id)}
+                                click={handleSnippetToggle(tag._id)}
                             />
                         })
                     }

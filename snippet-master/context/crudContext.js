@@ -75,7 +75,6 @@ export const CrudProvider = ({ children }) => {
     useEffect(() => {
         loadCategories()
     },[reload])
-    console.log('context', categories);
 
     return (
         <CrudContext.Provider value={{ ...values, values, categories, handleChange, handleSubmit, deleteCategory, showError }}>

@@ -1,16 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { atomOneDark, docco, dark, darcula, vs, idea } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import avatar1 from '../../assets/avatar1.png'
 import Image from 'next/image';
 import { useThemeContext } from '../../context/themeContext';
 import Button from '../Button/Button';
+import Select from 'react-select'
+
 
 function Snippet({ snippet }) {
     const theme = useThemeContext();
     
     const {code, title, tags, postedBy} = snippet;
+
+    //All code thems
+    const codeThemes = [
+        atomOneDark,
+        docco,
+        dark,
+        darcula,
+        vs,
+        idea
+    ]
+
+    //All code theme names
+    const options = [
+        { value: atomOneDark, label: 'Atom' },
+        { value: vs, label: 'Vs Code' },
+        { value: idea, label: 'Idea' }
+    ]
+
+    //code theme state
+    const [codeTheme, setCodeTheme] = useState(codeThemes[0]);
+
+    const changeCodeTheme = (e) => {
+        //set the code theme to the current value
+        setCodeTheme(codeThemes[options.findIndex(option => option.value === e.value)]);
+    }
 
     const codeString = `${code}`;
 
@@ -34,7 +61,6 @@ function Snippet({ snippet }) {
     
     //randomanize tag colors
     const randomTagColor = tagColors[Math.floor(Math.random() * tagColors.length)];
-    console.log(randomTagColor);
 
     return (
         <SnippetStyled theme={theme}>
@@ -51,9 +77,12 @@ function Snippet({ snippet }) {
                     {/*<div className="language">
                         <p>Javascript</p>
                     </div>*/}
+                    <div className="select-theme">
+                        <Select options={options} onChange={changeCodeTheme} />
+                    </div>
                 </div>
                 <div className="snippet-mid">
-                    <SyntaxHighlighter language='javascript' style={atomOneDark} showLineNumbers={'True'}>
+                    <SyntaxHighlighter language='javascript' style={codeTheme} showLineNumbers={'True'} wrapLongLines={'True'}>
                         {codeString}
                     </SyntaxHighlighter>
                 </div>
