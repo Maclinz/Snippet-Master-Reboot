@@ -1,32 +1,138 @@
-import React from 'react'
+import Link from 'next/link';
+import Router from 'next/router';
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useUserContext } from '../../context/context';
 import { useThemeContext } from '../../context/themeContext';
 import { add } from '../../utils/Icons';
 import Button from '../Button/Button';
 import Tags from '../Tags/Tags'
+import dynamic from 'next/dynamic'
+import {withRouter} from 'next/router'
+import { getCookie, isAuth } from '../../actions/auth';
+import { getTags } from '../../actions/tags';
+import { useSnippetContext } from '../../context/snippetContext';
+import { useTagContext } from '../../context/tagsContext';
+import { snippetCreate } from '../../actions/snippet';
 
-function ModalFull() {
+
+function ModalFull({router}) {
     const theme = useThemeContext()
     const {hideModal} = useUserContext()
+    const {values} = useTagContext()
+
+    const { tags } = values;
+
+    const { snippetValues, setSnippetValues } = useSnippetContext()
+    
+    const { title, code,loading, error } = snippetValues;
+    const token = getCookie('token')
+
+
+    //state 
+    const [checkedTag, setCheckedTag] = useState([]);
+
+    //create Snippet 
+    const createSnippet = (e) => {
+        e.preventDefault()
+
+        const snippet = {
+            title,
+            code,
+            tags: checkedTag,
+        }
+
+        snippetCreate(snippet, token).then(data => {
+            if (data.error) {
+                setSnippetValues({ ...snippetValues, error: data.error, loading: false })
+            } else {
+                setSnippetValues({
+                    ...snippetValues,
+                    title: '',
+                    code: '',
+                    loading: false,
+                    error: '',
+                    success: true,
+                })
+                setCheckedTag([]);
+                hideModal()
+            }
+        })
+    }
+
+    const handleChange = name => (e) => {
+        setSnippetValues({ ...snippetValues, [name]: e.target.value, errors: '', loading: false })
+    }
+
+    //handle tag toggle
+    const handleToggle = (tag) => () => {
+        // add or remove tag from array
+        const clickedTag = checkedTag.indexOf(tag);
+        const newCheckedTag = [...checkedTag];
+        if (clickedTag === -1) {
+            newCheckedTag.push(tag);
+        } else {
+            newCheckedTag.splice(clickedTag, 1);
+        }
+        //return a new array
+        setCheckedTag(newCheckedTag);
+    }
+
     return (
         <ModalFullStyled theme={theme}>
             <div className="modal-content">
-                <form action="">
+                <form action="" id="submitBtn">
                     <div className="input-control">
-                        <input type="text" id="title" placeholder='Title...' />
+                        <input 
+                            type="text" 
+                            id="title" 
+                            placeholder='Title...' 
+                            onChange={handleChange('title')}
+                            value={title}
+                        />
                     </div>
                     <div className="input-control">
                         <div className="code-body">
                             <pre>
                                 <code>
-                                    <textarea name="" id="" cols="30" rows="10" placeholder='Add Your Code Here...'></textarea>
+                                    <textarea 
+                                        name="" 
+                                        id="" 
+                                        cols="30" 
+                                        rows="10" 
+                                        placeholder='Add Your Code Here...'
+                                        onChange={handleChange('code')}
+                                        value={code}
+                                    >
+
+                                        </textarea>
                                 </code>
                             </pre>
                         </div>
                     </div>
                 </form>
-                <Tags />
+                <h4>Tags</h4>
+                <div className="tags">
+                    {
+                        tags.map((tag, index) => {
+                            return <Button
+                                name={tag.name}
+                                type={'button'}
+                                selector={'btn-login'}
+                                padding={'.5rem 2rem'}
+                                borderRad={'2rem'}
+                                fs={'1.2rem'}
+                                key={tag._id}
+                                backgound={
+                                    //change color of tag if it is checked
+                                    checkedTag.includes(tag._id) ? theme.colorGradient : theme.buttonGradient5
+                                }
+                                blob={'blob'}
+                                click={handleToggle(tag._id)}
+                            />
+                        })
+                    }
+                </div>
                 <div className="create-snippet">
                     <Button
                         name={'Create Snippet'}
@@ -38,6 +144,8 @@ function ModalFull() {
                         backgound={theme.colorButton}
                         icon={add}
                         blob={'blob'}
+                        form="submitBtn"
+                        click={createSnippet}
                     />
                 </div>
             </div>
@@ -88,6 +196,17 @@ const ModalFullStyled = styled.div`
         display: flex;
         justify-content: flex-end;
     }
+    .tags{
+        display: flex;
+        flex-wrap: wrap;
+        button{
+            margin-bottom: .5rem;
+            margin-top: .5rem;
+            &:not(:last-child){
+                margin-right: .5rem;
+            }
+        }
+    }
 `;
 
-export default ModalFull
+export default withRouter(ModalFull)

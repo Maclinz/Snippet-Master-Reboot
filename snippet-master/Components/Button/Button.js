@@ -14,11 +14,12 @@ function Button({
     click, 
     type,
     blob,
-    dClick
+    dClick,
+    form
 }) {
     const theme = useThemeContext()
     return (
-        <ButtonStyled theme={theme} className={selector} onDoubleClick={dClick} onClick={click} type={type}
+        <ButtonStyled theme={theme} className={selector} form={form} onDoubleClick={dClick} onClick={click} type={type}
             style={{
                 background:backgound,
                 padding: padding,

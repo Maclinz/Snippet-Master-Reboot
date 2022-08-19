@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import { UserProvider } from '../context/context'
 import { CrudProvider } from '../context/crudContext'
+import { SnipetProvider } from '../context/snippetContext'
 import { CrudTagsProvider } from '../context/tagsContext'
 import { ThemeProider } from '../context/themeContext'
 import '../styles/globals.css'
@@ -20,11 +21,13 @@ function MyApp({ Component, pageProps }) {
         </Head>
       <UserProvider>
         <ThemeProider>
-          <CrudTagsProvider>
-            <CrudProvider>
-                <Component {...pageProps} />
-            </CrudProvider>
-          </CrudTagsProvider>
+          <SnipetProvider>
+            <CrudTagsProvider>
+              <CrudProvider>
+                  <Component {...pageProps} />
+              </CrudProvider>
+            </CrudTagsProvider>
+          </SnipetProvider>
         </ThemeProider>
       </UserProvider>
     </React.Fragment>

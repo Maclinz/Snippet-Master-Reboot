@@ -10,6 +10,7 @@ import Link from "next/link"
 import Router, { useRouter } from 'next/router';
 import { signout } from "../actions/auth"
 import ModalFull from "./ModalFull/ModalFull"
+import Admin from '../Components/auth/Admin'
 
 
 function Layout({children}) {
@@ -27,7 +28,9 @@ function Layout({children}) {
     return (
         <LayoutStyled theme={theme} showTopPanel={showTopPanel}>
             <Header />
-            {modal && <ModalFull />}
+            <Admin>
+                {modal && <ModalFull />}
+            </Admin>
             <div className="menu-panel">
                 {
                     panelMenu.map(item => {
