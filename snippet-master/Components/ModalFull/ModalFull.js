@@ -42,7 +42,10 @@ function ModalFull({router}) {
             tags: checkedTag,
         }
 
+        //validate form
+
         snippetCreate(snippet, token).then(data => {
+            //validations 
             if (data.error) {
                 setSnippetValues({ ...snippetValues, error: data.error, loading: false })
             } else {
@@ -83,6 +86,14 @@ function ModalFull({router}) {
             <div className="modal-content">
                 <form action="" id="submitBtn">
                     <div className="input-control">
+                        {
+                            error && <div className="errors">
+                                <h4>Error</h4>
+                                <li>
+                                    <p>{error}</p>
+                                </li>
+                            </div>
+                        }
                         <input 
                             type="text" 
                             id="title" 

@@ -22,12 +22,12 @@ exports.create = (req, res) => {
             error: 'Code is required'
         });
     }
-    /*
+    
     if(!tags || tags.length == 0){
         return res.status(400).json({
             error: 'At least one tag is required'
         });
-    }*/
+    }
 
     //check code length
     if(code.length < 50 || code.length > 2000000){
@@ -67,5 +67,138 @@ exports.create = (req, res) => {
             res.json(data);
         })
     })
+
+}
+
+exports.listSnippets = (req, res) => {
+    SnippetSchema.find({})
+    .populate('tags', '_id name slug')
+    .populate('postedBy', '_id name username profile')
+    .select('_id title slug mtitle postedBy createdAt updatedAt')
+    .exec((err, data) => {
+        if(err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json(data);
+    })
+}
+
+exports.listSnippetsandTags = (req, res) => {
+    //limit request to 10 coming from the frontend
+    let limit = req.body.limit ? parseInt(req.body.limit) : 10;
+    let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+
+    let snippets
+    let tags
+    //let categories
+
+    SnippetSchema.find({})
+        .populate('tags', '_id name slug')
+        .populate('postedBy', '_id name username profile')
+        //sort based on latest createdAt
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .select('_id title slug mtitle postedBy createdAt updatedAt')
+        .exec((err, data) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            snippets = data;
+            //get tags
+            Tags.find({}).exec((err, data) => {
+                if(err){
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    });
+                }
+                tags = data;
+            })
+            //return all snippets and tags
+            res.json({
+                snippets,
+                tags,
+                size: snippets.length
+            });
+        })
+
+}
+
+exports.readSnippet = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    SnippetSchema.findOne({slug})
+        .populate('tags', '_id name slug')
+        .populate('postedBy', '_id name username')
+        .select('_id title slug mtitle code tags postedBy createdAt updatedAt')
+        .exec((err, data) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            res.json(data);
+        })
+}
+
+exports.removeSnippet = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    SnippetSchema.findOneAndRemove({slug})
+        .exec((err, data) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            res.json({
+                message: 'Snippet deleted successfully'
+            });
+        })
+}
+
+exports.updateSnippet = (req, res) => {
+    //Update snippet
+    const { title, code, categories, tags } = req.body;
+
+    //slug
+    let snippetSlug = req.params.slug.toLowerCase();
+
+    SnippetSchema.findOne({slug: snippetSlug})
+        .exec((err, oldSnippet) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+
+            if (code.length < 50 || code.length > 2000000) {
+                return res.status(400).json({
+                    error: 'Code must be between 50 and 2000000 characters!'
+                });
+            }
+
+            //keep old slug
+            let prevSlug = oldSnippet.slug;   
+            oldSnippet = _.merge(oldSnippet, {
+                title,
+                code,
+                categories,
+                tags,
+            });
+            oldSnippet.slug = prevSlug;
+
+            //save snippet
+            oldSnippet.save((err, data) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    });
+                }
+                res.json(data);
+            })
+        })
 
 }

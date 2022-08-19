@@ -101,6 +101,21 @@ const LayoutStyled = styled.div`
             }
         }
     }
+
+    .errors{
+        color: ${props => props.theme.colorDanger};
+        h4{
+            font-size: 1.8rem;
+        }
+        li{
+            list-style: circle;
+            margin-bottom: .7rem;
+        }
+        p{
+            font-weight: 500;
+            display: inline;
+        }
+    }
 `;
 
 export default Layout
