@@ -18,8 +18,7 @@ export default function Home() {
             <Categories />
           </div>
           <div className="snippets-con">
-            <Snippet />
-            <Snippet />
+            
           </div>
         </MainContent>
       </Layout>

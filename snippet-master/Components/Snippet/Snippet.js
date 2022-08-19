@@ -7,30 +7,10 @@ import Image from 'next/image';
 import { useThemeContext } from '../../context/themeContext';
 import Button from '../Button/Button';
 
-function Snippet() {
+function Snippet({ snippet }) {
     const theme = useThemeContext();
-    const code = `
-        import React, {useContext, useState} from 'react'
-        import themes from '../styles/themes'
-
-        const ThemeContext = React.createContext()
-
-        export const ThemeProider = ({children}) => {
-
-            const [theme, seTheme] = useState(0)
-            const currentTheme = themes[theme]
-
-            return (
-                <ThemeContext.Provider value={currentTheme}>
-                    {children}
-                </ThemeContext.Provider>
-            )
-        }
-
-        export const useThemeContext = () =>{
-            return useContext(ThemeContext)
-        }
-    `
+    
+    const {code, title, tags, postedBy} = snippet;
 
     const codeString = `${code}`;
 
@@ -63,11 +43,11 @@ function Snippet() {
                     <div className="profile">
                         <Image src={avatar1} alt="avatar" width="64" height="64" className='profile-img' />
                         <div className="user-text">
-                            <h3 className="s-title2">Test</h3>
+                            <h3 className="s-title2">{postedBy.username}</h3>
                             <p className="s-title">Programmer</p>
                         </div>
                     </div>
-                    <h3 className="s-title3">Hast Tables</h3>
+                    <h3 className="s-title3">{title}</h3>
                     {/*<div className="language">
                         <p>Javascript</p>
                     </div>*/}
@@ -84,76 +64,19 @@ function Snippet() {
                     <div className="snippet-tags">
                         <h3>Tags</h3>
                         <div className="tags">
-                            <Button
-                                name={'Javascript'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'Hash Tables'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'React'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'Context Api'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'CSS'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'Vanilla Javascript'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1.2rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'Axios'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1.2rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'Code'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1.2rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'Vs Code'}
-                                backgound={randomTagColor}
-                                blob={'Arrays'}
-                                padding={'.4rem 1.2rem'}
-                                borderRad={'12px'}
-                            />
-                            <Button
-                                name={'Visual Studio'}
-                                backgound={randomTagColor}
-                                blob={'blob'}
-                                padding={'.4rem 1.2rem'}
-                                borderRad={'12px'}
-                            />
+                            {
+                                tags.map(tag => {
+                                    return <Button
+                                        name={tag.name}
+                                        backgound={randomTagColor}
+                                        blob={'blob'}
+                                        padding={'.4rem 1rem'}
+                                        borderRad={'12px'}
+                                        key={tag._id}
+                                    />
+                                })
+                            }
+                            
                         </div>
                     </div>
                 </div>
@@ -166,6 +89,8 @@ const SnippetStyled = styled.div`
     width: 100%;
     background-color: ${props => props.theme.colorBg2};
     border-radius: ${props => props.theme.borderRadiusSm};
+    position: relative;
+    z-index: 1;
     .snippet-con{
         padding: 2rem;
         .snippet-top{

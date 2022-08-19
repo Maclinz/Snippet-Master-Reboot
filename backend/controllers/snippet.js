@@ -74,7 +74,7 @@ exports.listSnippets = (req, res) => {
     SnippetSchema.find({})
     .populate('tags', '_id name slug')
     .populate('postedBy', '_id name username profile')
-    .select('_id title slug mtitle postedBy createdAt updatedAt')
+        .select('_id title slug code mtitle postedBy createdAt updatedAt')
     .exec((err, data) => {
         if(err) {
             return res.status(400).json({
@@ -101,7 +101,7 @@ exports.listSnippetsandTags = (req, res) => {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select('_id title slug mtitle postedBy createdAt updatedAt')
+        .select('_id title slug code mtitle postedBy createdAt updatedAt')
         .exec((err, data) => {
             if(err){
                 return res.status(400).json({

@@ -82,7 +82,7 @@ function ModalFull({router}) {
     }
 
     return (
-        <ModalFullStyled theme={theme}>
+        <ModalFullStyled theme={theme} className={'snippet-form'}>
             <div className="modal-content">
                 <form action="" id="submitBtn">
                     <div className="input-control">

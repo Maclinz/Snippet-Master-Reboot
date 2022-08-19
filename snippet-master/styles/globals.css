@@ -71,8 +71,25 @@ pre::-webkit-scrollbar-thumb {
   border-radius: 15px;
 }
 
+
+.snippet-form textarea::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+.snippet-form textarea::-webkit-scrollbar-track {
+ 
+}
+
+/* Handle */
+.snippet-form textarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(110.42deg, rgba(207, 87, 163, 0.63) 29.2%, rgba(71, 49, 182, 0.63) 63.56%);
+  border-radius: 15px;
+}
+
 /* Handle on hover */
-pre::-webkit-scrollbar-thumb:hover {
+.snippet-form textarea::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(110.42deg, #CF57A3 29.2%, #4731B6 63.56%);
 }
 

@@ -11,7 +11,7 @@ export const UserProvider = ({children}) => {
         collapsed: true,
         showTopPanel: false,
         hideTopPanel: false,
-        modal: true,
+        modal: false,
     }
     const [state, dispatch] = useReducer(user_reducer, initialState)
     const [values, setValues] = useState({

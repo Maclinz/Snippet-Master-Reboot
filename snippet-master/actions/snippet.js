@@ -20,3 +20,19 @@ export const snippetCreate = (snippet, token) => {
             console.log(err)
         })
 }
+
+//List all snippets
+export const listSnippetsandTags = async () => {
+    return await fetch(`${baseUrl}/snippets-tags-categories`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+        },
+    })
+        .then((res) => {
+            return res.json()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}

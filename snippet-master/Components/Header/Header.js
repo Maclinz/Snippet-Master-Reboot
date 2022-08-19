@@ -124,6 +124,7 @@ const HeaderStyled = styled.header`
     justify-content: space-between;
     padding: ${props => props.theme.padLRSm};
     position: fixed;
+    z-index: 3;
     .btn-login{
         i{
             color: ${props => props.theme.colorGrey0};
