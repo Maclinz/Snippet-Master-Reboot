@@ -58,6 +58,7 @@ pre::-webkit-scrollbar {
   height: 8px;
 }
 
+
 /* Track */
 pre::-webkit-scrollbar-track {
   background: #282c34;
@@ -92,5 +93,6 @@ pre::-webkit-scrollbar-thumb {
 .snippet-form textarea::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(110.42deg, #CF57A3 29.2%, #4731B6 63.56%);
 }
+
 
 

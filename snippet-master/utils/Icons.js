@@ -12,3 +12,9 @@ export const gear = <i className="fa-solid fa-gear"></i>
 export const login = <i className="fa-solid fa-right-to-bracket"></i>
 export const user = <i className="fa-solid fa-user"></i>
 export const join = <i className="fa-solid fa-user-plus"></i>
+export const heart = <i className="fa-solid fa-heart"></i>
+export const edit = <i className="fa-solid fa-file-pen"></i>
+export const users = <i className="fa-solid fa-user-group"></i>
+export const fire = <i class="fa-solid fa-fire-flame-curved"></i>
+
+

@@ -1,4 +1,4 @@
-import { bookmark, box, home } from "./Icons";
+import { bookmark, box, fire, home, users } from "./Icons";
 
 
 const menu = [
@@ -7,6 +7,18 @@ const menu = [
         name: 'Home',
         url: '/',
         icon: home
+    },
+    {
+        id: 4,
+        name: 'Popular',
+        url: '/popular',
+        icon: fire
+    },
+    {
+        id: 5,
+        name: 'Top Creators',
+        url: '/top-creators',
+        icon: users
     },
     {
         id: 2,

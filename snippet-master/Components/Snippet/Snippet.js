@@ -1,12 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { atomOneDark, docco, dark, darcula, vs, idea } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { atomOneDark, 
+    docco, 
+    dark, 
+    darcula, 
+    vs, 
+    idea, 
+    xcode, 
+    vs2015, 
+    obsidian, 
+    lightfair,
+    tomorrow,
+    tomorrowNight,
+    tomorrowNightBlue,
+    tomorrowNightBright,
+    tomorrowNightEighties,
+    twilight,
+    vibrantInk,
+    vibrantInkDark,
+    vibrantInkLight,
+    github,
+    } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import avatar1 from '../../assets/avatar1.png'
 import Image from 'next/image';
 import { useThemeContext } from '../../context/themeContext';
 import Button from '../Button/Button';
 import Select from 'react-select'
+import { edit, heart } from '../../utils/Icons';
 
 
 function Snippet({ snippet }) {
@@ -21,15 +42,105 @@ function Snippet({ snippet }) {
         dark,
         darcula,
         vs,
-        idea
+        idea, 
+        xcode, 
+        vs2015,
+        obsidian,
+        lightfair,
+        tomorrow,
+        tomorrowNight,
+        tomorrowNightBlue,
+        tomorrowNightBright,
+        tomorrowNightEighties,
+        twilight,
+        vibrantInk,
+        vibrantInkDark,
+        vibrantInkLight,
+        github,
     ]
 
     //All code theme names
     const options = [
         { value: atomOneDark, label: 'Atom' },
         { value: vs, label: 'Vs Code' },
-        { value: idea, label: 'Idea' }
+        { value: idea, label: 'Idea' },
+        { value: xcode, label: 'XCode' },
+        { value: vs2015, label: 'Vs 2015' },
+        { value: obsidian, label: 'Obsidian' },
+        { value: lightfair, label: 'Lightfair' },
+        { value: tomorrow, label: 'Tomorrow' },
+        { value: tomorrowNight, label: 'Tomorrow Night' },
+        { value: tomorrowNightBlue, label: 'Tomorrow Night Blue' },
+        { value: tomorrowNightBright, label: 'Tomorrow Night Bright' },
+        { value: tomorrowNightEighties, label: 'Tomorrow Night Eighties' },
+        { value: twilight, label: 'Twilight' },
+        { value: vibrantInk, label: 'Vibrant Ink' },
+        { value: vibrantInkDark, label: 'Vibrant Ink Dark' },
+        { value: vibrantInkLight, label: 'Vibrant Ink Light' },
+        { value: github, label: 'Github' },
+
     ]
+
+    //Custom Select styles
+    const customStyles = {
+        option: (provided, state) => ({
+            //color: state.isSelected ? theme.colorGrey6 : theme.colorGrey5,
+            padding: '10px 20px',
+            backgroundColor: theme.colorBg,
+            cursor: 'pointer',
+            transition: 'all 0.3s ease-in-out',
+            //color: color,
+            '&:hover': {
+                backgroundColor: theme.colorIcons,
+            }
+
+        }),
+
+        control: () => ({
+            width: '100%',
+            backgroundColor: theme.colorBg3,
+            height: '100%',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            border: 'none',
+            outline: 'none',
+            padding: '.4rem',
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+        }),
+        indicatorSeparator: () => ({
+            display: 'none',
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            //position: position,
+        }),
+        menu: (provided) => ({
+            ...provided,
+            background: theme.colorBg,
+            width: '220px',
+            borderRadius: '12px',
+            '&::-webkit-scrollbar': {
+                width: '7px',
+                backgroundColor: 'red',
+            },
+            '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#1a1a1a',
+            },
+
+        }),
+
+        singleValue: (provided, state) => {
+
+            const opacity = state.isDisabled ? 0.5 : 1;
+            const transition = 'opacity 300ms';
+            const color = theme.headerTextColor;
+
+            return { ...provided, opacity, transition, color };
+        }
+    }
 
     //code theme state
     const [codeTheme, setCodeTheme] = useState(codeThemes[0]);
@@ -78,7 +189,7 @@ function Snippet({ snippet }) {
                         <p>Javascript</p>
                     </div>*/}
                     <div className="select-theme">
-                        <Select options={options} onChange={changeCodeTheme} />
+                        <Select className='react-select-container' options={options} onChange={changeCodeTheme} styles={customStyles} placeholder={'Select A Theme'} />
                     </div>
                 </div>
                 <div className="snippet-mid">
@@ -88,7 +199,26 @@ function Snippet({ snippet }) {
                 </div>
                 <div className="snippet-bottom">
                     <div className="snippet-actions">
-                        
+                        <div className="left-actions">
+                            <Button
+                                name={'2.5K Likes'}
+                                backgound={randomTagColor}
+                                blob={'blob'}
+                                padding={'.6rem 1rem'}
+                                borderRad={'12px'}
+                                icon={heart}
+                            />
+                        </div>
+                        <div className="right-actions">
+                            <Button
+                                name={'Edit'}
+                                backgound={randomTagColor}
+                                blob={'blob'}
+                                padding={'.6rem 1rem'}
+                                borderRad={'12px'}
+                                icon={edit}
+                            />
+                        </div>
                     </div>
                     <div className="snippet-tags">
                         <h3>Tags</h3>
@@ -130,6 +260,7 @@ const SnippetStyled = styled.div`
                 align-items: center;
                 .profile-img{
                     border-radius: 50% ;
+                    border: 2px solid ${props => props.theme.colorPrimary} !important;
                 }
                 .user-text{
                     margin-left:1rem ;
@@ -147,12 +278,34 @@ const SnippetStyled = styled.div`
             pre{
                 border-radius: ${props => props.theme.borderRadiusSm};
                 max-height: 350px;
+                height: 350px;
                 code{
                     font-weight: 500;
                 }
             }
         }
         .snippet-bottom{
+            .snippet-actions{
+                margin: 1rem 0;
+                display: flex;
+                justify-content: space-between;
+                button{
+                    border: 1px solid ${props => props.theme.colorIcons};
+                    transition: all .4s ease-in-out;
+                    &:hover{
+                        box-shadow: ${props => props.theme.shadow5};
+                        transition: all .4s ease-in-out;
+                        color: ${props => props.theme.colorGrey0};
+                        i{
+                            color: ${props => props.theme.colorGrey0};
+                            transition: all .4s ease-in-out;
+                        }
+                    }
+                    i{
+                        color: ${props => props.theme.colorIcons2};
+                    }
+                }
+            }
             .snippet-tags{
                 h3{
                     margin-bottom: .6rem;
