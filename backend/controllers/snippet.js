@@ -202,3 +202,20 @@ exports.updateSnippet = (req, res) => {
         })
 
 }
+
+//search snippets
+exports.searchSnippets = (req, res) => {
+    const {search} = req.query;
+    if(search){
+        SnippetSchema.find({
+            $or: [{title: {$regex: search, $options: 'i'}}, {code: {$regex: search, $options: 'i'}}]
+        },(err, snippets) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            res.json(snippets);
+        }).populate('tags', '_id name slug').populate('postedBy', '_id name username').select('_id title slug code mtitle postedBy createdAt updatedAt');
+    }
+}

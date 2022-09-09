@@ -15,6 +15,7 @@ function Button({
     type,
     blob,
     dClick,
+    border,
     form
 }) {
     const theme = useThemeContext()
@@ -25,7 +26,8 @@ function Button({
                 padding: padding,
                 borderRadius: borderRad,
                 fontWeight: fw,
-                fontSize: fs
+                fontSize: fs,
+                border: border,
             }}>
                 {icon}
                 {name}

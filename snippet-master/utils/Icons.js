@@ -16,5 +16,9 @@ export const heart = <i className="fa-solid fa-heart"></i>
 export const edit = <i className="fa-solid fa-file-pen"></i>
 export const users = <i className="fa-solid fa-user-group"></i>
 export const fire = <i class="fa-solid fa-fire-flame-curved"></i>
+export const down = <i className="fa-solid fa-caret-down"></i>
+export const trash = <i className="fa-solid fa-trash"></i>
+export const admin = <i className="fa-solid fa-lock"></i>
+
 
 

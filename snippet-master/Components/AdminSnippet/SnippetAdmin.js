@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { atomOneDark, 
-    docco, 
-    dark, 
-    darcula, 
-    vs, 
-    idea, 
-    xcode, 
-    vs2015, 
-    obsidian, 
+import {
+    atomOneDark,
+    docco,
+    dark,
+    darcula,
+    vs,
+    idea,
+    xcode,
+    vs2015,
+    obsidian,
     lightfair,
     tomorrow,
     tomorrowNight,
@@ -20,7 +21,7 @@ import { atomOneDark,
     vibrantInkDark,
     vibrantInkLight,
     github,
-    } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+} from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import avatar1 from '../../assets/avatar1.png'
 import Image from 'next/image';
@@ -28,157 +29,20 @@ import { useThemeContext } from '../../context/themeContext';
 import Button from '../Button/Button';
 import Select from 'react-select'
 import { edit, heart, trash } from '../../utils/Icons';
+import { useSnippetContext } from '../../context/snippetContext';
 
 
-function Snippet({ snippet }) {
+function SnippetAdmin({ snippet }) {
     const theme = useThemeContext();
-    
-    const {code, title, tags, postedBy} = snippet;
+    const { deleteSnippet } = useSnippetContext()
 
-    //All code thems
-    const codeThemes = [
-        atomOneDark,
-        docco,
-        dark,
-        darcula,
-        vs,
-        idea, 
-        xcode, 
-        vs2015,
-        obsidian,
-        lightfair,
-        tomorrow,
-        tomorrowNight,
-        tomorrowNightBlue,
-        tomorrowNightBright,
-        tomorrowNightEighties,
-        twilight,
-        vibrantInk,
-        vibrantInkDark,
-        vibrantInkLight,
-        github,
-    ]
-
-    //All code theme names
-    const options = [
-        { value: atomOneDark, label: 'Atom' },
-        { value: vs, label: 'Vs Code' },
-        { value: idea, label: 'Idea' },
-        { value: xcode, label: 'XCode' },
-        { value: vs2015, label: 'Vs 2015' },
-        { value: obsidian, label: 'Obsidian' },
-        { value: lightfair, label: 'Lightfair' },
-        { value: tomorrow, label: 'Tomorrow' },
-        { value: tomorrowNight, label: 'Tomorrow Night' },
-        { value: tomorrowNightBlue, label: 'Tomorrow Night Blue' },
-        { value: tomorrowNightBright, label: 'Tomorrow Night Bright' },
-        { value: tomorrowNightEighties, label: 'Tomorrow Night Eighties' },
-        { value: twilight, label: 'Twilight' },
-        { value: vibrantInk, label: 'Vibrant Ink' },
-        { value: vibrantInkDark, label: 'Vibrant Ink Dark' },
-        { value: vibrantInkLight, label: 'Vibrant Ink Light' },
-        { value: github, label: 'Github' },
-
-    ]
-
-    //Custom Select styles
-    const customStyles = {
-        menuList: (base) => ({
-            ...base,
-            "::-webkit-scrollbar": {
-                width: "4px",
-            },
-            "::-webkit-scrollbar-track": {
-                background: '#282c34'
-            },
-            "::-webkit-scrollbar-thumb": {
-                background: 'linear-gradient(110.42deg, #CF57A3 29.2%, #4731B6 63.56%)',
-                borderRadius: '10px'
-            },
-            "::-webkit-scrollbar-thumb:hover": {
-                background: "#555"
-            }
-        }),
-        option: (provided, state) => ({
-            //color: state.isSelected ? theme.colorGrey6 : theme.colorGrey5,
-            padding: '10px 20px',
-            backgroundColor: theme.colorBg,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease-in-out',
-            //color: color,
-            '&:hover': {
-                backgroundColor: theme.colorIcons,
-            }
-
-        }),
-
-        control: () => ({
-            width: '100%',
-            backgroundColor: theme.colorBg3,
-            height: '100%',
-            borderRadius: '12px',
-            display: 'flex',
-            alignItems: 'center',
-            border: 'none',
-            outline: 'none',
-            padding: '.4rem',
-            cursor: 'pointer'
-        }),
-        placeholder: (provided) => ({
-            ...provided,
-        }),
-        indicatorSeparator: () => ({
-            display: 'none',
-        }),
-        dropdownIndicator: (provided) => ({
-            ...provided,
-            //position: position,
-        }),
-        menu: (provided) => ({
-            ...provided,
-            background: theme.colorBg,
-            width: '220px',
-            borderRadius: '12px',
-            "::-webkit-scrollbar": {
-                width: "4px",
-                height: "0px",
-            },
-            "::-webkit-scrollbar-track": {
-                background: "#f1f1f1"
-            },
-            "::-webkit-scrollbar-thumb": {
-                background: "#888"
-            },
-            "::-webkit-scrollbar-thumb:hover": {
-                background: "#555"
-            }
-
-        }),
-        
-
-        singleValue: (provided, state) => {
-
-            const opacity = state.isDisabled ? 0.5 : 1;
-            const transition = 'opacity 300ms';
-            const color = theme.headerTextColor;
-
-            return { ...provided, opacity, transition, color };
-        }
-    }
-
-    //code theme state
-    const [codeTheme, setCodeTheme] = useState(codeThemes[0]);
-
-    const changeCodeTheme = (e) => {
-        //set the code theme to the current value
-        setCodeTheme(codeThemes[options.findIndex(option => option.value === e.value)]);
-    }
+    const { code, title, postedBy } = snippet;
 
     const codeString = `${code}`;
 
     //tag colors 
     const tagColors = [
-        theme.buttonGradient1, 
+        theme.buttonGradient1,
         theme.buttonGradient2,
         theme.buttonGradient3,
         theme.buttonGradient4,
@@ -193,7 +57,7 @@ function Snippet({ snippet }) {
         theme.buttonGradient13,
         theme.buttonGradient14,
     ]
-    
+
     //randomanize tag colors
     const randomTagColor = tagColors[Math.floor(Math.random() * tagColors.length)];
 
@@ -201,7 +65,7 @@ function Snippet({ snippet }) {
     const randomTagColorMemo = useMemo(() => {
         return randomTagColor;
     }, []);
-    
+
 
     return (
         <SnippetStyled theme={theme}>
@@ -218,12 +82,9 @@ function Snippet({ snippet }) {
                     {/*<div className="language">
                         <p>Javascript</p>
                     </div>*/}
-                    <div className="select-theme">
-                        <Select className='react-select-container' options={options} onChange={changeCodeTheme} styles={customStyles} placeholder={'Select A Theme'} />
-                    </div>
                 </div>
                 <div className="snippet-mid">
-                    <SyntaxHighlighter language='javascript' style={codeTheme} showLineNumbers={'True'} wrapLongLines={'True'}>
+                    <SyntaxHighlighter language='javascript' style={atomOneDark} showLineNumbers={'True'} wrapLongLines={'True'}>
                         {codeString}
                     </SyntaxHighlighter>
                 </div>
@@ -255,25 +116,8 @@ function Snippet({ snippet }) {
                                 padding={'.6rem 1rem'}
                                 borderRad={'12px'}
                                 icon={trash}
+                                click={() => deleteSnippet(snippet.slug)}
                             />
-                        </div>
-                    </div>
-                    <div className="snippet-tags">
-                        <h3>Tags</h3>
-                        <div className="tags">
-                            {
-                                tags.map(tag => {
-                                    return <Button
-                                        name={tag.name}
-                                        backgound={randomTagColorMemo}
-                                        blob={'blob'}
-                                        padding={'.4rem 1rem'}
-                                        borderRad={'12px'}
-                                        key={tag._id}
-                                    />
-                                })
-                            }
-                            
                         </div>
                     </div>
                 </div>
@@ -375,4 +219,4 @@ const SnippetStyled = styled.div`
     }
 `;
 
-export default Snippet
+export default SnippetAdmin

@@ -1,4 +1,4 @@
-import { GET_SNIPPETS_BEGIN, GET_SNIPPETS_SUCCESS } from "../utils/actions"
+import { DELETE_SNIPPET, GET_ADMIN_SNIPPETS_SUCCESS, GET_SNIPPETS_BEGIN, GET_SNIPPETS_SUCCESS, HIDE_SNIPPET_MODAL, INPUT_CHANGE, LOAD_MORE, RELOAD_SNIPPETS, REMOVE_SNIPPET, SEARCHING, SHOW_SNIPPET_MODAL } from "../utils/actions"
 
 
 const snippet_reducer = (state, action) => {
@@ -13,10 +13,85 @@ const snippet_reducer = (state, action) => {
     if(action.type === GET_SNIPPETS_SUCCESS) {
         return {
             ...state,
-            snippets: action.payload,
+            snippets: action.payload.snippets,
+            totalSnippets: action.payload.size,
             loading: false,
         }
     }
+
+    if(action.type === LOAD_MORE) {
+        return {
+            ...state,
+            snippets: [...state.snippets, ...action.payload.snippets],
+            totalSnippets: action.payload.size,
+            loading: false,
+        }
+    }
+
+    if (action.type === INPUT_CHANGE) {
+        return {
+            ...state,
+            searchState: {
+                ...state.searchState,
+                search: action.payload
+            }
+        }
+    }
+
+    if(action.type === SEARCHING) {
+        return {
+            ...state,
+            searchState: {
+                ...state.searchState,
+                message: action.payload.message,
+                searched: true,
+                search: action.payload.search,
+            },
+            snippets: action.payload.data
+        }
+    }
+
+    if(action.type === RELOAD_SNIPPETS) {
+        return {
+            ...state,
+            snippets: action.payload,
+        }
+    }
+
+    if(action.type === GET_ADMIN_SNIPPETS_SUCCESS) {
+        return {
+            ...state,
+            allSnippetsAdmin: action.payload
+        }
+    }
+
+    if(action.type === DELETE_SNIPPET) {
+        return {
+            ...state,
+            loading: false,
+        }
+    }
+
+    if (action.type === SHOW_SNIPPET_MODAL) {
+        return {
+            ...state,
+            snippetModal: true
+        }
+    }
+    if (action.type === HIDE_SNIPPET_MODAL) {
+        return {
+            ...state,
+            snippetModal: false
+        }
+    }
+
+    if (action.type === REMOVE_SNIPPET) {
+        return {
+            ...state,
+            removeSnippet: !state.removeSnippet
+        }
+    }
+    
 
     return {...state}
 }

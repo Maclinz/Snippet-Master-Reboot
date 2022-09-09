@@ -4,9 +4,9 @@ import { useUserContext } from '../../context/context';
 import { useThemeContext } from '../../context/themeContext';
 function MainContent({children}) {
     const theme = useThemeContext()
-    const {collapsed} = useUserContext()
+    const {collapsed, hideTopPanel} = useUserContext()
     return (
-        <MainContentStyled theme={theme} collapsed={collapsed}>
+        <MainContentStyled theme={theme} collapsed={collapsed} onClick={hideTopPanel}>
             {children}
         </MainContentStyled>
     )

@@ -53,6 +53,29 @@ button, textarea, input{
   cursor: pointer;
 }
 
+.load-more{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 3rem;
+  margin-top: 1rem;
+}
+
+.main-title{
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding-left: 1.5rem;
+  padding-top: 2rem;
+  padding-right: 1.5rem;
+}
+
+.loading-con{
+  padding-left: 1.5rem;
+  padding-top: 2rem;
+  padding-right: 1.5rem;
+  
+}
+
 pre::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -93,6 +116,9 @@ pre::-webkit-scrollbar-thumb {
 .snippet-form textarea::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(110.42deg, #CF57A3 29.2%, #4731B6 63.56%);
 }
+
+
+
 
 
 

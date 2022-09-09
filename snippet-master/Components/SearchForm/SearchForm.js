@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { searchSnippets } from '../../actions/snippet';
+import { useSnippetContext } from '../../context/snippetContext';
 import { useThemeContext } from '../../context/themeContext';
-import { search } from '../../utils/Icons';
+import { search as searchIcon } from '../../utils/Icons';
 
 function SearchForm() {
     const theme = useThemeContext()
+
+    const { handleSearch, handleInputChange, hideTopPanel } = useSnippetContext()
+
+    //searched snippets
+
+
+    //handle search input
+    
+
     return (
-        <SearchFormStyled theme={theme}>
+        <SearchFormStyled theme={theme} onSubmit={handleSearch} >
             <div className="input-control">
-                <input type="text" placeholder='Seach Here...' />
+                <input type="text" placeholder='Seach Here...' onChange={handleInputChange} />
                 <button className="search">
-                    {search}
+                    {searchIcon}
                 </button>
             </div>
         </SearchFormStyled>

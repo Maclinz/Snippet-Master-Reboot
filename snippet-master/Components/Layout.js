@@ -8,9 +8,10 @@ import { useThemeContext } from "../context/themeContext"
 import panelMenu from "../utils/panelMenu"
 import Link from "next/link"
 import Router, { useRouter } from 'next/router';
-import { signout } from "../actions/auth"
+import { isAuth, signout } from "../actions/auth"
 import ModalFull from "./ModalFull/ModalFull"
 import Admin from '../Components/auth/Admin'
+import { admin } from "../utils/Icons"
 
 
 function Layout({children}) {
@@ -26,27 +27,38 @@ function Layout({children}) {
     }
 
     return (
-        <LayoutStyled theme={theme} showTopPanel={showTopPanel}>
+        <LayoutStyled theme={theme} showTopPanel={showTopPanel} >
             <Header />
             <Admin>
                 {modal && <ModalFull />}
             </Admin>
             <div className="menu-panel">
                 {
+                    isAuth() && isAuth().role === 1 && 
+                    <li className={`nav-item ${router.pathname === '/admin/crud/snippets' ? 'active' : ''}`} onClick={() => {
+                        handleClick('/admin/crud/snippets')
+                    }}>
+                        {admin}
+                        Admin
+                    </li>
+                }
+                {
                     panelMenu.map(item => {
                         const link = item.url
-                        return <li className={`nav-item ${router.pathname === link ? 'active' : ''}`} key={item.id} 
-                        onClick={() => {
-                            handleClick(link)
-                            if(link === '/signout') {
-                                signout(() =>{
-                                    Router.replace('/')
-                                })
-                            }
-                        }}>
-                            {item.icon}
-                            <Link href={''}>{item.name}</Link>
-                        </li>
+                        return <div key={item.id}>
+                            <li className={`nav-item ${router.pathname === link ? 'active' : ''}`} key={item.id}
+                                onClick={() => {
+                                    handleClick(link)
+                                    if (link === '/signout') {
+                                        signout(() => {
+                                            Router.replace('/')
+                                        })
+                                    }
+                                }}>
+                                {item.icon}
+                                <Link href={''}>{item.name}</Link>
+                            </li>
+                        </div>
                     })
                 }
             </div>

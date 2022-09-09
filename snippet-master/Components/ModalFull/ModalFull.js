@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Router from 'next/router';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 import styled from 'styled-components'
 import { useUserContext } from '../../context/context';
 import { useThemeContext } from '../../context/themeContext';
@@ -23,7 +23,7 @@ function ModalFull({router}) {
 
     const { tags } = values;
 
-    const { snippetValues, setSnippetValues } = useSnippetContext()
+    const { snippetValues, setSnippetValues, listSnippets, listAllSnippetsAdmin } = useSnippetContext()
     
     const { title, code,loading, error } = snippetValues;
     const token = getCookie('token')
@@ -59,7 +59,10 @@ function ModalFull({router}) {
                 })
                 setCheckedTag([]);
                 hideModal()
+                listAllSnippetsAdmin()
             }
+            //refresh snippets
+            listSnippets()
         })
     }
 
@@ -70,6 +73,7 @@ function ModalFull({router}) {
             loading: false 
         })
     }
+
     const titleSnippetChange = name => (e) => {
         setSnippetValues({
             ...snippetValues, 
@@ -150,6 +154,7 @@ function ModalFull({router}) {
                                     checkedTag.includes(tag._id) ? theme.colorGradient : theme.buttonGradient5
                                 }
                                 blob={'blob'}
+                                border={`1px solid ${theme.colorIcons}`}
                                 click={handleSnippetToggle(tag._id)}
                             />
                         })

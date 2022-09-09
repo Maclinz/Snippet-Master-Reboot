@@ -27,6 +27,7 @@ function Categories() {
                         selector={`category ${activeCategory === index ? 'active': null}`}
                         padding={'.4rem 1rem'} 
                         blob={'blob'}
+                        border={`1px solid ${theme.colorIcons}`}
                         click={() => handleCategoryClick(index)}
                     />
                 })
