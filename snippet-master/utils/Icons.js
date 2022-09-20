@@ -19,6 +19,8 @@ export const fire = <i class="fa-solid fa-fire-flame-curved"></i>
 export const down = <i className="fa-solid fa-caret-down"></i>
 export const trash = <i className="fa-solid fa-trash"></i>
 export const admin = <i className="fa-solid fa-lock"></i>
+export const copy = <i className="fa-solid fa-clipboard"></i>
+
 
 
 

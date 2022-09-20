@@ -60,7 +60,7 @@ function Snippets() {
 }
 
 const AllSnippetsStyed = styled.div`
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 2rem;

@@ -27,7 +27,7 @@ import Image from 'next/image';
 import { useThemeContext } from '../../context/themeContext';
 import Button from '../Button/Button';
 import Select from 'react-select'
-import { edit, heart, trash } from '../../utils/Icons';
+import { copy, edit, heart, trash } from '../../utils/Icons';
 import Link from 'next/link';
 
 
@@ -170,6 +170,9 @@ function Snippet({ snippet }) {
     //code theme state
     const [codeTheme, setCodeTheme] = useState(codeThemes[0]);
 
+    //copied state
+    const [copied, setCopied] = useState(false);
+
     const changeCodeTheme = (e) => {
         //set the code theme to the current value
         setCodeTheme(codeThemes[options.findIndex(option => option.value === e.value)]);
@@ -205,7 +208,7 @@ function Snippet({ snippet }) {
     
 
     return (
-        <SnippetStyled theme={theme}>
+        <SnippetStyled theme={theme} rand={randomTagColorMemo}>
             <div className="snippet-con">
                 <div className="snippet-top">
                     <div className="profile">
@@ -230,6 +233,20 @@ function Snippet({ snippet }) {
                     </div>
                 </div>
                 <div className="snippet-mid">
+                    <div className="copy-btn">
+                        <button
+                            onClick={() => {
+                                navigator.clipboard.writeText(codeString);
+                                setCopied(true);
+                                setTimeout(() => {
+                                    setCopied(false);
+                                }, 2000);
+                            }}
+                        >
+                            {copy}
+                        </button>
+                        <p className="s-title3">{copied ? 'Copied!' : 'Copy'}</p>
+                    </div>
                     <SyntaxHighlighter language='javascript' style={codeTheme} showLineNumbers={'True'} wrapLongLines={'True'}>
                         {codeString}
                     </SyntaxHighlighter>
@@ -320,6 +337,33 @@ const SnippetStyled = styled.div`
             margin-left:0 ;
             margin-right:0 ;
             margin-bottom: 2rem;
+            position: relative;
+            .copy-btn{
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                //background: ${props => props.theme.colorPrimary};
+                padding: .4rem .7rem;
+                border-radius: ${props => props.theme.borderRadiusSm};
+                cursor: pointer;
+                transition: all .3s ease-in-out;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                &:hover{
+                    i{
+                        transform: scale(1.1);
+                        transition: all .3s ease-in-out;
+                        color: ${props => props.theme.colorGrey1};
+                    }
+                }
+                i{
+                    font-size: 1.3rem;
+                    color: ${props => props.theme.colorIcons};
+                    transition: all .3s ease-in-out;
+                }
+            }
             pre{
                 border-radius: ${props => props.theme.borderRadiusSm};
                 max-height: 350px;

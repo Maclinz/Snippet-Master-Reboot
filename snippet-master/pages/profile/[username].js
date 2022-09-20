@@ -18,17 +18,19 @@ function Profile({ user, snippets }) {
             <MainContent >
                 <ProfileStyled theme={theme}>
                     <div className="profile-container">
-                        <div className="profile-header">
-                            <h5>
-                                {user.name}
-                            </h5>
-                            <p>
-                                Joined {moment(user.createdAt).fromNow()}
-                            </p>
+                        <div className="profile-content">
+                            <div className="profile-header">
+                                <h5>
+                                    {user.name}
+                                </h5>
+                                <p>
+                                    Joined {moment(user.createdAt).fromNow()}
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <div className="createdByUser">
-                        <h5>Snippets created by {user.name}</h5>
+                        <h5>Snippets created by <span>{user.name}</span></h5>
                         <div className="user-snippets">
                             {snippets.map((snippet) => {
                                 return <Snippet key={snippet._id} snippet={snippet} />
@@ -52,9 +54,33 @@ Profile.getInitialProps = async ({ query }) => {
 }
 
 const ProfileStyled = styled.div`
-    padding: 2rem 1.5rem;
-    
+    padding: 1.5rem;
+    .profile-container{
+        height: 40vh;
+        background: ${props => props.theme.colorBg2};
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        .profile-header{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            h5{
+                font-size: 2rem;
+            }
+        }
+    }
     .createdByUser{
+        h5{
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            span{
+                color: ${props => props.theme.colorPrimary};
+            }
+        }
         .user-snippets{
             display: grid;
             grid-template-columns: repeat(2, 1fr);
