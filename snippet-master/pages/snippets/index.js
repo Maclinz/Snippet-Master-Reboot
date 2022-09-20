@@ -8,12 +8,18 @@ import { useThemeContext } from '../../context/themeContext'
 import Button from '../../Components/Button/Button'
 import { down } from '../../utils/Icons'
 import Loading from '../../Components/Loading/Loading'
+import { isAuth } from '../../actions/auth'
 
 function Snippets() {
     const {snippets, loading,searchState, loadMore} = useSnippetContext()
     const theme = useThemeContext()
 
     const {searched, message} = searchState
+
+    //filter out the snippets that are not created by the user
+    const userSnippets = snippets.filter(snippet => snippet.postedBy._id === isAuth()._id)
+
+    console.log('userSnippets Creat', userSnippets);
 
     return (
         <Layout>
@@ -28,12 +34,12 @@ function Snippets() {
                 </div>
                 {!loading && <AllSnippetsStyed theme={theme}>
                     {
-                        snippets.map(snippet => {
+                        userSnippets.map(snippet => {
                             return <Snippet key={snippet._id} snippet={snippet} />
                         })
                     }
                 </AllSnippetsStyed>}
-                {loading || snippets.length > 1 && <div className="load-more">
+                {loading || userSnippets.length > 5 && <div className="load-more">
                     <Button
                         name={'Load More'}
                         type={'submit'}

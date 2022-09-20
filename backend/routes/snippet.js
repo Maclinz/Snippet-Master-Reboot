@@ -11,6 +11,9 @@ router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
     .delete('/snippet/:slug', requireSignIn, authMiddleware, removeSnippet )
     .put('/snippet/:slug',  updateSnippet )
     .get('/snippets/search', searchSnippets)
+    //auth user crud
+    .post('/user/create-snippet', requireSignIn, authMiddleware, create)
+
 
 
 

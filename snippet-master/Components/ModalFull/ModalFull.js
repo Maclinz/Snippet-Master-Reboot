@@ -61,10 +61,14 @@ function ModalFull({router}) {
                 hideModal()
                 listAllSnippetsAdmin()
             }
-            //refresh snippets
-            listSnippets()
+            //refresh snippets if all valiations are passed
+            if(!data.error){
+                listSnippets()
+            }
         })
     }
+
+    //create snippet for auth user
 
     const handleSnippetChange = name => (e) => {
         setSnippetValues({

@@ -94,6 +94,9 @@ const SidebarStyled = styled.div`
         i{
             color: ${props => props.theme.colorIcons2} !important;
         }
+        a{
+            color: ${props => props.theme.colorIcons2} !important;
+        }
     }
     .navigation{
         margin: 1rem 0;

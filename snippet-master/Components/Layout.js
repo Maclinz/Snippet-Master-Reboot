@@ -29,9 +29,7 @@ function Layout({children}) {
     return (
         <LayoutStyled theme={theme} showTopPanel={showTopPanel} >
             <Header />
-            <Admin>
                 {modal && <ModalFull />}
-            </Admin>
             <div className="menu-panel">
                 {
                     isAuth() && isAuth().role === 1 && 
@@ -69,6 +67,7 @@ function Layout({children}) {
 }
 
 const LayoutStyled = styled.div`
+    color:${props => props.theme.colorFontPrimary};
     .menu-panel{
         display: ${props => props.showTopPanel ? 'block' : 'none'};
         position: fixed;

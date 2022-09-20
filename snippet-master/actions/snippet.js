@@ -1,11 +1,23 @@
 import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
 import queryString from 'query-string';
+import { isAuth } from './auth';
 
 let baseUrl = 'http://localhost:8000/api/v1';
 
 export const snippetCreate = (snippet, token) => {
-    return fetch(`${baseUrl}/create-snippet`, {
+
+    //change url dynamically based on role
+    let snippetUrl;
+
+    if (isAuth() && isAuth().role === 1) {
+        snippetUrl = `${baseUrl}/snippet/create-snippet`;
+    }else if (isAuth() && isAuth().role === 0) {
+        snippetUrl = `${baseUrl}/user/create-snippet`;
+    }
+
+
+    return fetch(`${snippetUrl}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

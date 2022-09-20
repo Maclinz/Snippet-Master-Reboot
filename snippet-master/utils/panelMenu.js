@@ -2,16 +2,16 @@ import { gear, login, user } from "./Icons"
 
 
 const pnaleMenu = [
-    {
+    /*{
         id: 1,
         name: 'Profile',
         url: '/profile',
         icon: user,
-    },
+    },*/
     {
         id: 2,
         name: 'Settings',
-        url: '/settings',
+        url: '/profile',
         icon:gear,
     },
     {

@@ -18,6 +18,7 @@ const MainContentStyled = styled.main`
     background-color: ${props => props.theme.colorBg3};
     min-height: 100vh;
     margin-top: 8vh;
+    position: relative;
 `;
 
 export default MainContent

@@ -1,3 +1,4 @@
+import { isAuth } from "../actions/auth";
 import { bookmark, box, fire, home, users } from "./Icons";
 
 
@@ -29,7 +30,7 @@ const menu = [
     {
         id: 3,
         name: 'My Snippets',
-        url: '/snippets',
+        url: `/snippets`,
         icon: box
     },
 ]

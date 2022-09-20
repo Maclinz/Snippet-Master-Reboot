@@ -4,7 +4,7 @@ const bottomMenu = [
     {
         id: 1,
         name: 'Settings',
-        url: '/settings',
+        url: '/profile',
         icon: gear
     },
     {

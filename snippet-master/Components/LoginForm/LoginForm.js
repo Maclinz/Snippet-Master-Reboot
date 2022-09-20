@@ -134,6 +134,16 @@ const LoginFormStyled = styled.form`
     box-shadow: ${props => props.theme.shadow3};
     border-radius: ${props => props.theme.borderRadiusMd2};
     overflow: hidden;
+    color: ${props => props.theme.colorGrey0};
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active{
+        -webkit-box-shadow: 0 0 0 36px ${props => props.theme.colorGreyDark} inset !important;
+    }
+    input:-webkit-autofill{
+        -webkit-text-fill-color: ${props => props.theme.colorGrey2} !important;
+    }
     .error{
         color: ${props => props.theme.colorDanger};
         h4{

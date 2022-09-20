@@ -30,6 +30,7 @@ import Button from '../Button/Button';
 import Select from 'react-select'
 import { edit, heart, trash } from '../../utils/Icons';
 import { useSnippetContext } from '../../context/snippetContext';
+import Link from 'next/link';
 
 
 function SnippetAdmin({ snippet }) {
@@ -74,7 +75,13 @@ function SnippetAdmin({ snippet }) {
                     <div className="profile">
                         <Image src={avatar1} alt="avatar" width="64" height="64" className='profile-img' />
                         <div className="user-text">
-                            <h3 className="s-title2">{postedBy.username}</h3>
+                            <h3 className="s-title2">
+                                {
+                                    <Link href={`/profile/${postedBy.username}`}>
+                                        {postedBy.username}
+                                    </Link>
+                                }
+                            </h3>
                             <p className="s-title">Programmer</p>
                         </div>
                     </div>

@@ -38,8 +38,7 @@ function Categories() {
 
 const CategoriesStyled = styled.div`
     display: flex;
-    padding: 1rem 1.5rem;
-    margin: 0.6rem 0;
+    padding: 1.13rem 1.5rem;
     border-bottom: 1px solid ${props => props.theme.borderColor2};
     position: fixed;
     width: 100%;

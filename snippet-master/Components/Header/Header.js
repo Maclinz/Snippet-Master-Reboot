@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { useThemeContext } from '../../context/themeContext';
+import { useThemeContext, useThemeUpdate } from '../../context/themeContext';
 import logo from '../../assets/logo.svg'
 import Image from 'next/image'
 import { add, bars, bell, join, login, moon } from '../../utils/Icons';
@@ -19,6 +19,7 @@ function Header() {
 
     //context
     const { collapseNavbar, showMenuPanel, hideTopPanel, showModal } = useUserContext()
+    const setTheme = useThemeUpdate()
 
     /*useEffect(() => {
         const tl = gsap.timeline()
@@ -48,7 +49,12 @@ function Header() {
                 <div className="form-con">
                     <SearchForm />
                 </div>
-                <button className="h-btn theme">
+                <button className="h-btn theme" onClick={() => {
+                    //toggle theme
+                    setTheme(
+                        theme.name === 'light' ? 0 : 1
+                    )
+                }}>
                     {moon}
                 </button>
                 <button className="h-btn notifications">

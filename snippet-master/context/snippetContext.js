@@ -112,6 +112,7 @@ export const SnipetProvider = ({ children }) => {
                     })
                     //reload
                     listAllSnippetsAdmin()
+                    listSnippets()
                 })
                 .catch(err => {
                     console.log(err);
@@ -125,6 +126,7 @@ export const SnipetProvider = ({ children }) => {
         let skip = state.skip
         let limit = state.limit
         skip += limit
+        
         
         listSnippetsandTags(skip, limit)
             .then(data => {

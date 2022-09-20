@@ -1,6 +1,8 @@
-import React, { useContext, useReducer, useState } from "react"
+import React, { useContext, useEffect, useReducer, useState } from "react"
+import { isAuth } from "../actions/auth"
+import { userPublicProfile } from "../actions/user"
 import user_reducer from "../reducers/user_reducer"
-import{ COLLAPSE_SIDEBAR, HIDE_MENU_PANEL, HIDE_MODAL, SHOW_MENU_PANEL, SHOW_MODAL, UPDATE_INPUTS } from "../utils/actions"
+import{ COLLAPSE_SIDEBAR, HIDE_MENU_PANEL, HIDE_MODAL, SHOW_MENU_PANEL, SHOW_MODAL, UPDATE_INPUTS, USER_PUBLIC_INFO } from "../utils/actions"
 
 const UserContext = React.createContext()
 const UserUpdateContext = React.createContext()
@@ -12,6 +14,19 @@ export const UserProvider = ({children}) => {
         showTopPanel: false,
         hideTopPanel: false,
         modal: false,
+        user: {
+            username: '',
+            name: '',
+            email: '',
+            password: '',
+            error: '',
+            success: '',
+        },
+        userPublicInfo: {
+            username: '',
+            email: '',
+
+        },
     }
     const [state, dispatch] = useReducer(user_reducer, initialState)
     const [values, setValues] = useState({
@@ -24,6 +39,18 @@ export const UserProvider = ({children}) => {
         message: '',
         showForm: true,
     })
+
+
+    //get user info
+    /*const publicUserProfile = ({query}) => {
+        userPublicProfile()
+        .then(data => {
+            dispatch({
+                type: USER_PUBLIC_INFO,
+                payload: data
+            })
+        }).catch(err => console.log(err))
+    }*/
 
     const collapseNavbar = () => {
         dispatch({
@@ -64,6 +91,14 @@ export const UserProvider = ({children}) => {
         const randomIndex = Math.floor(Math.random() * angryEmojies.length)
         return angryEmojies[randomIndex]
     }
+
+    useEffect(() => {
+        //publicUserProfile(state.userPublicInfo)
+        //dispatch user info
+        
+    }, [])
+
+    console.log('user context', state)
 
     return(
         <UserContext.Provider value={{ ...state, collapseNavbar, showMenuPanel, hideTopPanel, randomEmojie, showModal, hideModal }}>
