@@ -29,12 +29,16 @@ import Button from '../Button/Button';
 import Select from 'react-select'
 import { copy, edit, heart, trash } from '../../utils/Icons';
 import Link from 'next/link';
+import { isAuth } from '../../actions/auth';
+import { useSnippetContext } from '../../context/snippetContext';
 
 
 function Snippet({ snippet }) {
     const theme = useThemeContext();
+
+    const { deleteSnippet } = useSnippetContext()
     
-    const {code, title, tags, postedBy} = snippet;
+    const {code, title, tags, postedBy, slug} = snippet;
 
     //All code thems
     const codeThemes = [
@@ -216,7 +220,7 @@ function Snippet({ snippet }) {
                         <div className="user-text">
                             <h3 className="s-title2">
                                 {
-                                    <Link href={`/profile/${postedBy.username}`}>
+                                    <Link href={`/profile/${!postedBy.username ? '' : postedBy.username}`}>
                                         {postedBy.username}
                                     </Link>
                                 }
@@ -245,7 +249,7 @@ function Snippet({ snippet }) {
                         >
                             {copy}
                         </button>
-                        <p className="s-title3">{copied ? 'Copied!' : 'Copy'}</p>
+                        <p className="s-title3 copy">{copied ? 'Copied!' : 'Copy'}</p>
                     </div>
                     <SyntaxHighlighter language='javascript' style={codeTheme} showLineNumbers={'True'} wrapLongLines={'True'}>
                         {codeString}
@@ -264,22 +268,36 @@ function Snippet({ snippet }) {
                             />
                         </div>
                         <div className="right-actions">
-                            <Button
-                                name={'Edit'}
-                                backgound={randomTagColorMemo}
-                                blob={'blob'}
-                                padding={'.6rem 1rem'}
-                                borderRad={'12px'}
-                                icon={edit}
-                            />
-                            <Button
-                                name={'Delete'}
-                                backgound={randomTagColorMemo}
-                                blob={'blob'}
-                                padding={'.6rem 1rem'}
-                                borderRad={'12px'}
-                                icon={trash}
-                            />
+                            {
+                                //show the edit button if the user is the owner of the snippet or if the user is an admin
+                                isAuth() && (isAuth().role === 0 || isAuth().role === 1) && isAuth()._id === postedBy._id && 
+                                    <Button
+                                        name={'Edit'}
+                                        backgound={randomTagColorMemo}
+                                        blob={'blob'}
+                                        padding={'.6rem 1rem'}
+                                        borderRad={'12px'}
+                                        icon={edit}
+                                    />
+                            }
+                            {
+                                //show the delete button if the user is the owner of the snippet
+                                isAuth() && isAuth().username === postedBy.username &&
+                                    <Button
+                                        name={'Delete'}
+                                        backgound={randomTagColorMemo}
+                                        blob={'blob'}
+                                        padding={'.6rem 1rem'}
+                                        borderRad={'12px'}
+                                        icon={trash}
+                                        click={
+                                            () => {
+                                                deleteSnippet(slug);
+                                            }
+                                        }
+                                    />
+                            }
+                            
                         </div>
                     </div>
                     <div className="snippet-tags">
@@ -312,6 +330,13 @@ const SnippetStyled = styled.div`
     border-radius: ${props => props.theme.borderRadiusSm};
     position: relative;
     z-index: 1;
+    .copy{
+        background: linear-gradient(180.94deg, #F56693 26.59%, #6FCF97 86.88%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+    }
     .snippet-con{
         padding: 2rem;
         .snippet-top{
@@ -355,12 +380,18 @@ const SnippetStyled = styled.div`
                     i{
                         transform: scale(1.1);
                         transition: all .3s ease-in-out;
-                        color: ${props => props.theme.colorGrey1};
+                        color: #CF57A3;
+                        opacity: 1;
                     }
                 }
                 i{
                     font-size: 1.3rem;
-                    color: ${props => props.theme.colorIcons};
+                    background: linear-gradient(180.94deg, #F56693 26.59%, #6FCF97 86.88%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                    opacity: 0.8;
                     transition: all .3s ease-in-out;
                 }
             }
@@ -410,9 +441,9 @@ const SnippetStyled = styled.div`
                     flex-wrap: wrap;
                     button{
                         transition: all .4s ease-in-out;
-                        margin-bottom: 1rem;
+                        margin-bottom: .5rem;
                         &:not(:last-child){
-                            margin-right: .8rem;
+                            margin-right: .5rem;
                         }
                         border: 1px solid ${props => props.theme.colorIcons};
                         &:hover{

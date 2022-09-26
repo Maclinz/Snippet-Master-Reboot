@@ -33,7 +33,9 @@ export const SnipetProvider = ({ children }) => {
         removeSnippet: false,
         allSnippetsAdmin: [
             {
-                postedBy: {},
+                postedBy: {
+                    username: "",
+                },
                 code: "",
             }
         ],

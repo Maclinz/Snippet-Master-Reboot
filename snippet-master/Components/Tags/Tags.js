@@ -80,6 +80,7 @@ const CategoryStyled = styled.div`
     .categories{
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         button{
             font-size: ${props => props.theme.fontSmall2} !important;
             &:not(:last-child){

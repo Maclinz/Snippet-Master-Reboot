@@ -28,6 +28,8 @@ function ModalFull({router}) {
     const { title, code,loading, error } = snippetValues;
     const token = getCookie('token')
 
+    console.log('snippetValues Dtatata', snippetValues);
+
 
     //state 
     const [checkedTag, setCheckedTag] = useState([]);
@@ -45,6 +47,7 @@ function ModalFull({router}) {
         //validate form
 
         snippetCreate(snippet, token).then(data => {
+            console.log('datad', data);
             //validations 
             if (data.error) {
                 setSnippetValues({ ...snippetValues, error: data.error, loading: false })
@@ -87,12 +90,15 @@ function ModalFull({router}) {
     }
 
     //handle tag toggle
-    const handleSnippetToggle = (tag) => () => {
+    const handleTagToggle = (tag) => () => {
         // add or remove tag from array
         const clickedTag = checkedTag.indexOf(tag);
         const newCheckedTag = [...checkedTag];
         if (clickedTag === -1) {
-            newCheckedTag.push(tag);
+            //the maximum number of tags is 7
+            if (newCheckedTag.length < 7) {
+                newCheckedTag.push(tag)
+            }
         } else {
             newCheckedTag.splice(clickedTag, 1);
         }
@@ -159,7 +165,7 @@ function ModalFull({router}) {
                                 }
                                 blob={'blob'}
                                 border={`1px solid ${theme.colorIcons}`}
-                                click={handleSnippetToggle(tag._id)}
+                                click={handleTagToggle(tag._id)}
                             />
                         })
                     }

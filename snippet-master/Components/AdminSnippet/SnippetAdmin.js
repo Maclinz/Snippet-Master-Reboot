@@ -77,7 +77,7 @@ function SnippetAdmin({ snippet }) {
                         <div className="user-text">
                             <h3 className="s-title2">
                                 {
-                                    <Link href={`/profile/${postedBy.username}`}>
+                                    <Link href={`/profile/${!postedBy.username ? '' : postedBy.username}`}>
                                         {postedBy.username}
                                     </Link>
                                 }

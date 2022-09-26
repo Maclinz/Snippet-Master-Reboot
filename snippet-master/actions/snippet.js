@@ -11,7 +11,7 @@ export const snippetCreate = (snippet, token) => {
     let snippetUrl;
 
     if (isAuth() && isAuth().role === 1) {
-        snippetUrl = `${baseUrl}/snippet/create-snippet`;
+        snippetUrl = `${baseUrl}/create-snippet`;
     }else if (isAuth() && isAuth().role === 0) {
         snippetUrl = `${baseUrl}/user/create-snippet`;
     }

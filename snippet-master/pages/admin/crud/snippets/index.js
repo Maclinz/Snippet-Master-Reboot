@@ -6,6 +6,7 @@ import { useSnippetContext } from '../../../../context/snippetContext'
 import SnippetAdmin from '../../../../Components/AdminSnippet/SnippetAdmin'
 import Loading from '../../../../Components/Loading/Loading'
 import ConfirmModal from '../../../../Components/ConfirmModal/ConfirmModal'
+import Tags from '../../../../Components/Tags/Tags'
 
 function index() {
     const { allSnippetsAdmin, loading, snippetModal } = useSnippetContext()
@@ -20,6 +21,9 @@ function index() {
                         {
                             loading && <Loading />
                         }
+                    </div>
+                    <div className="create-tags">
+                        <Tags />
                     </div>
                     <div className="all-snippets">
                         {!loading &&
@@ -40,6 +44,22 @@ const SnippetAdminStyled = styled.div`
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-gap: 2rem;
+    }
+
+    .create-tags{
+        padding: 2rem 1.5rem;
+        display: flex;
+        justify-content: center;
+        width: 80%;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        form{
+            justify-content: center;
+            .form-group{
+                width: initial;
+            }
+        }
     }
 `;
 
