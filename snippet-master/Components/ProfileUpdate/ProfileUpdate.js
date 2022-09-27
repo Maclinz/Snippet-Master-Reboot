@@ -1,0 +1,227 @@
+import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import styled from 'styled-components'
+import { getCookie, isAuth } from '../../actions/auth';
+import { getProfile, updateUser } from '../../actions/user';
+import { useSnippetContext } from '../../context/snippetContext';
+import { useThemeContext } from '../../context/themeContext';
+import Button from '../Button/Button';
+
+function ProfileUpdate() {
+
+    const theme = useThemeContext()
+    const {listSnippets, listAllSnippetsAdmin} = useSnippetContext()
+
+    const [values, setValues] = useState({
+        username: '',
+        name: '',
+        email: '',
+        password: '',
+        error: false,
+        success: false,
+        loading: false,
+        photo: '',
+        bio: '',
+        userData: '',
+
+    });
+
+    const token = getCookie('token');
+    const { username, name, email, password,bio, error, success, loading, photo, userData } = values;
+
+    //load user profile data
+    const initProfile = () => {
+        getProfile(token).then(data => {
+            console.log('Profile Data', data);
+            if (data.error) {
+                setValues({ ...values, error: data.error })
+            } else {
+                setValues({ ...values, username: data.username, name: data.name, email: data.email, bio: data.bio })
+            }
+        })
+    };
+
+    //handle form change 
+    const handleChange = name => e => {
+        //check if the name is photo then get the file else get the value
+        const value = name === 'photo' ? e.target.files[0] : e.target.value;
+        
+        let userFormData = new FormData();
+        userFormData.set(name, value);
+        setValues({ ...values, [name]: value, userData: userFormData, error: false, success: false })
+    }
+
+    //handle form submit
+    const handleSubmit = e => {
+        e.preventDefault();
+        //set loading to true 
+        setValues({ ...values, loading: true });
+
+        //update user
+        updateUser(token, userData).then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error, loading: false })
+            } else {
+                setValues({ ...values, username: data.username, name: data.name, email: data.email, bio: data.bio, success: true, loading: false })
+            }
+            
+            if(!data.error){
+                listSnippets()
+                listAllSnippetsAdmin()
+            }
+        })
+    }
+
+    //get user info
+    useEffect(() => {
+        //init profile is user is logged in
+        if (isAuth()) {
+            initProfile();
+        }
+    }, []);
+
+    //form for user infromation
+    const profileUpdateForm = () => {
+        return <form className='user-from'>
+            <div className="file-uploader">
+                <label htmlFor="file-upload" className="file-upload">
+                    Profile Photo
+                </label>
+                <input id="file-upload" 
+                    type="file" accept="image/*" 
+                    className='img-upload'  
+                    onChange={handleChange('photo')}
+                    hidden
+                />
+            </div>
+            <div className="names">
+                <div className="input-controller">
+                    <label htmlFor="username">Username</label>
+                    <input type="text"
+                        name='username'
+                        value={username}
+                        onChange={handleChange('username')}
+                    />
+                </div>
+                <div className="input-controller">
+                    <label htmlFor="name">Name</label>
+                    <input type="text"
+                        name='name'
+                        value={name}
+                        onChange={handleChange('name')}
+                    />
+                </div>
+            </div>
+            <div className="input-controller">
+                <label htmlFor="email">Email</label>
+                <input type="email" 
+                    name='email' 
+                    value={email} 
+                    onChange={handleChange('email')}
+                    autoComplete='off'
+                />
+            </div>
+            <div className="input-controller">
+                <label htmlFor="email">Password</label>
+                <input type="password" 
+                    name='password' 
+                    value={password} 
+                    onChange={handleChange('password')}
+                />
+            </div>
+            <div className="input-controller">
+                <label htmlFor="bio">Bio</label>
+                <textarea value={bio} 
+                    name="bio" id="" 
+                    cols="30" rows="6"
+                    onChange={handleChange('bio')}
+                    >
+
+                    </textarea>
+            </div>
+            <div className="submit-container">
+                <Button
+                    type='submit'
+                    click={handleSubmit}
+                    name='Save Changes'
+                    blob={'blob'}
+                    padding={'.8rem 1rem'}
+                    borderRad={'12px'}
+                    backgound={'#6FCF97'}
+                />
+            </div>
+        </form>
+    }
+
+    return (
+        <ProfileUpdateStyled theme={theme}>
+            <div className="form-con">
+                {
+                    profileUpdateForm()
+                }
+            </div>
+        </ProfileUpdateStyled>
+    )
+}
+
+const ProfileUpdateStyled = styled.div`
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .file-uploader{
+        margin-bottom: 1.5rem;
+        label{
+            display: inline-block;
+            padding: .8rem 1.2rem;
+            border-radius: ${props => props.theme.borderRadiusSm};
+            border: 2px solid ${props => props.theme.colorPrimaryGreen};
+            cursor: pointer;
+        };
+    }
+    .submit-container{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .form-con{
+        background-color: ${props => props.theme.colorBg2};
+        width: 70%;
+        border-radius: ${props => props.theme.borderRadiusSm};
+        .user-from{
+            padding: 2rem 3rem;
+            .names{
+                display: flex;
+                justify-content: space-between;
+                gap: 1.5rem;
+            }
+            .input-controller{
+                margin-bottom: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                label{
+                    margin-bottom: .5rem;
+                    font-weight: 500;
+                }
+                textarea{
+                    resize: none;
+                    width: 100%;
+                }
+                textarea, input{
+                    padding: .8rem 1rem;
+                    border-radius: ${props => props.theme.borderRadiusSm};
+                    border: 1px solid ${props => props.theme.colorIcons};
+                    outline: none;
+                    color: ${props => props.theme.colorWhite};
+                    &:focus{
+                        border: 1px solid ${props => props.theme.colorPrimaryGreen};
+                    }
+                }
+            }
+        }
+    }
+`;
+
+export default ProfileUpdate

@@ -3,7 +3,7 @@ const {requireSignIn, authMiddleware, adminMiddleware } = require('../controller
 const { read, publicProfile, update, userPhoto } = require('../controllers/user');
 const router = exppress.Router();
 
-router.get('/profile', requireSignIn, authMiddleware , read)
+router.get('/user/profile', requireSignIn, authMiddleware , read)
 router.get('/user/:username' , publicProfile)
 router.put('/user/update', requireSignIn, authMiddleware, update)
 //photo

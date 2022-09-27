@@ -61,6 +61,13 @@ exports.update = (req, res) => {
         user = _.extend(user, fields);
         user.updated = Date.now();
 
+        //validate password
+        if(fields.password && fields.password.length < 6) {
+            return res.status(400).json({
+                error: 'Password should be min 6 characters long'
+            })
+        }
+
         if(files.photo) {
             if(files.photo.size > 1000000) {
                 //error if photo is greater than 1mb
@@ -68,7 +75,10 @@ exports.update = (req, res) => {
                     error: 'Image should be less than 1mb in size'
                 })
             }
-            user.photo.data = fs.readFileSync(files.photo.path);
+            user.photo.data = fs.readFileSync(
+                //get file path
+                files.photo.filepath, "utf8"
+            );
             user.photo.contentType = files.photo.type;
         }
 

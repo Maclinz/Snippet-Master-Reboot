@@ -11,7 +11,7 @@ const pnaleMenu = [
     {
         id: 2,
         name: 'Settings',
-        url: '/profile',
+        url: '/profile/update',
         icon:gear,
     },
     {

@@ -10,6 +10,7 @@ import { down } from '../../utils/Icons'
 import { userPublicProfile } from '../../actions/user'
 import moment from 'moment'
 import Private from '../../Components/auth/Private'
+import Link from 'next/link'
 
 function UserProfile() {
     const theme = useThemeContext()
@@ -18,11 +19,9 @@ function UserProfile() {
         <Layout>
             <MainContent >
                 <Private>
-                    <ProfileStyled theme={theme}>
-                        <h1>
-                            Profile
-                        </h1>
-                    </ProfileStyled>
+                <ProfileStyled theme={theme}>
+                    <Link href="/profile/update">Update Profile</Link>
+                </ProfileStyled>
                 </Private>
             </MainContent>
         </Layout>

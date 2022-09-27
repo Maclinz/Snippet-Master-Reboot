@@ -5,7 +5,7 @@ const bottomMenu = [
     {
         id: 1,
         name: 'Settings',
-        url: `${isAuth() ? '/profile' : '/login'}`,
+        url: `${isAuth() ? '/profile/update' : '/login'}`,
         icon: gear
     },
     {

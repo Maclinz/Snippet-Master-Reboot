@@ -20,6 +20,7 @@ function Profile({ user, snippets }) {
                     <div className="profile-container">
                         <div className="profile-content">
                             <div className="profile-header">
+                                <div className="image-con"></div>
                                 <h5>
                                     {user.name}
                                 </h5>
