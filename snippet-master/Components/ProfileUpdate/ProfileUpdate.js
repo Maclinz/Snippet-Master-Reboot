@@ -99,6 +99,7 @@ function ProfileUpdate() {
                 <div className="input-controller">
                     <label htmlFor="username">Username</label>
                     <input type="text"
+                        id='username'
                         name='username'
                         value={username}
                         onChange={handleChange('username')}
@@ -107,6 +108,7 @@ function ProfileUpdate() {
                 <div className="input-controller">
                     <label htmlFor="name">Name</label>
                     <input type="text"
+                        id='name'
                         name='name'
                         value={name}
                         onChange={handleChange('name')}
@@ -116,6 +118,7 @@ function ProfileUpdate() {
             <div className="input-controller">
                 <label htmlFor="email">Email</label>
                 <input type="email" 
+                    id='email'
                     name='email' 
                     value={email} 
                     onChange={handleChange('email')}
@@ -123,8 +126,9 @@ function ProfileUpdate() {
                 />
             </div>
             <div className="input-controller">
-                <label htmlFor="email">Password</label>
+                <label htmlFor="password">Password</label>
                 <input type="password" 
+                    id='password'
                     name='password' 
                     value={password} 
                     onChange={handleChange('password')}
@@ -133,7 +137,8 @@ function ProfileUpdate() {
             <div className="input-controller">
                 <label htmlFor="bio">Bio</label>
                 <textarea value={bio} 
-                    name="bio" id="" 
+                    id='bio'
+                    name="bio"
                     cols="30" rows="6"
                     onChange={handleChange('bio')}
                     >
