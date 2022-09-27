@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { getCookie } from "../actions/auth";
-import { listSnippetsandTags, searchSnippets, listAllSnippets, snippetDelete } from '../actions/snippet'
+import { listSnippetsandTags, searchSnippets, listAllSnippets, snippetDelete, singleSnippet, bookmarkSnippet } from '../actions/snippet'
 import reducer from '../reducers/snippet_reducer'
-import { GET_SNIPPETS_SUCCESS,GET_ADMIN_SNIPPETS_SUCCESS,GET_SNIPPETS_ERROR, GET_SNIPPETS_BEGIN, LOAD_MORE, SEARCHING, INPUT_CHANGE, RELOAD_SNIPPETS, DELETE_SNIPPET, SHOW_SNIPPET_MODAL, HIDE_SNIPPET_MODAL, REMOVE_SNIPPET } from "../utils/actions";
+import { GET_SNIPPETS_SUCCESS,GET_ADMIN_SNIPPETS_SUCCESS,GET_SNIPPETS_ERROR, GET_SNIPPETS_BEGIN, LOAD_MORE, SEARCHING, INPUT_CHANGE, RELOAD_SNIPPETS, DELETE_SNIPPET, SHOW_SNIPPET_MODAL, HIDE_SNIPPET_MODAL, REMOVE_SNIPPET, BOOKMARK_SNIPPET } from "../utils/actions";
 
 const SnippeContext = React.createContext();
 
@@ -31,6 +31,8 @@ export const SnipetProvider = ({ children }) => {
         loadedSnippets: [],
         snippetModal: false,
         removeSnippet: false,
+        bookmarkedSnippets: [],
+        bookMarked: false,
         allSnippetsAdmin: [
             {
                 postedBy: {
@@ -123,6 +125,20 @@ export const SnipetProvider = ({ children }) => {
     }
 
 
+    //bookmark snippet
+    const snippetBookmark = (slug) => {
+        bookmarkSnippet(slug, token).then(data => {
+            console.log('Bookmarkedddd Snippet', data);
+            dispatch({
+                type: BOOKMARK_SNIPPET,
+                payload: data
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+
+    }
+
     //load more snippets
     const loadMore = () => {
         let skip = state.skip
@@ -200,6 +216,7 @@ export const SnipetProvider = ({ children }) => {
             deleteSnippet,
             listAllSnippetsAdmin,
             hideSnippetModal,
+            snippetBookmark
             }}>
                 {children}
         </SnippeContext.Provider>

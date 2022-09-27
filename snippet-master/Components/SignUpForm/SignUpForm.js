@@ -7,6 +7,7 @@ import { useUserContext, useUserUpdateContext } from '../../context/context';
 import { isAuth, signup } from '../../actions/auth';
 import Router from 'next/router';
 import { gsap } from 'gsap';
+import Link from 'next/link';
 
 
 function SignUpForm() {
@@ -117,6 +118,11 @@ function SignUpForm() {
                         value={password}
                     />
                 </div>
+                <p className='reg-link'>
+                    <Link href={"/login"}>
+                        Already have an account?
+                    </Link>
+                </p>
                 <Button 
                     name={'Register'} 
                     type={'submit'} 
@@ -139,7 +145,7 @@ const SignUpFormStyled = styled.form`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30%;
+    width: 35%;
     box-shadow: ${props => props.theme.shadow3};
     border-radius: ${props => props.theme.borderRadiusMd2};
     color: ${props => props.theme.colorGrey0};

@@ -67,6 +67,9 @@ const MainContentStyled = styled.div`
     grid-template-columns: repeat(2, 1fr);
     padding: 6.1rem 1.5rem;
     grid-gap: ${props => props.theme.gridGap};
+    @media screen and (max-width: 1260px){
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
 `;

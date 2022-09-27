@@ -102,3 +102,34 @@ export const searchSnippets = async (params) => {
             console.log(err)
         })
 }
+
+//get single snippet
+export const singleSnippet = async (slug) => {
+    return await fetch(`${baseUrl}/snippet/${slug}`, {
+        method: 'GET'
+    })
+        .then((res) => {
+            return res.json()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+//bookmark snippet
+export const bookmarkSnippet = (slug, token) => {
+    return fetch(`${baseUrl}/snippet/bookmark/${slug}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then((res) => {
+            return res.json()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}

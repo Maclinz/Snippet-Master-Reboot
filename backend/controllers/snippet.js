@@ -219,3 +219,15 @@ exports.searchSnippets = (req, res) => {
         }).populate('tags', '_id name slug').populate('postedBy', '_id name username').select('_id title slug code mtitle postedBy createdAt updatedAt');
     }
 }
+
+//bookmark snippet
+exports.bookmarkUserSnippet = (req, res) => {
+    SnippetSchema.findByIdAndUpdate(req.body.snippetId, {$push: {bookmarks: req.auth._id}}, {new: true}).exec((err, result) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json(result);
+    })
+};

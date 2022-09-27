@@ -157,7 +157,7 @@ function ModalFull({router}) {
                                 selector={'btn-login'}
                                 padding={'.5rem 2rem'}
                                 borderRad={'2rem'}
-                                fs={'1.2rem'}
+                                //fs={'1.2rem'}
                                 key={tag._id}
                                 backgound={
                                     //change color of tag if it is checked

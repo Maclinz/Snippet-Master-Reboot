@@ -159,6 +159,14 @@ const SidebarStyled = styled.div`
             font-size: ${props => props.theme.fontSmall};
             text-align: center;
             margin: .5rem 0;
+            a{
+                background: ${props => props.theme.colorPrimaryGreenGrad};
+                color: transparent;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                transition: all .5s ease-in-out;
+                font-weight: 600;
+            }
         }
     }
 `;

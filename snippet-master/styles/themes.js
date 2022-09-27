@@ -30,6 +30,7 @@ const themes = [
         colorGrey6: '#12181b',
         colorWhite: '#fff',
         colorPrimaryGreen: '#6FCF97',
+        colorPrimaryGreenGrad: 'linear-gradient(91deg,#F56693 0,#6FCF97 90.46%)',
         buttonGradient1: 'linear-gradient(110.42deg, rgba(107, 190, 146, 0.1) 29.2%, rgba(245, 102, 146, 0.1) 63.56%)',
         buttonGradient2: 'linear-gradient(110.42deg, rgba(25, 151, 222, 0.1) 29.2%, rgba(168, 85, 247, 0.1) 63.56%)',
         buttonGradient3: 'linear-gradient(110.42deg, rgba(25, 151, 222, 0.1) 29.2%, rgba(168, 85, 247, 0.1) 63.56%)',

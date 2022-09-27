@@ -36,7 +36,7 @@ import { useSnippetContext } from '../../context/snippetContext';
 function Snippet({ snippet }) {
     const theme = useThemeContext();
 
-    const { deleteSnippet } = useSnippetContext()
+    const { deleteSnippet, snippetBookmark } = useSnippetContext()
     
     const {code, title, tags, postedBy, slug} = snippet;
 
@@ -177,6 +177,10 @@ function Snippet({ snippet }) {
     //copied state
     const [copied, setCopied] = useState(false);
 
+    //bookmark state
+    const [bookmarked, setBookmarked] = useState(false);
+
+
     const changeCodeTheme = (e) => {
         //set the code theme to the current value
         setCodeTheme(codeThemes[options.findIndex(option => option.value === e.value)]);
@@ -211,6 +215,7 @@ function Snippet({ snippet }) {
     }, []);
     
 
+
     return (
         <SnippetStyled theme={theme} rand={randomTagColorMemo}>
             <div className="snippet-con">
@@ -229,6 +234,7 @@ function Snippet({ snippet }) {
                         </div>
                     </div>
                     <h3 className="s-title3">{title}</h3>
+                    {/*<button onClick={() => snippetBookmark(slug)}>BookMArks</button>
                     {/*<div className="language">
                         <p>Javascript</p>
                     </div>*/}
@@ -351,10 +357,22 @@ const SnippetStyled = styled.div`
                 }
                 .user-text{
                     margin-left:1rem ;
+                    h3{
+                        color: ${props => props.theme.colorPrimaryGreen};
+                        &:hover{
+                            color: ${props => props.theme.colorPrimary};
+                            text-decoration: underline;
+                        }
+                    }
                 }
             }
             .s-title3{
                 margin: 1rem 0;
+                background: linear-gradient(91deg,#F56693 0,#6FCF97 15.46%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-fill-color: transparent;
             }
         }
         .snippet-mid{

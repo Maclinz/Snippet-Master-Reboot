@@ -20,8 +20,6 @@ function Snippets() {
     //filter out the snippets that are not created by the user
     const userSnippets = snippets.filter(snippet => snippet.postedBy._id === isAuth()._id)
 
-    console.log('userSnippets Creat', userSnippets);
-
     return (
         <Layout>
             <MainContent >
@@ -67,6 +65,9 @@ const AllSnippetsStyed = styled.div`
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 2rem;
+    @media screen and (max-width: 1260px){
+      grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 export default Snippets

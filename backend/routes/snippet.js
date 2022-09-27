@@ -1,6 +1,6 @@
 const exppress = require('express');
 const { requireSignIn, adminMiddleware, authMiddleware } = require('../controllers/auth');
-const { create, listSnippets, listSnippetsandTags, readSnippet, removeSnippet, updateSnippet, searchSnippets} = require('../controllers/snippet');
+const { create, listSnippets, listSnippetsandTags, readSnippet, removeSnippet, updateSnippet, searchSnippets,bookmarkUserSnippet} = require('../controllers/snippet');
 const { runValidation } = require('../validations');
 const router = exppress.Router();
 
@@ -13,6 +13,9 @@ router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
     .get('/snippets/search', searchSnippets)
     //auth user crud
     .post('/user/create-snippet', requireSignIn, authMiddleware, create)
+    //bookmark snippet
+    .post('/snippet/bookmark/:slug', requireSignIn, authMiddleware, bookmarkUserSnippet)
+    
 
 
 

@@ -70,6 +70,7 @@ const ProfileStyled = styled.div`
             align-items: center;
             h5{
                 font-size: 2rem;
+                color: ${props => props.theme.colorPrimaryGreen};
             }
         }
     }
@@ -79,13 +80,16 @@ const ProfileStyled = styled.div`
             text-align: center;
             margin-bottom: 2rem;
             span{
-                color: ${props => props.theme.colorPrimary};
+                color: ${props => props.theme.colorPrimaryGreen};
             }
         }
         .user-snippets{
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-gap: 2rem;
+            @media screen and (max-width: 1260px){
+                grid-template-columns: repeat(1, 1fr);
+            }
         }
     }
 `;
