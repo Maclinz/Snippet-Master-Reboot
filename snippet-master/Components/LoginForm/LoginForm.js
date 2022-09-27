@@ -48,6 +48,8 @@ function LoginForm() {
                     email: '',
                     password: '',
                 })
+
+                Router.reload()
             }
         })
     }

@@ -18,19 +18,19 @@ const menu = [
     {
         id: 5,
         name: 'Top Creators',
-        url: '/top-creators',
+        url: `${isAuth() ? '/top-creators' : '/login'}`,
         icon: users
     },
     {
         id: 2,
         name: 'Bookmarks',
-        url: '/bookmarks',
+        url: `${isAuth() ? '/bookmarks' : '/login'}`,
         icon: bookmark
     },
     {
         id: 3,
         name: 'My Snippets',
-        url: `/snippets`,
+        url: `${isAuth() ? '/snippets': '/login'}`,
         icon: box
     },
 ]

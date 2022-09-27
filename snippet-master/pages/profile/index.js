@@ -9,6 +9,7 @@ import Button from '../../Components/Button/Button'
 import { down } from '../../utils/Icons'
 import { userPublicProfile } from '../../actions/user'
 import moment from 'moment'
+import Private from '../../Components/auth/Private'
 
 function UserProfile() {
     const theme = useThemeContext()
@@ -16,11 +17,13 @@ function UserProfile() {
     return (
         <Layout>
             <MainContent >
-                <ProfileStyled theme={theme}>
-                    <h1>
-                        Profile
-                    </h1>
-                </ProfileStyled>
+                <Private>
+                    <ProfileStyled theme={theme}>
+                        <h1>
+                            Profile
+                        </h1>
+                    </ProfileStyled>
+                </Private>
             </MainContent>
         </Layout>
     )

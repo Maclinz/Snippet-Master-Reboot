@@ -9,6 +9,7 @@ import Button from '../../Components/Button/Button'
 import { down } from '../../utils/Icons'
 import Loading from '../../Components/Loading/Loading'
 import { isAuth } from '../../actions/auth'
+import Private from '../../Components/auth/Private'
 
 function Snippets() {
     const {snippets, loading,searchState, loadMore} = useSnippetContext()
@@ -24,6 +25,7 @@ function Snippets() {
     return (
         <Layout>
             <MainContent >
+                <Private>
                 <div className="main-title">
                     <h1>Filters Goes Here...</h1>
                 </div>
@@ -54,6 +56,7 @@ function Snippets() {
                         click={loadMore}
                     />
                 </div>}
+                </Private>
             </MainContent>
         </Layout>
     )

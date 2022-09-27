@@ -237,10 +237,10 @@ const ModalFullStyled = styled.div`
         display: flex;
         flex-wrap: wrap;
         button{
-            margin-bottom: .5rem;
-            margin-top: .5rem;
+            margin-bottom: .4rem;
+            margin-top: .4rem;
             &:not(:last-child){
-                margin-right: .5rem;
+                margin-right: .4rem;
             }
         }
     }

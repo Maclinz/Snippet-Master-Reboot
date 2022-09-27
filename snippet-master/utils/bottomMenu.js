@@ -1,10 +1,11 @@
+import { isAuth } from "../actions/auth"
 import { gear, help } from "./Icons"
 
 const bottomMenu = [
     {
         id: 1,
         name: 'Settings',
-        url: '/profile',
+        url: `${isAuth() ? '/profile' : '/login'}`,
         icon: gear
     },
     {

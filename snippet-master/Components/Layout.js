@@ -51,6 +51,7 @@ function Layout({children}) {
                                         signout(() => {
                                             Router.replace('/')
                                         })
+                                        Router.reload()
                                     }
                                 }}>
                                 {item.icon}

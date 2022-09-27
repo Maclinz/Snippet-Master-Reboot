@@ -7,32 +7,35 @@ import SnippetAdmin from '../../../../Components/AdminSnippet/SnippetAdmin'
 import Loading from '../../../../Components/Loading/Loading'
 import ConfirmModal from '../../../../Components/ConfirmModal/ConfirmModal'
 import Tags from '../../../../Components/Tags/Tags'
+import Admin from '../../../../Components/auth/Admin'
 
 function index() {
     const { allSnippetsAdmin, loading, snippetModal } = useSnippetContext()
     return (
         <Layout>
             <MainContent>
-                <SnippetAdminStyled>
-                    {
-                        snippetModal && <ConfirmModal />
-                    }
-                    <div className="loading-con">
+                <Admin>
+                    <SnippetAdminStyled>
                         {
-                            loading && <Loading />
+                            snippetModal && <ConfirmModal />
                         }
-                    </div>
-                    <div className="create-tags">
-                        <Tags />
-                    </div>
-                    <div className="all-snippets">
-                        {!loading &&
-                            allSnippetsAdmin.map((snippet) => {
-                                return <SnippetAdmin key={snippet._id} snippet={snippet} />
-                            })
-                        }
-                    </div>
-                </SnippetAdminStyled>
+                        <div className="loading-con">
+                            {
+                                loading && <Loading />
+                            }
+                        </div>
+                        <div className="create-tags">
+                            <Tags />
+                        </div>
+                        <div className="all-snippets">
+                            {!loading &&
+                                allSnippetsAdmin.map((snippet) => {
+                                    return <SnippetAdmin key={snippet._id} snippet={snippet} />
+                                })
+                            }
+                        </div>
+                    </SnippetAdminStyled>
+                </Admin>
             </MainContent>
         </Layout>
     )
