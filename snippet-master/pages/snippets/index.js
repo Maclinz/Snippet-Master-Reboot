@@ -63,7 +63,7 @@ function Snippets() {
 const AllSnippetsStyed = styled.div`
     padding: 1.5rem;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-gap: 2rem;
     @media screen and (max-width: 1260px){
         grid-template-columns: repeat(1, 1fr);

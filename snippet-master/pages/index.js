@@ -64,7 +64,7 @@ const MainContentStyled = styled.div`
   }
   .snippets-con{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     padding: 6.1rem 1.5rem;
     grid-gap: ${props => props.theme.gridGap};
     transition: all .4s ease-in-out;

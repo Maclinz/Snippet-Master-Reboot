@@ -45,7 +45,7 @@ const SnippetAdminStyled = styled.div`
     .all-snippets{
         padding: 2rem 1.5rem;
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         grid-gap: 2rem;
     }
 

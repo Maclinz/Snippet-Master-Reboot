@@ -372,6 +372,9 @@ const SnippetStyled = styled.div`
     z-index: 1;
     grid-column: ${props => props.expanded ? 'span 2' : 'span 1'};
     transition: all .4s ease-in-out;
+    @media screen and (max-width: 1260px){
+        grid-column: initial;
+    }
     .copy{
         background: linear-gradient(180.94deg, #F56693 26.59%, #6FCF97 86.88%);
         -webkit-background-clip: text;
