@@ -216,7 +216,7 @@ exports.searchSnippets = (req, res) => {
                 });
             }
             res.json(snippets);
-        }).populate('tags', '_id name slug').populate('postedBy', '_id name username').select('_id title slug code mtitle postedBy createdAt updatedAt');
+        }).populate('tags', '_id name slug').populate('postedBy', '_id name username').select('_id title tags slug code mtitle postedBy createdAt updatedAt');
     }
 }
 

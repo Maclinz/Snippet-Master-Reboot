@@ -38,6 +38,18 @@ const userSchema = new mongoose.Schema({
     about: {
         type: String,
     },
+    github: {
+        type: String,
+        maxlength: 100,
+    },
+    linkedin: {
+        type: String,
+        maxlength: 100,
+    },
+    mail: {
+        type: String,
+        maxlength: 100,
+    },
     role: {
         type: Number,
         default: 0,

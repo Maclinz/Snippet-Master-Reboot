@@ -6,6 +6,7 @@ import { getCookie, isAuth } from '../../actions/auth';
 import { getProfile, updateUser } from '../../actions/user';
 import { useSnippetContext } from '../../context/snippetContext';
 import { useThemeContext } from '../../context/themeContext';
+import { githubIcon, linked, mailIcon } from '../../utils/Icons';
 import Button from '../Button/Button';
 
 function ProfileUpdate() {
@@ -22,14 +23,17 @@ function ProfileUpdate() {
         success: false,
         loading: false,
         photo: '',
-        bio: '',
+        about: '',
         userData: '',
-
+        github: '',
+        linkedin: '',
+        mail: '',
     });
 
     const token = getCookie('token');
-    const { username, name, email, password,bio, error, success, loading, photo, userData } = values;
+    const { username, name, email, password,about, github,linkedin, mail, error, success, loading, photo, userData } = values;
 
+    console.log('My vAlues', values)
     //load user profile data
     const initProfile = () => {
         getProfile(token).then(data => {
@@ -37,7 +41,16 @@ function ProfileUpdate() {
             if (data.error) {
                 setValues({ ...values, error: data.error })
             } else {
-                setValues({ ...values, username: data.username, name: data.name, email: data.email, bio: data.bio })
+                setValues({ 
+                    ...values, 
+                    username: data.username, 
+                    name: data.name, 
+                    email: data.email, 
+                    about: data.about, 
+                    github: data.github,
+                    linkedin: data.linkedin,
+                    mail: data.mail,
+                })
             }
         })
     };
@@ -63,7 +76,18 @@ function ProfileUpdate() {
             if (data.error) {
                 setValues({ ...values, error: data.error, loading: false })
             } else {
-                setValues({ ...values, username: data.username, name: data.name, email: data.email, bio: data.bio, success: true, loading: false })
+                setValues({ 
+                    ...values, 
+                    username: data.username, 
+                    name: data.name, 
+                    email: data.email, 
+                    about: data.about, 
+                    success: true, 
+                    github: data.github,
+                    linkedin: data.linkedin,
+                    mail: data.mail,
+                    loading: false 
+                })
             }
             
             if(!data.error){
@@ -81,12 +105,14 @@ function ProfileUpdate() {
         }
     }, []);
 
+    console.log('My vAlues 22222', values)
+
     //form for user infromation
     const profileUpdateForm = () => {
         return <form className='user-from'>
             <div className="file-uploader">
                 <label htmlFor="file-upload" className="file-upload">
-                    Profile Photo
+                    Photo
                 </label>
                 <input id="file-upload" 
                     type="file" accept="image/*" 
@@ -94,6 +120,40 @@ function ProfileUpdate() {
                     onChange={handleChange('photo')}
                     hidden
                 />
+                <div className="input-controller">
+                    <span className="icon">
+                        {githubIcon}
+                    </span>
+                    <input type="text"
+                        id='github'
+                        name='github'
+                        value={github}
+                        onChange={handleChange('github')}
+                    />
+                </div>
+                <div className="input-controller">
+                    <span className="icon">
+                        {linked}
+                    </span>
+                    <input type="text"
+                        id='linkedin'
+                        name='linkedin'
+                        value={linkedin}
+                        onChange={handleChange('linkedin')}
+                    />
+                </div>
+                <div className="input-controller">
+                    <span className="icon">
+                        {mailIcon}
+                    </span>
+                    <input type="text"
+                        id='mail'
+                        name='mail'
+                        value={mail}
+                        onChange={handleChange('mail')}
+                    />
+                </div>
+                
             </div>
             <div className="names">
                 <div className="input-controller">
@@ -135,12 +195,12 @@ function ProfileUpdate() {
                 />
             </div>
             <div className="input-controller">
-                <label htmlFor="bio">Bio</label>
-                <textarea value={bio} 
-                    id='bio'
-                    name="bio"
+                <label htmlFor="about">Bio</label>
+                <textarea value={about} 
+                    id='about'
+                    name="about"
                     cols="30" rows="6"
-                    onChange={handleChange('bio')}
+                    onChange={handleChange('about')}
                     >
 
                     </textarea>
@@ -178,12 +238,30 @@ const ProfileUpdateStyled = styled.div`
     align-items: center;
     .file-uploader{
         margin-bottom: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        .input-controller{
+            position: relative;
+            .icon{
+                position: absolute;
+                top: 50%;
+                left: 1rem;
+                transform: translateY(-50%);
+                i{
+                    font-size: 1.5rem;
+                }
+            }
+            input{
+                padding-left: 3.2rem !important;
+            }
+        }
         label{
             display: inline-block;
             padding: .8rem 1.2rem;
             border-radius: ${props => props.theme.borderRadiusSm};
             border: 2px solid ${props => props.theme.colorPrimaryGreen};
             cursor: pointer;
+            align-self: flex-start;
         };
     }
     .submit-container{

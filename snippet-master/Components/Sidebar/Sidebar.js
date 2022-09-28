@@ -166,6 +166,7 @@ const SidebarStyled = styled.div`
                 -webkit-text-fill-color: transparent;
                 transition: all .5s ease-in-out;
                 font-weight: 600;
+                font-size: 15px;
             }
         }
     }

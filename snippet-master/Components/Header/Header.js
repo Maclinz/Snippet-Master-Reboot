@@ -196,7 +196,10 @@ const HeaderStyled = styled.header`
         h4{
             font-size: ${props => props.theme.fH4};
             margin-left: .5rem;
-            color: ${props => props.theme.colorGrey0};
+            background: ${props => props.theme.name === 'default' ? 'transparent' : props.theme.colorGradient};
+            -webkit-background-clip: ${props => props.theme.name === 'default' ? 'none' : 'text'};
+            -webkit-text-fill-color: ${props => props.theme.name === 'default' ? props.theme.colorGrey0 : 'transparent'};
+
         }
     }
 

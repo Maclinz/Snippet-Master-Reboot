@@ -6,9 +6,11 @@ import Snippet from '../../Components/Snippet/Snippet'
 import styled from 'styled-components'
 import { useThemeContext } from '../../context/themeContext'
 import Button from '../../Components/Button/Button'
-import { down } from '../../utils/Icons'
+import { down, githubIcon, linked, mailIcon } from '../../utils/Icons'
 import { userPublicProfile } from '../../actions/user'
 import moment from 'moment'
+import Link from 'next/link'
+import  Router from 'next/router'
 
 function Profile({ user, snippets }) {
     const theme = useThemeContext()
@@ -27,6 +29,38 @@ function Profile({ user, snippets }) {
                                 <p>
                                     Joined {moment(user.createdAt).fromNow()}
                                 </p>
+                            </div>
+                            <div className="profile-body">
+                                <div className="left-profile">
+                                    <h5>
+                                        {user.name}
+                                    </h5>
+                                    <p>
+                                        {!user.about ? 'No bio, There is nothing to see here.' : user.about}
+                                    </p>
+                                </div>
+                                <div className="right-profile">
+                                    <div className="socials">
+                                        <div className="social" onClick={() => Router.push(`${!user.github ? '/' : user.github}`)}>
+                                            <span>
+                                                {githubIcon}
+                                            </span>
+                                            <Link href={!user.github ? '/' : user.github}>GitHub</Link>
+                                        </div>
+                                        <div className="social" onClick={() => Router.push(`${!user.linkedin ? '/' : user.linkedin}`)}>
+                                            <span>
+                                                {linked}
+                                            </span>
+                                            <Link href={!user.linkedin ? '/' : user.linkedin}>LinkedIn</Link>
+                                        </div>
+                                        <div className="social" onClick={() => Router.push(`${!user.mail ? '/' : user.linkedin}`)}>
+                                            <span>
+                                                {mailIcon}
+                                            </span>
+                                            <Link href={!user.mail ? '/' : user.linkedin}>Email</Link>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,6 +90,10 @@ Profile.getInitialProps = async ({ query }) => {
 
 const ProfileStyled = styled.div`
     padding: 1.5rem;
+    .profile-content{
+        width: 100%;
+        margin: 0 auto;
+    }
     .profile-container{
         height: 40vh;
         background: ${props => props.theme.colorBg2};
@@ -89,6 +127,39 @@ const ProfileStyled = styled.div`
             grid-gap: 2rem;
             @media screen and (max-width: 1260px){
                 grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    }
+
+    .profile-body{
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2.5rem;
+        .left-profile{
+            width: 50%;
+            h5{
+                font-size: 1.4rem;
+                margin-bottom: .5rem;
+            }
+        }
+        .socials{
+            background-color: ${props => props.theme.colorBg};
+            padding: 1rem 4rem;
+            display: flex;
+            flex-direction: column;
+            border-radius: ${props => props.theme.borderRadiusSm};
+            .social{
+                display: grid;
+                grid-template-columns: 35px 1fr;
+                padding-right: 5rem;
+                cursor: pointer;
+                i{
+                    font-size: 1.5rem;
+                }
+                justify-content: space-evenly;
+                margin: .8rem 0;
             }
         }
     }
