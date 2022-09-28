@@ -51,7 +51,9 @@ function Layout({children}) {
                                         signout(() => {
                                             Router.replace('/')
                                         })
+                                        location.reload();
                                     }
+                                    
                                 }}>
                                 {item.icon}
                                 <Link href={''}>{item.name}</Link>

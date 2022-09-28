@@ -14,6 +14,7 @@ import { getTags } from '../../actions/tags';
 import { useSnippetContext } from '../../context/snippetContext';
 import { useTagContext } from '../../context/tagsContext';
 import { snippetCreate } from '../../actions/snippet';
+import Select from 'react-select'
 
 
 function ModalFull({router}) {
@@ -30,9 +31,71 @@ function ModalFull({router}) {
 
     console.log('snippetValues Dtatata', snippetValues);
 
-
     //state 
     const [checkedTag, setCheckedTag] = useState([]);
+
+    /*const codeLanguages = [
+        'javascript',
+        'css',
+        'html',
+        'profile',
+        'java',
+        'c',
+        'c++',
+        'c#',
+        'php',
+        'ruby',
+        'go',
+        'swift',
+        'kotlin',
+        'rust',
+        'scala',
+        'bash',
+        'sql',
+        'typescript',
+        'json',
+        'yaml',
+        'markdown',
+        'react',
+        'vue',
+        'angular',
+        'Elm',
+    ]
+
+    const languages = [
+        { value: 'javascript', label: 'javascript' },
+        { value: 'css', label: 'css' },
+        { value: 'html', label: 'html' },
+        { value: 'profile', label: 'profile' },
+        { value: 'java', label: 'java' },
+        { value: 'c', label: 'c' },
+        { value: 'c++', label: 'c++' },
+        { value: 'c#', label: 'c#' },
+        { value: 'php', label: 'php' },
+        { value: 'ruby', label: 'ruby' },
+        { value: 'go', label: 'go' },
+        { value: 'swift', label: 'swift' },
+        { value: 'kotlin', label: 'kotlin' },
+        { value: 'rust', label: 'rust' },
+        { value: 'scala', label: 'scala' },
+        { value: 'bash', label: 'bash' },
+        { value: 'sql', label: 'sql' },
+        { value: 'typescript', label: 'typescript' },
+        { value: 'json', label: 'json' },
+        { value: 'yaml', label: 'yaml' },
+        { value: 'markdown', label: 'markdown' },
+        { value: 'react', label: 'react' },
+        { value: 'vue', label: 'vue' },
+        { value: 'angular', label: 'angular' },
+        { value: 'Elm', label: 'Elm' },
+    ]
+
+    const [codeLanguage, setCodeLanguage] = useState(codeLanguages[0]);
+
+    const changeCodeLanguage = (e) => {
+        //set the code theme to the current value
+        setCodeLanguage(codeLanguages[languages.findIndex(language => language.value === e.value)]);
+    }*/
 
     //create Snippet 
     const createSnippet = (e) => {
@@ -42,6 +105,7 @@ function ModalFull({router}) {
             title,
             code,
             tags: checkedTag,
+            //language: codeLanguage
         }
 
         //validate form
@@ -56,6 +120,7 @@ function ModalFull({router}) {
                     ...snippetValues,
                     title: '',
                     code: '',
+                    language: '',
                     loading: false,
                     error: '',
                     success: true,
@@ -106,10 +171,96 @@ function ModalFull({router}) {
         setCheckedTag(newCheckedTag);
     }
 
+    //Custom Select styles
+    const customStyles = {
+        menuList: (base) => ({
+            ...base,
+            "::-webkit-scrollbar": {
+                width: "4px",
+            },
+            "::-webkit-scrollbar-track": {
+                background: '#282c34'
+            },
+            "::-webkit-scrollbar-thumb": {
+                background: 'linear-gradient(110.42deg, #CF57A3 29.2%, #4731B6 63.56%)',
+                borderRadius: '10px'
+            },
+            "::-webkit-scrollbar-thumb:hover": {
+                background: "#555"
+            }
+        }),
+        option: (provided, state) => ({
+            //color: state.isSelected ? theme.colorGrey6 : theme.colorGrey5,
+            padding: '10px 20px',
+            backgroundColor: theme.colorBg,
+            cursor: 'pointer',
+            transition: 'all 0.3s ease-in-out',
+            //color: color,
+            '&:hover': {
+                backgroundColor: theme.colorIcons,
+            }
+
+        }),
+
+        control: () => ({
+            width: '100%',
+            backgroundColor: theme.colorBg3,
+            height: '100%',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            border: 'none',
+            outline: 'none',
+            padding: '.4rem',
+            cursor: 'pointer'
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+        }),
+        indicatorSeparator: () => ({
+            display: 'none',
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            //position: position,
+        }),
+        menu: (provided) => ({
+            ...provided,
+            background: theme.colorBg,
+            width: '220px',
+            borderRadius: '12px',
+            "::-webkit-scrollbar": {
+                width: "4px",
+                height: "0px",
+            },
+            "::-webkit-scrollbar-track": {
+                background: "#f1f1f1"
+            },
+            "::-webkit-scrollbar-thumb": {
+                background: "#888"
+            },
+            "::-webkit-scrollbar-thumb:hover": {
+                background: "#555"
+            }
+
+        }),
+
+
+        singleValue: (provided, state) => {
+
+            const opacity = state.isDisabled ? 0.5 : 1;
+            const transition = 'opacity 300ms';
+            const color = theme.headerTextColor;
+
+            return { ...provided, opacity, transition, color };
+        }
+    }
+
     return (
         <ModalFullStyled theme={theme} className={'snippet-form'}>
             <div className="modal-content">
                 <form action="" id="submitBtn">
+                    {/*<Select className='react-select-container' options={languages} onChange={changeCodeLanguage} styles={customStyles} placeholder={'Select A Language'} />*/}
                     <div className="input-control">
                         {
                             error && <div className="errors">

@@ -9,7 +9,7 @@ const {errorHandler} = require('../helpers/dbErrorHandler');
 const {readFileSync} = require('fs');
 
 exports.create = (req, res) => {
-    const {title, code, categories, tags} = req.body;
+    const {title, code, categories, tags, language} = req.body;
 
     //validate data
     if(!title){
@@ -46,6 +46,7 @@ exports.create = (req, res) => {
         categories,
         slug,
         mtitle,
+        language,
         postedBy: req.auth._id
     })
     
@@ -74,7 +75,7 @@ exports.listSnippets = (req, res) => {
     SnippetSchema.find({})
     .populate('tags', '_id name slug')
     .populate('postedBy', '_id name username profile')
-        .select('_id title slug code mtitle postedBy createdAt updatedAt')
+        .select('_id title slug code language mtitle postedBy createdAt updatedAt')
     .exec((err, data) => {
         if(err) {
             return res.status(400).json({
@@ -101,7 +102,7 @@ exports.listSnippetsandTags = (req, res) => {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select('_id title slug code mtitle postedBy createdAt updatedAt')
+        .select('_id title slug code language mtitle postedBy createdAt updatedAt')
         .exec((err, data) => {
             if(err){
                 return res.status(400).json({
@@ -133,7 +134,7 @@ exports.readSnippet = (req, res) => {
     SnippetSchema.findOne({slug})
         .populate('tags', '_id name slug')
         .populate('postedBy', '_id name username')
-        .select('_id title slug mtitle code tags postedBy createdAt updatedAt')
+        .select('_id title slug mtitle code language tags postedBy createdAt updatedAt')
         .exec((err, data) => {
             if(err){
                 return res.status(400).json({

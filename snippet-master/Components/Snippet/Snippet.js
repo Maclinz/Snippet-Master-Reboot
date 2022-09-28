@@ -38,7 +38,7 @@ function Snippet({ snippet }) {
 
     const { deleteSnippet, snippetBookmark } = useSnippetContext()
     
-    const {code, title, tags, postedBy, slug} = snippet;
+    const {code, title, tags, postedBy, slug, language} = snippet;
 
     //All code thems
     const codeThemes = [
@@ -85,6 +85,7 @@ function Snippet({ snippet }) {
         { value: github, label: 'Github' },
 
     ]
+
 
     //Custom Select styles
     const customStyles = {
@@ -257,8 +258,13 @@ function Snippet({ snippet }) {
                         </button>
                         <p className="s-title3 copy">{copied ? 'Copied!' : 'Copy'}</p>
                     </div>
-                    <SyntaxHighlighter language='javascript' style={codeTheme} showLineNumbers={'True'} wrapLongLines={'True'}>
-                        {codeString}
+                    <SyntaxHighlighter 
+                        language={`${language ? language : 'javascript'}`}
+                        style={codeTheme} 
+                        showLineNumbers={'True'} 
+                        wrapLongLines={'True'}
+                        >
+                            {codeString}
                     </SyntaxHighlighter>
                 </div>
                 <div className="snippet-bottom">

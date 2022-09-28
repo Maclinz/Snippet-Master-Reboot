@@ -19,6 +19,7 @@ const SnippetSchema = new mongoose.Schema({
         min: 50,
         max: 2000000,
     },
+    language: String,
     mtitle: {
         type: String,
     },

@@ -128,6 +128,7 @@ function ProfileUpdate() {
                         id='github'
                         name='github'
                         value={github}
+                        autoComplete='off'
                         onChange={handleChange('github')}
                     />
                 </div>
@@ -139,6 +140,7 @@ function ProfileUpdate() {
                         id='linkedin'
                         name='linkedin'
                         value={linkedin}
+                        autoComplete='off'
                         onChange={handleChange('linkedin')}
                     />
                 </div>
@@ -150,6 +152,7 @@ function ProfileUpdate() {
                         id='mail'
                         name='mail'
                         value={mail}
+                        autoComplete='off'
                         onChange={handleChange('mail')}
                     />
                 </div>
@@ -200,6 +203,7 @@ function ProfileUpdate() {
                     id='about'
                     name="about"
                     cols="30" rows="6"
+                    maxLength={460}
                     onChange={handleChange('about')}
                     >
 
