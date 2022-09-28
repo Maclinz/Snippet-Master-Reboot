@@ -23,6 +23,7 @@ export const copy = <i className="fa-solid fa-clipboard"></i>
 export const githubIcon = <i className="fa-brands fa-github"></i>
 export const linked = <i className="fa-brands fa-linkedin"></i>
 export const mailIcon = <i className="fa-solid fa-envelope"></i>
+export const expand = <i className="fa-solid fa-expand"></i>
 
 
 

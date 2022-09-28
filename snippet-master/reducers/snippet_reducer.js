@@ -1,4 +1,4 @@
-import { BOOKMARK_SNIPPET, DELETE_SNIPPET, GET_ADMIN_SNIPPETS_SUCCESS, GET_SNIPPETS_BEGIN, GET_SNIPPETS_SUCCESS, HIDE_SNIPPET_MODAL, INPUT_CHANGE, LOAD_MORE, RELOAD_SNIPPETS, REMOVE_SNIPPET, SEARCHING, SHOW_SNIPPET_MODAL } from "../utils/actions"
+import { BOOKMARK_SNIPPET, DELETE_SNIPPET, GET_ADMIN_SNIPPETS_SUCCESS, GET_SNIPPETS_BEGIN, GET_SNIPPETS_SUCCESS, HIDE_SNIPPET_MODAL, INPUT_CHANGE, LOAD_MORE, RELOAD_SNIPPETS, REMOVE_SNIPPET, SEARCHING, SHOW_SNIPPET_MODAL, SINGLE_SNIPPET_SUCCES } from "../utils/actions"
 
 
 const snippet_reducer = (state, action) => {
@@ -96,6 +96,15 @@ const snippet_reducer = (state, action) => {
         return {
             ...state,
             bookmarkedSnippets:[...state.bookmarkedSnippets, action.payload],
+        }
+    }
+
+    //single snippet
+    if(action.type === SINGLE_SNIPPET_SUCCES) {
+        return {
+            ...state,
+            clickedSnippet: action.payload,
+            expandSnippet: !state.expandSnippet
         }
     }
     

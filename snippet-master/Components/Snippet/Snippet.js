@@ -27,18 +27,22 @@ import Image from 'next/image';
 import { useThemeContext } from '../../context/themeContext';
 import Button from '../Button/Button';
 import Select from 'react-select'
-import { copy, edit, heart, trash } from '../../utils/Icons';
+import { bookmark, copy, edit, expand, githubIcon, heart, trash } from '../../utils/Icons';
 import Link from 'next/link';
 import { isAuth } from '../../actions/auth';
 import { useSnippetContext } from '../../context/snippetContext';
+import ActionButton from '../ActionButton/ActionButton';
 
 
 function Snippet({ snippet }) {
     const theme = useThemeContext();
 
-    const { deleteSnippet, snippetBookmark } = useSnippetContext()
+    const { deleteSnippet, snippetBookmark, getSingleSnippet, expandSnippet } = useSnippetContext()
     
     const {code, title, tags, postedBy, slug, language} = snippet;
+
+    //snippet ref
+    const snippetRef = React.useRef(null);
 
     //All code thems
     const codeThemes = [
@@ -181,6 +185,9 @@ function Snippet({ snippet }) {
     //bookmark state
     const [bookmarked, setBookmarked] = useState(false);
 
+    //expand state
+    const [expanded, setExpanded] = useState(false);
+
 
     const changeCodeTheme = (e) => {
         //set the code theme to the current value
@@ -216,9 +223,16 @@ function Snippet({ snippet }) {
     }, []);
     
 
+    //smooth scroll into view
+    /*const smoothScroll = () => {
+        snippetRef.current.scrollIntoView({
+            behavior: 'smooth',
+        });
+    }*/
+
 
     return (
-        <SnippetStyled theme={theme} rand={randomTagColorMemo}>
+        <SnippetStyled theme={theme} rand={randomTagColorMemo} expanded={expanded} ref={snippetRef}>
             <div className="snippet-con">
                 <div className="snippet-top">
                     <div className="profile">
@@ -233,6 +247,20 @@ function Snippet({ snippet }) {
                             </h3>
                             <p className="s-title">Programmer</p>
                         </div>
+                    </div>
+                    <div className="top-btns">
+                        <ActionButton
+                            icon={expand}
+                            background={randomTagColorMemo}
+                            click={() => {
+                                setExpanded(!expanded);
+                            }}
+                        />
+                        <ActionButton
+                            icon={bookmark}
+                            background={randomTagColorMemo}
+                            //blob={'blob'}
+                        />
                     </div>
                     <h3 className="s-title3">{title}</h3>
                     {/*<button onClick={() => snippetBookmark(slug)}>BookMArks</button>
@@ -342,6 +370,8 @@ const SnippetStyled = styled.div`
     border-radius: ${props => props.theme.borderRadiusSm};
     position: relative;
     z-index: 1;
+    grid-column: ${props => props.expanded ? 'span 2' : 'span 1'};
+    transition: all .4s ease-in-out;
     .copy{
         background: linear-gradient(180.94deg, #F56693 26.59%, #6FCF97 86.88%);
         -webkit-background-clip: text;
@@ -352,6 +382,14 @@ const SnippetStyled = styled.div`
     .snippet-con{
         padding: 2rem;
         .snippet-top{
+            position: relative;
+            .top-btns{
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                gap: .7rem;
+            }
             .profile{
                 position: relative;
                 border-radius: 50% ;
@@ -421,8 +459,8 @@ const SnippetStyled = styled.div`
             }
             pre{
                 border-radius: ${props => props.theme.borderRadiusSm};
-                max-height: 350px;
-                height: 350px;
+                max-height: ${props => props.expanded ? '600px' : '350px'};
+                height: ${props => props.expanded ? '500px' : '350px'};
                 code{
                     font-weight: 500;
                 }

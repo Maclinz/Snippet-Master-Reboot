@@ -13,7 +13,7 @@ import { down } from '../utils/Icons';
 
 export default function Home() {
   const theme = useThemeContext()
-  const {snippets, loading, loadMore} = useSnippetContext()
+  const { snippets, loading, loadMore, expandSnippet } = useSnippetContext()
 
   return (
     <MainContentStyled theme={theme}>
@@ -67,6 +67,7 @@ const MainContentStyled = styled.div`
     grid-template-columns: repeat(2, 1fr);
     padding: 6.1rem 1.5rem;
     grid-gap: ${props => props.theme.gridGap};
+    transition: all .4s ease-in-out;
     @media screen and (max-width: 1260px){
       grid-template-columns: repeat(1, 1fr);
     }

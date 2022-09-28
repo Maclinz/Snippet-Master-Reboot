@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer, useState } from "react";
 import { getCookie } from "../actions/auth";
 import { listSnippetsandTags, searchSnippets, listAllSnippets, snippetDelete, singleSnippet, bookmarkSnippet } from '../actions/snippet'
 import reducer from '../reducers/snippet_reducer'
-import { GET_SNIPPETS_SUCCESS,GET_ADMIN_SNIPPETS_SUCCESS,GET_SNIPPETS_ERROR, GET_SNIPPETS_BEGIN, LOAD_MORE, SEARCHING, INPUT_CHANGE, RELOAD_SNIPPETS, DELETE_SNIPPET, SHOW_SNIPPET_MODAL, HIDE_SNIPPET_MODAL, REMOVE_SNIPPET, BOOKMARK_SNIPPET } from "../utils/actions";
+import { GET_SNIPPETS_SUCCESS,GET_ADMIN_SNIPPETS_SUCCESS,GET_SNIPPETS_ERROR, GET_SNIPPETS_BEGIN, LOAD_MORE, SEARCHING, INPUT_CHANGE, RELOAD_SNIPPETS, DELETE_SNIPPET, SHOW_SNIPPET_MODAL, HIDE_SNIPPET_MODAL, REMOVE_SNIPPET, BOOKMARK_SNIPPET, SINGLE_SNIPPET_SUCCES } from "../utils/actions";
 
 const SnippeContext = React.createContext();
 
@@ -30,6 +30,14 @@ export const SnipetProvider = ({ children }) => {
         totalSnippets: 0,
         loadedSnippets: [],
         snippetModal: false,
+        clickedSnippet: {
+            title: "",
+            code: "",
+            tags: [],
+            errors: '',
+            success: false,
+        },
+        expandSnippet: false,
         removeSnippet: false,
         bookmarkedSnippets: [],
         bookMarked: false,
@@ -124,6 +132,18 @@ export const SnipetProvider = ({ children }) => {
         }
     }
 
+    //get single snippet
+    const getSingleSnippet = (slug) => {
+        
+        singleSnippet(slug).then(data => {
+            console.log('Single Snippet', data);
+            dispatch({
+                type: SINGLE_SNIPPET_SUCCES,
+                payload: data
+            })
+        })
+    }
+
 
     //bookmark snippet
     const snippetBookmark = (slug) => {
@@ -206,7 +226,8 @@ export const SnipetProvider = ({ children }) => {
     return (
         <SnippeContext.Provider value={{ 
             ...snippetValues, 
-            ...state,loadMore, 
+            ...state,
+            loadMore, 
             snippetValues, 
             setSnippetValues, 
             loadMore, 
@@ -216,7 +237,8 @@ export const SnipetProvider = ({ children }) => {
             deleteSnippet,
             listAllSnippetsAdmin,
             hideSnippetModal,
-            snippetBookmark
+            snippetBookmark,
+            getSingleSnippet
             }}>
                 {children}
         </SnippeContext.Provider>

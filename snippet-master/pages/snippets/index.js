@@ -12,7 +12,7 @@ import { isAuth } from '../../actions/auth'
 import Private from '../../Components/auth/Private'
 
 function Snippets() {
-    const {snippets, loading,searchState, loadMore} = useSnippetContext()
+    const { snippets, loading, searchState, loadMore, expandSnippet } = useSnippetContext()
     const theme = useThemeContext()
 
     const {searched, message} = searchState
@@ -32,7 +32,7 @@ function Snippets() {
                         loading && <Loading />
                     }
                 </div>
-                {!loading && <AllSnippetsStyed theme={theme}>
+                    {!loading && <AllSnippetsStyed theme={theme} expand={expandSnippet}>
                     {
                         userSnippets.map(snippet => {
                             return <Snippet key={snippet._id} snippet={snippet} />
@@ -63,10 +63,10 @@ function Snippets() {
 const AllSnippetsStyed = styled.div`
     padding: 1.5rem;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 2rem;
     @media screen and (max-width: 1260px){
-      grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 `;
 
