@@ -1,6 +1,8 @@
 const exppress = require('express');
 const { requireSignIn, adminMiddleware, authMiddleware } = require('../controllers/auth');
-const { create, listSnippets, listSnippetsandTags, readSnippet, removeSnippet, updateSnippet, searchSnippets,bookmarkUserSnippet} = require('../controllers/snippet');
+const { create, listSnippets, listSnippetsandTags, 
+    readSnippet, removeSnippet, updateSnippet, 
+    searchSnippets, bookmarkUserSnippet, unbookmarkUserSnippet, listBookmarkedSnippets, unlikeSnippet, likeSnippet } = require('../controllers/snippet');
 const { runValidation } = require('../validations');
 const router = exppress.Router();
 
@@ -15,8 +17,14 @@ router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
     .post('/user/create-snippet', requireSignIn, authMiddleware, create)
     //bookmark snippet
     .post('/snippet/bookmark/:slug', requireSignIn, authMiddleware, bookmarkUserSnippet)
-    
-
+    //unbookmark snippet
+    .post('/snippet/unbookmark/:slug', requireSignIn, authMiddleware, unbookmarkUserSnippet)
+    //get bookmarked snippets
+    .get('/user/bookmarks', requireSignIn, authMiddleware, listBookmarkedSnippets)
+    //like snippet
+    .put('/snippet/like/:slug', requireSignIn, authMiddleware, likeSnippet)
+    //unlike snippet
+    .put('/snippet/unlike/:slug', requireSignIn, authMiddleware, unlikeSnippet)
 
 
 

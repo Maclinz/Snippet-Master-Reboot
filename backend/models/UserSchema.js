@@ -29,7 +29,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         lowercase: true,
     },
-
+    bookmarks: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Snippet',
+        }
+    ],
     hashed_password: {
         type: String,
         required: true,

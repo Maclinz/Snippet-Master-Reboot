@@ -6,6 +6,7 @@ const _ = require('lodash');
 const Tags = require('../models/TagsSchema');
 const Category = require('../models/CategorySchema');
 const {errorHandler} = require('../helpers/dbErrorHandler');
+const User = require('../models/UserSchema');
 const {readFileSync} = require('fs');
 
 exports.create = (req, res) => {
@@ -74,8 +75,8 @@ exports.create = (req, res) => {
 exports.listSnippets = (req, res) => {
     SnippetSchema.find({})
     .populate('tags', '_id name slug')
-    .populate('postedBy', '_id name username profile')
-        .select('_id title slug code language mtitle postedBy createdAt updatedAt')
+    .populate('postedBy', '_id name username bookmarks profile')
+        .select('_id title slug code likes liked liked bookmark language mtitle postedBy createdAt updatedAt')
     .exec((err, data) => {
         if(err) {
             return res.status(400).json({
@@ -97,12 +98,12 @@ exports.listSnippetsandTags = (req, res) => {
 
     SnippetSchema.find({})
         .populate('tags', '_id name slug')
-        .populate('postedBy', '_id name username profile')
+        .populate('postedBy', '_id name username bookmarks profile')
         //sort based on latest createdAt
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
-        .select('_id title slug code language mtitle postedBy createdAt updatedAt')
+        .select('_id title slug code likes liked bookmark language mtitle postedBy createdAt updatedAt')
         .exec((err, data) => {
             if(err){
                 return res.status(400).json({
@@ -133,8 +134,8 @@ exports.readSnippet = (req, res) => {
     const slug = req.params.slug.toLowerCase();
     SnippetSchema.findOne({slug})
         .populate('tags', '_id name slug')
-        .populate('postedBy', '_id name username')
-        .select('_id title slug mtitle code language tags postedBy createdAt updatedAt')
+        .populate('postedBy', '_id name username bookmarks profile')
+        .select('_id title slug mtitle code likes liked bookmark language tags postedBy createdAt updatedAt')
         .exec((err, data) => {
             if(err){
                 return res.status(400).json({
@@ -217,13 +218,44 @@ exports.searchSnippets = (req, res) => {
                 });
             }
             res.json(snippets);
-        }).populate('tags', '_id name slug').populate('postedBy', '_id name username').select('_id title tags slug code mtitle postedBy createdAt updatedAt');
+        }).populate('tags', '_id name slug').populate('postedBy', '_id name username bookmarks').select('_id title tags slug code likes liked bookmark mtitle postedBy createdAt updatedAt');
     }
 }
 
 //bookmark snippet
 exports.bookmarkUserSnippet = (req, res) => {
-    SnippetSchema.findByIdAndUpdate(req.body.snippetId, {$push: {bookmarks: req.auth._id}}, {new: true}).exec((err, result) => {
+    
+    //save bookmarked snippet
+    User.findByIdAndUpdate(req.auth._id, {$push: {bookmarks: req.body.snippetId}},{new: true}).exec((err, result) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        console.log(result);
+        //set bookmarked snippet to true
+    })
+    
+};
+
+//unbookmark snippet
+exports.unbookmarkUserSnippet = (req, res) => {
+    //if snippet is bookmarked, remove it from the user's bookmarks
+    User.findByIdAndUpdate(req.auth._id, {$pull: {bookmarks: req.body.snippetId}},{new: true}).exec((err, result) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        console.log(result);
+        
+    })
+};
+
+
+//list bookmarked snippets
+exports.listBookmarkedSnippets = (req, res) => {
+    User.findById(req.auth._id).select('bookmarks').populate('bookmarks').exec((err, result) => {
         if(err){
             return res.status(400).json({
                 error: errorHandler(err)
@@ -231,4 +263,33 @@ exports.bookmarkUserSnippet = (req, res) => {
         }
         res.json(result);
     })
+}
+
+
+//like snippet
+exports.likeSnippet = (req, res) => {
+    //like snippet and set liked to true
+    SnippetSchema.findByIdAndUpdate(req.body.snippetId, {$push: {likes: req.auth._id}},{new: true}).exec((err, result) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json(result);
+    })
+};
+
+//unlike snippet
+exports.unlikeSnippet = (req, res) => {
+    //unlike snippet and set liked to false
+    SnippetSchema.findByIdAndUpdate(req.body.snippetId, {$pull: {likes: req.auth._id}} ,{new: true}).exec((err, result) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        res.json(result);
+    })
+
+    //set liked to false
 };

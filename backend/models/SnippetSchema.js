@@ -20,8 +20,18 @@ const SnippetSchema = new mongoose.Schema({
         max: 2000000,
     },
     language: String,
+    likes: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
+    liked: {
+        type: Boolean,
+        default: false,
+        
+    },
     mtitle: {
         type: String,
+    },
+    bookmark: {
+        type: Boolean,
+        default: false,
     },
     mdesc: {
         type: String,

@@ -27,19 +27,20 @@ import Image from 'next/image';
 import { useThemeContext } from '../../context/themeContext';
 import Button from '../Button/Button';
 import Select from 'react-select'
-import { bookmark, copy, edit, expand, githubIcon, heart, trash } from '../../utils/Icons';
+import { bookmarkIcon, copy, edit, expand, githubIcon, heart, trash } from '../../utils/Icons';
 import Link from 'next/link';
-import { isAuth } from '../../actions/auth';
+import { getCookie, isAuth } from '../../actions/auth';
 import { useSnippetContext } from '../../context/snippetContext';
 import ActionButton from '../ActionButton/ActionButton';
+import { unbookmarkSnippet, bookmarkSnippet, likeSnippet, unlikeSnippet } from '../../actions/snippet';
 
 
 function Snippet({ snippet }) {
     const theme = useThemeContext();
 
-    const { deleteSnippet, snippetBookmark, getSingleSnippet, expandSnippet } = useSnippetContext()
+    const { deleteSnippet, getSingleSnippet, expandSnippet } = useSnippetContext()
     
-    const {code, title, tags, postedBy, slug, language} = snippet;
+    const {code, title, tags, postedBy, slug, language, likes} = snippet;
 
     //snippet ref
     const snippetRef = React.useRef(null);
@@ -183,7 +184,9 @@ function Snippet({ snippet }) {
     const [copied, setCopied] = useState(false);
 
     //bookmark state
-    const [bookmarked, setBookmarked] = useState(false);
+    const [bookmarked, setBookmarked] = useState(null);
+    const [liked, setLiked] = useState(null);
+    const [likeCount, setLikeCount] = useState(likes.length);
 
     //expand state
     const [expanded, setExpanded] = useState(false);
@@ -230,6 +233,38 @@ function Snippet({ snippet }) {
         });
     }*/
 
+    //token
+    const token =  getCookie('token');
+
+    const bookmarkSnippetHandler = (slug, snippedId) => {
+        //check if snippet is bookmarked
+        if (!bookmarked) {
+            setBookmarked(true);
+            //bookmark
+            bookmarkSnippet(slug, token, snippedId).then(data => {
+                console.log('Bookmarkedddd Snippet', data);
+            }).catch(err => {
+                console.log(err);
+            })            
+        } else{
+            //unbookmark if already bookmarked
+            if(bookmarked) {
+                setBookmarked(false);
+                unbookmarkSnippet(slug, token, snippedId).then(data => {
+                    //console.log('Unbookmarked Snippet', data);
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
+            
+        }
+
+    }
+    
+    //like and unlike snippet
+    const likeSnippetHandler = (slug, snippedId) => {
+
+    }
 
     return (
         <SnippetStyled theme={theme} rand={randomTagColorMemo} expanded={expanded} ref={snippetRef}>
@@ -257,9 +292,13 @@ function Snippet({ snippet }) {
                             }}
                         />
                         <ActionButton
-                            icon={bookmark}
+                            icon={bookmarkIcon}
                             background={randomTagColorMemo}
                             //blob={'blob'}
+                            click={() => {
+                                //snippetBookmark(slug, snippet._id);
+                                bookmarkSnippetHandler(slug, snippet._id);
+                            }}
                         />
                     </div>
                     <h3 className="s-title3">{title}</h3>
@@ -299,12 +338,15 @@ function Snippet({ snippet }) {
                     <div className="snippet-actions">
                         <div className="left-actions">
                             <Button
-                                name={'2.5K Likes'}
+                                name={`${likeCount} Likes`}
                                 backgound={randomTagColorMemo}
                                 blob={'blob'}
                                 padding={'.6rem 1rem'}
                                 borderRad={'12px'}
                                 icon={heart}
+                                click={() => {
+                                    likeSnippetHandler(slug, snippet._id);
+                                }}
                             />
                         </div>
                         <div className="right-actions">

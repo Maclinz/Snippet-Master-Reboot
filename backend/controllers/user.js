@@ -28,7 +28,7 @@ exports.publicProfile = (req, res) => {
         SnippetSchema.find({postedBy: userId})
             .populate('postedBy', '_id name username')
             .populate('tags', '_id name slug')
-            .select('_id title description code language postedBy createdAt updatedAt')
+            .select('_id title description code likes liked bookmark language postedBy createdAt updatedAt')
             .limit(10)
             .exec((err, data) => {
                 if(err) {

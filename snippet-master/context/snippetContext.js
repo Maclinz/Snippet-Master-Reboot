@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import { getCookie } from "../actions/auth";
-import { listSnippetsandTags, searchSnippets, listAllSnippets, snippetDelete, singleSnippet, bookmarkSnippet } from '../actions/snippet'
+import { getCookie, isAuth } from "../actions/auth";
+import { listSnippetsandTags, searchSnippets, listAllSnippets, snippetDelete, singleSnippet, bookmarkSnippet, listBookmarks, unbookmarkSnippet } from '../actions/snippet'
 import reducer from '../reducers/snippet_reducer'
-import { GET_SNIPPETS_SUCCESS,GET_ADMIN_SNIPPETS_SUCCESS,GET_SNIPPETS_ERROR, GET_SNIPPETS_BEGIN, LOAD_MORE, SEARCHING, INPUT_CHANGE, RELOAD_SNIPPETS, DELETE_SNIPPET, SHOW_SNIPPET_MODAL, HIDE_SNIPPET_MODAL, REMOVE_SNIPPET, BOOKMARK_SNIPPET, SINGLE_SNIPPET_SUCCES } from "../utils/actions";
+import { GET_SNIPPETS_SUCCESS,GET_ADMIN_SNIPPETS_SUCCESS,GET_SNIPPETS_ERROR, GET_SNIPPETS_BEGIN, LOAD_MORE, SEARCHING, INPUT_CHANGE, RELOAD_SNIPPETS, DELETE_SNIPPET, SHOW_SNIPPET_MODAL, HIDE_SNIPPET_MODAL, REMOVE_SNIPPET, BOOKMARK_SNIPPET, SINGLE_SNIPPET_SUCCES, UNBOOKMARK_SNIPPET } from "../utils/actions";
 
 const SnippeContext = React.createContext();
 
@@ -40,7 +40,7 @@ export const SnipetProvider = ({ children }) => {
         expandSnippet: false,
         removeSnippet: false,
         bookmarkedSnippets: [],
-        bookMarked: false,
+        bookmarked: false,
         allSnippetsAdmin: [
             {
                 postedBy: {
@@ -146,8 +146,8 @@ export const SnipetProvider = ({ children }) => {
 
 
     //bookmark snippet
-    const snippetBookmark = (slug) => {
-        bookmarkSnippet(slug, token).then(data => {
+    const snippetBookmark = (slug, snippedId) => {
+        bookmarkSnippet(slug, token, snippedId).then(data => {
             console.log('Bookmarkedddd Snippet', data);
             dispatch({
                 type: BOOKMARK_SNIPPET,
@@ -158,6 +158,45 @@ export const SnipetProvider = ({ children }) => {
         })
 
     }
+
+
+    //boomark and unbookmark
+    
+    const bookmarkSnippetHandler = (slug, snippedId) => {
+        //check if snippet is bookmarked
+        if (state.bookmarked){
+            dispatch({
+                type: BOOKMARK_SNIPPET,
+            })
+            //bookmark
+            snippetBookmark(slug, token, snippedId).then(data => {
+                console.log('Bookmarkedddd Snippet', data);
+            }).catch(err => {
+                console.log(err);
+            })
+        }else{
+            //unbookmark
+            dispatch({
+                type: UNBOOKMARK_SNIPPET,
+            })
+            unbookmarkSnippet(slug, token, snippedId).then(data => {
+                console.log('Unbookmarkedddd Snippet', data);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    }
+
+    //list bookmarked snippets
+    const listBookmarkedSnippets = () => {
+        listBookmarks(token).then(data => {
+            console.log('Bookmarked Snippets', data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    listBookmarkedSnippets()
 
     //load more snippets
     const loadMore = () => {
@@ -222,6 +261,7 @@ export const SnipetProvider = ({ children }) => {
         listAllSnippetsAdmin()
     } , [])
 
+    console.log(isAuth())
     console.log('Snippet State', state)
     return (
         <SnippeContext.Provider value={{ 
@@ -238,7 +278,7 @@ export const SnipetProvider = ({ children }) => {
             listAllSnippetsAdmin,
             hideSnippetModal,
             snippetBookmark,
-            getSingleSnippet
+            getSingleSnippet,
             }}>
                 {children}
         </SnippeContext.Provider>
