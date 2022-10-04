@@ -1,5 +1,5 @@
 import { isAuth } from "../actions/auth";
-import { bookmark, box, fire, home, users } from "./Icons";
+import { bookmarkIcon, box, fire, home, users } from "./Icons";
 
 
 const menu = [
@@ -25,7 +25,7 @@ const menu = [
         id: 2,
         name: 'Bookmarks',
         url: `${isAuth() ? '/bookmarks' : '/login'}`,
-        icon: bookmark
+        icon: bookmarkIcon
     },
     {
         id: 3,
