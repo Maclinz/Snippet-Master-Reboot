@@ -224,18 +224,18 @@ exports.searchSnippets = (req, res) => {
 
 //bookmark snippet
 exports.bookmarkUserSnippet = (req, res) => {
-    
-    //save bookmarked snippet
-    User.findByIdAndUpdate(req.auth._id, {$push: {bookmarks: req.body.snippetId}},{new: true}).exec((err, result) => {
+   //toggle bookmark snippet
+    SnippetSchema.findByIdAndUpdate(req.body.snippetId, { $push: { bookmarks: req.auth._id } }, { new: true }).exec((err, result) => {
         if(err){
             return res.status(400).json({
                 error: errorHandler(err)
             });
+        } else {
+            res.json(result);
+            console.log(result);
         }
-        console.log(result);
-        //set bookmarked snippet to true
-    })
-    
+    });
+
 };
 
 //unbookmark snippet
@@ -268,28 +268,10 @@ exports.listBookmarkedSnippets = (req, res) => {
 
 //like snippet
 exports.likeSnippet = (req, res) => {
-    //like snippet and set liked to true
-    SnippetSchema.findByIdAndUpdate(req.body.snippetId, {$push: {likes: req.auth._id}},{new: true}).exec((err, result) => {
-        if(err){
-            return res.status(400).json({
-                error: errorHandler(err)
-            });
-        }
-        res.json(result);
-    })
+
 };
 
 //unlike snippet
 exports.unlikeSnippet = (req, res) => {
-    //unlike snippet and set liked to false
-    SnippetSchema.findByIdAndUpdate(req.body.snippetId, {$pull: {likes: req.auth._id}} ,{new: true}).exec((err, result) => {
-        if(err){
-            return res.status(400).json({
-                error: errorHandler(err)
-            });
-        }
-        res.json(result);
-    })
-
-    //set liked to false
+    
 };

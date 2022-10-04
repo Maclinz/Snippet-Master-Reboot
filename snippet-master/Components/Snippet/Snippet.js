@@ -40,7 +40,7 @@ function Snippet({ snippet }) {
 
     const { deleteSnippet, getSingleSnippet, expandSnippet } = useSnippetContext()
     
-    const {code, title, tags, postedBy, slug, language, likes} = snippet;
+    const {code, title, tags, postedBy, slug, language, likes, liked} = snippet;
 
     //snippet ref
     const snippetRef = React.useRef(null);
@@ -185,8 +185,11 @@ function Snippet({ snippet }) {
 
     //bookmark state
     const [bookmarked, setBookmarked] = useState(null);
-    const [liked, setLiked] = useState(null);
+    //const [liked, setLiked] = useState(null);
     const [likeCount, setLikeCount] = useState(likes.length);
+    const [likesData, setLikesData] = useState(likes);
+
+    console.log('likes', likesData)
 
     //expand state
     const [expanded, setExpanded] = useState(false);
@@ -263,7 +266,7 @@ function Snippet({ snippet }) {
     
     //like and unlike snippet
     const likeSnippetHandler = (slug, snippedId) => {
-
+        
     }
 
     return (
