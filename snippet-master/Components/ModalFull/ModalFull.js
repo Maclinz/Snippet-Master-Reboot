@@ -29,7 +29,7 @@ function ModalFull({router}) {
     const { title, code,loading, error } = snippetValues;
     const token = getCookie('token')
 
-    console.log('snippetValues Dtatata', snippetValues);
+    //console.log('snippetValues Dtatata', snippetValues);
 
     //state 
     const [checkedTag, setCheckedTag] = useState([]);
@@ -111,7 +111,7 @@ function ModalFull({router}) {
         //validate form
 
         snippetCreate(snippet, token).then(data => {
-            console.log('datad', data);
+            //console.log('datad', data);
             //validations 
             if (data.error) {
                 setSnippetValues({ ...snippetValues, error: data.error, loading: false })

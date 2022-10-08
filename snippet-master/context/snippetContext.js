@@ -101,7 +101,7 @@ export const SnipetProvider = ({ children }) => {
         //dispatch({ type: GET_SNIPPETS_BEGIN })
         listAllSnippets()
             .then(data => {
-                console.log('All Snips',data);
+                //console.log('All Snips',data);
                 dispatch({
                     type: GET_ADMIN_SNIPPETS_SUCCESS,
                     payload: data
@@ -149,7 +149,7 @@ export const SnipetProvider = ({ children }) => {
     //bookmark snippet
     const snippetBookmark = (slug, snippedId) => {
         bookmarkSnippet(slug, token, snippedId).then(data => {
-            console.log('Bookmarkedddd Snippet', data);
+            //console.log('Bookmarkedddd Snippet', data);
             dispatch({
                 type: BOOKMARK_SNIPPET,
                 payload: data
@@ -171,7 +171,7 @@ export const SnipetProvider = ({ children }) => {
             })
             //bookmark
             snippetBookmark(slug, token, snippedId).then(data => {
-                console.log('Bookmarkedddd Snippet', data);
+                //console.log('Bookmarkedddd Snippet', data);
             }).catch(err => {
                 console.log(err);
             })
@@ -191,7 +191,7 @@ export const SnipetProvider = ({ children }) => {
     //list bookmarked snippets
     const listBookmarkedSnippets = () => {
         listBookmarks(token).then(data => {
-            console.log('Bookmarked Snippets', data);
+            //console.log('Bookmarked Snippets', data);
         }).catch(err => {
             console.log(err);
         })

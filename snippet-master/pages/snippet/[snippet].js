@@ -33,7 +33,7 @@ function SingleSnippet({snippet}) {
 //get initial props : must be in the actuall snippet page, I will create a neww page for this
 SingleSnippet.getInitialProps = async ({query}) => {
     //get snippet slug
-    console.log('Quedzzadddddddddds',query.snippet );
+    //console.log('Quedzzadddddddddds',query.snippet );
     
     return singleSnippet(query.snippet).then(data => {
         if(data.error) {

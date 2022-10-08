@@ -33,11 +33,11 @@ function ProfileUpdate() {
     const token = getCookie('token');
     const { username, name, email, password,about, github,linkedin, mail, error, success, loading, photo, userData } = values;
 
-    console.log('My vAlues', values)
+    //console.log('My vAlues', values)
     //load user profile data
     const initProfile = () => {
         getProfile(token).then(data => {
-            console.log('Profile Data', data);
+            //console.log('Profile Data', data);
             if (data.error) {
                 setValues({ ...values, error: data.error })
             } else {
@@ -105,7 +105,7 @@ function ProfileUpdate() {
         }
     }, []);
 
-    console.log('My vAlues 22222', values)
+    //console.log('My vAlues 22222', values)
 
     //form for user infromation
     const profileUpdateForm = () => {
