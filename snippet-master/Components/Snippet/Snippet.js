@@ -59,10 +59,6 @@ function Snippet({ snippet }) {
         tomorrowNightBlue,
         tomorrowNightBright,
         tomorrowNightEighties,
-        twilight,
-        vibrantInk,
-        vibrantInkDark,
-        vibrantInkLight,
         github,
     ]
 
