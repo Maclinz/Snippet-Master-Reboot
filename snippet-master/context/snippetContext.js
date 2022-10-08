@@ -181,7 +181,7 @@ export const SnipetProvider = ({ children }) => {
                 type: UNBOOKMARK_SNIPPET,
             })
             unbookmarkSnippet(slug, token, snippedId).then(data => {
-                console.log('Unbookmarkedddd Snippet', data);
+                //console.log('Unbookmarkedddd Snippet', data);
             }).catch(err => {
                 console.log(err);
             })
@@ -263,8 +263,8 @@ export const SnipetProvider = ({ children }) => {
     } , [])
 
 
-    console.log(isAuth())
-    console.log('Snippet State', state)
+    //console.log(isAuth())
+    //console.log('Snippet State', state)
     return (
         <SnippeContext.Provider value={{ 
             ...snippetValues, 
