@@ -32,7 +32,8 @@ import Link from 'next/link';
 import { getCookie, isAuth } from '../../actions/auth';
 import { useSnippetContext } from '../../context/snippetContext';
 import ActionButton from '../ActionButton/ActionButton';
-import { unbookmarkSnippet, bookmarkSnippet, likeSnippet, unlikeSnippet } from '../../actions/snippet';
+import { unbookmarkSnippet, bookmarkSnippet, likeSnippet, unlikeSnippet, singleSnippet } from '../../actions/snippet';
+import Router from 'next/router';
 
 
 function Snippet({ snippet }) {
@@ -184,7 +185,7 @@ function Snippet({ snippet }) {
     const [copied, setCopied] = useState(false);
 
     //bookmark state
-    const [bookmarked, setBookmarked] = useState(null);
+    //const [bookmarked, setBookmarked] = useState(null);
     //const [liked, setLiked] = useState(null);
     const [likeCount, setLikeCount] = useState(likes.length);
     const [likesData, setLikesData] = useState(likes);
@@ -239,38 +240,30 @@ function Snippet({ snippet }) {
     //token
     const token =  getCookie('token');
 
-    const bookmarkSnippetHandler = (slug, snippedId) => {
-        //check if snippet is bookmarked
-        if (!bookmarked) {
-            setBookmarked(true);
-            //bookmark
-            bookmarkSnippet(slug, token, snippedId).then(data => {
-                console.log('Bookmarkedddd Snippet', data);
-            }).catch(err => {
-                console.log(err);
-            })            
-        } else{
-            //unbookmark if already bookmarked
-            if(bookmarked) {
-                setBookmarked(false);
-                unbookmarkSnippet(slug, token, snippedId).then(data => {
-                    //console.log('Unbookmarked Snippet', data);
-                }).catch(err => {
-                    console.log(err);
-                })
-            }
-            
-        }
 
-    }
-    
     //like and unlike snippet
     const likeSnippetHandler = (slug, snippedId) => {
-        
+        likeSnippet(slug, token, snippedId).then(data => {}).catch(err => {});
     }
 
+    //fetch single snippet when link is opened directly
+    useEffect(() => {
+        //check if link has slug 
+    
+    }, [slug]);
+
     return (
-        <SnippetStyled theme={theme} rand={randomTagColorMemo} expanded={expanded} ref={snippetRef}>
+        <SnippetStyled theme={theme} rand={randomTagColorMemo} 
+            expanded={expanded} 
+            ref={snippetRef}
+            onDoubleClick={() =>{
+                getSingleSnippet(slug)
+                
+                Router.push(`/snippet/${slug}`)
+                
+                
+            }}
+        >
             <div className="snippet-con">
                 <div className="snippet-top">
                     <div className="profile">
@@ -300,7 +293,7 @@ function Snippet({ snippet }) {
                             //blob={'blob'}
                             click={() => {
                                 //snippetBookmark(slug, snippet._id);
-                                bookmarkSnippetHandler(slug, snippet._id);
+                                //bookmarkSnippetHandler(slug, snippet._id);
                             }}
                         />
                     </div>
@@ -408,6 +401,9 @@ function Snippet({ snippet }) {
         </SnippetStyled>
     )
 }
+
+//get initila snippet data
+
 
 const SnippetStyled = styled.div`
     width: 100%;

@@ -8,6 +8,7 @@ const Category = require('../models/CategorySchema');
 const {errorHandler} = require('../helpers/dbErrorHandler');
 const User = require('../models/UserSchema');
 const {readFileSync} = require('fs');
+const UserContribution = require('../models/UserContributionsSchema');
 
 exports.create = (req, res) => {
     const {title, code, categories, tags, language} = req.body;
@@ -135,6 +136,7 @@ exports.readSnippet = (req, res) => {
     SnippetSchema.findOne({slug})
         .populate('tags', '_id name slug')
         .populate('postedBy', '_id name username bookmarks profile')
+        .populate('slug', 'slug')
         .select('_id title slug mtitle code likes liked bookmark language tags postedBy createdAt updatedAt')
         .exec((err, data) => {
             if(err){
@@ -266,9 +268,42 @@ exports.listBookmarkedSnippets = (req, res) => {
 }
 
 
+
 //like snippet
 exports.likeSnippet = (req, res) => {
+    //like and save snippet
+    let liked = req.body.liked;
+    SnippetSchema.findByIdAndUpdate(req.body.snippetId, { $push: { likes: req.auth._id } }, { new: true }).exec((err, result) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        } else {
+            //update liked
+            liked = true;
+            //save liked snippet
+            result.save((err, result) => {
+                if(err){
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    });
+                }
+                res.json(result);
+                console.log(result);
+            });
+        }
+    });
 
+    //update user's liked snippets
+    User.findByIdAndUpdate(req.auth._id, {$push: {likedSnippets: req.body.snippetId}},{new: true}).exec((err, result) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        console.log(result);
+        
+    })
 };
 
 //unlike snippet

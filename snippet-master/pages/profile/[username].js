@@ -11,8 +11,9 @@ import { userPublicProfile } from '../../actions/user'
 import moment from 'moment'
 import Link from 'next/link'
 import  Router from 'next/router'
+import { singleSnippet } from '../../actions/snippet'
 
-function Profile({ user, snippets }) {
+function Profile({ user, snippets, snippet }) {
     const theme = useThemeContext()
 
     return (
@@ -86,7 +87,9 @@ Profile.getInitialProps = async ({ query }) => {
             return { user: data.user, snippets: data.snippets }
         }
     })
+    
 }
+
 
 const ProfileStyled = styled.div`
     padding: 1.5rem;

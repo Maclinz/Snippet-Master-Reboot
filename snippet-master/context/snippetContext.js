@@ -30,12 +30,13 @@ export const SnipetProvider = ({ children }) => {
         totalSnippets: 0,
         loadedSnippets: [],
         snippetModal: false,
-        clickedSnippet: {
+        singleSnippet: {
             title: "",
             code: "",
             tags: [],
             errors: '',
             success: false,
+            error: '',
         },
         expandSnippet: false,
         removeSnippet: false,
@@ -196,7 +197,7 @@ export const SnipetProvider = ({ children }) => {
         })
     }
 
-    listBookmarkedSnippets()
+    //listBookmarkedSnippets()
 
     //load more snippets
     const loadMore = () => {
@@ -260,6 +261,7 @@ export const SnipetProvider = ({ children }) => {
         listSnippets()
         listAllSnippetsAdmin()
     } , [])
+
 
     console.log(isAuth())
     console.log('Snippet State', state)

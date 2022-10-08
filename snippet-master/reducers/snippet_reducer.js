@@ -110,7 +110,7 @@ const snippet_reducer = (state, action) => {
     if(action.type === SINGLE_SNIPPET_SUCCES) {
         return {
             ...state,
-            clickedSnippet: action.payload,
+            singleSnippet: action.payload,
             expandSnippet: !state.expandSnippet
         }
     }
