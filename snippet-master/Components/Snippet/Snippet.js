@@ -178,7 +178,7 @@ function Snippet({ snippet }) {
     const [likeCount, setLikeCount] = useState(likes.length);
     const [likesData, setLikesData] = useState(likes);
 
-    console.log('likes', likesData)
+    //console.log('likes', likesData)
 
     //expand state
     const [expanded, setExpanded] = useState(false);
