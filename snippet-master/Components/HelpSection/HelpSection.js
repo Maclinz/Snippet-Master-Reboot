@@ -106,6 +106,7 @@ const HelpSectionStyled = styled.div`
                     padding-left: 2rem;
                     position: relative;
                     transition: all .4s ease-in-out;
+                    text-align: left;
                     &::after{
                         content: '';
                         position: absolute;

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useThemeContext } from '../../context/themeContext'
+import { plus, xmark } from '../../utils/Icons'
 
 function FaqItem({question, answer}) {
 
@@ -14,6 +15,11 @@ function FaqItem({question, answer}) {
             <div className="faq">
                 <h6 className={`${toggleAnswer ? 'active-faq': '' }`} onClick={() => setToggleAnswer(!toggleAnswer)}>
                     {question} 
+                    <div className="icons">
+                        {
+                            toggleAnswer ?  xmark : plus 
+                        }
+                    </div>
                 </h6>
                 <p>
                     {
@@ -36,6 +42,9 @@ const FaqItemStyled = styled.div`
         border-radius: 5px;
         font-size: 18px;
         font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     p{
         padding: .6rem 1rem;
