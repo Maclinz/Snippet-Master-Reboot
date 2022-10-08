@@ -15,10 +15,6 @@ import { atomOneDark,
     tomorrowNightBlue,
     tomorrowNightBright,
     tomorrowNightEighties,
-    twilight,
-    vibrantInk,
-    vibrantInkDark,
-    vibrantInkLight,
     github,
     } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -84,10 +80,6 @@ function Snippet({ snippet }) {
         { value: tomorrowNightBlue, label: 'Tomorrow Night Blue' },
         { value: tomorrowNightBright, label: 'Tomorrow Night Bright' },
         { value: tomorrowNightEighties, label: 'Tomorrow Night Eighties' },
-        { value: twilight, label: 'Twilight' },
-        { value: vibrantInk, label: 'Vibrant Ink' },
-        { value: vibrantInkDark, label: 'Vibrant Ink Dark' },
-        { value: vibrantInkLight, label: 'Vibrant Ink Light' },
         { value: github, label: 'Github' },
 
     ]
