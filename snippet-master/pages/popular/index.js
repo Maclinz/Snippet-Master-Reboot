@@ -2,7 +2,6 @@ import React from 'react'
 import { isAuth } from '../../actions/auth'
 import Layout from '../../Components/Layout'
 import MainContent from '../../Components/MainContent/MainContent'
-import Tags from '../../Components/Tags/Tags'
 
 isAuth
 function index() {

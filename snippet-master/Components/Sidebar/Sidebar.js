@@ -71,8 +71,8 @@ function Sidebar() {
             </nav>
             <footer>
                 <div className="links">
-                    <Link href={'/terms'}>Terms</Link>
-                    <Link href={'/privacy'}>Privacy</Link>
+                    <Link href={'/help'}>Terms</Link>
+                    <Link href={'/help'}>Privacy</Link>
                     <Link href={'/help'}>Help</Link>
                 </div>
                 <p>&copy;Copyright 2022 <Link href={'/'}>SnippetMaster</Link></p>

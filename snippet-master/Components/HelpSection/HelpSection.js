@@ -20,9 +20,11 @@ function HelpSection() {
             case 0:
                 return <HelpFaq />
             case 1:
-                return <p>Test 333</p>
+                return <p>Licensing and Agreements - Goes Here....</p>
             case 2:
-                return <p>Test 444</p>
+                return <p>Terms of Service - Goes Here....</p>
+            case 3:
+                return <p>Privacy Policy - Goes Here....</p>
         }
         
     }
@@ -89,7 +91,7 @@ const HelpSectionStyled = styled.div`
         width: 100%;
         max-width: 90%;
         margin: 0 auto;
-        min-height: 50vh;
+        min-height: 70vh;
         border-radius: 50px;
         p{
             color: ${props => props.theme.colorGrey2};
