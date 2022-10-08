@@ -7,6 +7,9 @@ const { runValidation } = require('../validations');
 const router = exppress.Router();
 
 router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
+    .get('/', (req, res) => {
+        res.send('hello world')
+    })
     .get('/snippets', listSnippets)
     .get('/snippet/:slug', readSnippet )
     .post('/snippets-tags-categories', listSnippetsandTags )

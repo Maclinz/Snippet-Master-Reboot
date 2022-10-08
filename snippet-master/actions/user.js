@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
 import queryString from 'query-string';
 
-let baseUrl = 'http://localhost:8000/api/v1';
+let baseUrl = 'https://snippetmasterdemo2.herokuapp.com/api/v1';
 
 export const userPublicProfile = (username) => {
     return fetch(`${baseUrl}/user/${username}`, {
