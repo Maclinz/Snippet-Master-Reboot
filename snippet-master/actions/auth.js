@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
 
-let baseUrl = 'http://localhost:8000/api/v1';
-//let baseUrl = 'https://snippetmasterdemo2.herokuapp.com/api/v1';
+//let baseUrl = 'http://localhost:8000/api/v1';
+let baseUrl = 'https://snippetmasterdemo2.herokuapp.com/api/v1';
 
 export const signup = (user) => {
     return fetch(`${baseUrl}/signup`, {
