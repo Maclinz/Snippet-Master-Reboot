@@ -37,10 +37,13 @@ function Snippet({ snippet }) {
 
     const { deleteSnippet, getSingleSnippet, expandSnippet } = useSnippetContext()
     
-    const {code, title, tags, postedBy, slug, language, likes, liked} = snippet;
+    const {code, title, tags, postedBy, slug, language, likes} = snippet;
 
     //snippet ref
     const snippetRef = React.useRef(null);
+
+    //user
+    const user = isAuth();
 
     //All code thems
     const codeThemes = [
@@ -176,7 +179,8 @@ function Snippet({ snippet }) {
     //const [bookmarked, setBookmarked] = useState(null);
     //const [liked, setLiked] = useState(null);
     const [likeCount, setLikeCount] = useState(likes.length);
-    const [likesData, setLikesData] = useState(likes);
+    const [likesData, setLikesData] = useState([]);
+    const [liked, setLiked] = useState(false);
 
     //console.log('likes', likesData)
 
@@ -231,8 +235,24 @@ function Snippet({ snippet }) {
 
     //like and unlike snippet
     const likeSnippetHandler = (slug, snippedId) => {
-        likeSnippet(slug, token, snippedId).then(data => {}).catch(err => {});
+        console.log('liked', liked);
+        likeSnippet(slug, token, snippedId).then(data => {
+            data.likes.map(like => {
+                if(like === user._id) {
+                    //only set liked to true if the user id is in the likes array
+                    setLiked(true);
+                    if (!liked) {
+                        setLikeCount(likeCount + 1);
+                    }
+                } 
+            })
+        }).catch(err => {});
     }
+
+    //useEffect to get likes
+    useEffect(() => {
+        
+    }, [liked]);
 
     //fetch single snippet when link is opened directly
     useEffect(() => {
