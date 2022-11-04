@@ -38,7 +38,7 @@ function Snippet({ snippet }) {
 
     const { deleteSnippet, getSingleSnippet, expandSnippet } = useSnippetContext()
     
-    const {code, title, tags, postedBy, slug, language, likes} = snippet;
+    const {code, title, tags, postedBy, slug, language, likes, liked} = snippet;
 
     //snippet ref
     const snippetRef = React.useRef(null);
@@ -181,7 +181,7 @@ function Snippet({ snippet }) {
     //const [liked, setLiked] = useState(null);
     const [likeCount, setLikeCount] = useState(likes.length);
     const [likesData, setLikesData] = useState([]);
-    const [liked, setLiked] = useState(false);
+    const [localLiked, setLocalLiked] = useState(liked);
 
     //console.log('likes', likesData)
 
@@ -239,8 +239,20 @@ function Snippet({ snippet }) {
         likeSnippet(slug, token, snippedId).then(data => {
             console.log('Likes data', data.likes);
             setLikeCount(data.likes.length);
+
+            setLocalLiked(data.liked);
+
         }).catch(err => {});
     }
+
+
+    const bookmarkHandler = (slug, snippedId) => {
+        bookmarkSnippet(slug, token, snippedId).then(data => {
+            console.log('Bookmark data', data);
+            //setBookmarked(data.bookmarked);
+        }).catch(err => {});
+    }
+
     //useEffect to get likes
     useEffect(() => {
         
@@ -254,7 +266,9 @@ function Snippet({ snippet }) {
     }, [likes.length]);
 
     return (
-        <SnippetStyled theme={theme} rand={randomTagColorMemo} 
+        <SnippetStyled 
+            theme={theme} rand={randomTagColorMemo} 
+            liked={localLiked}
             expanded={expanded} 
             ref={snippetRef}
             onDoubleClick={() =>{
@@ -295,6 +309,7 @@ function Snippet({ snippet }) {
                             click={() => {
                                 //snippetBookmark(slug, snippet._id);
                                 //bookmarkSnippetHandler(slug, snippet._id);
+                                bookmarkHandler(slug, snippet._id);
                             }}
                         />
                     </div>
@@ -524,12 +539,12 @@ const SnippetStyled = styled.div`
                         transition: all .4s ease-in-out;
                         color: ${props => props.theme.colorGrey0};
                         i{
-                            color: ${props => props.theme.colorGrey0};
+                            color: ${props => props.liked ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
                             transition: all .4s ease-in-out;
                         }
                     }
                     i{
-                        color: ${props => props.theme.colorIcons2};
+                        color: ${props => props.liked ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
                     }
                 }
                 .right-actions{

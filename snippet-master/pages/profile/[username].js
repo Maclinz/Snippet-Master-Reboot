@@ -16,6 +16,7 @@ import { singleSnippet } from '../../actions/snippet'
 function Profile({ user, snippets, snippet }) {
     const theme = useThemeContext()
 
+    console.log('test liked', user);
     return (
         <Layout>
             <MainContent >

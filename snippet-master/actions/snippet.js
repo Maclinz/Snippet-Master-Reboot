@@ -119,8 +119,8 @@ export const singleSnippet = async (slug) => {
 
 //bookmark snippet
 export const bookmarkSnippet = (slug, token, snippetId) => {
-    return fetch(`${baseUrl}/snippet/bookmark/${slug}`, {
-        method: 'POST',
+    return fetch(`${baseUrl}/snippet/bookmark/${snippetId}`, {
+        method: 'PUT',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',

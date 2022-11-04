@@ -35,6 +35,12 @@ const userSchema = new mongoose.Schema({
             ref: 'Snippet',
         }
     ],
+    liked: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Snippet',
+        }
+    ],
     hashed_password: {
         type: String,
         required: true,
