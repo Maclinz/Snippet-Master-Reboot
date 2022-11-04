@@ -24,7 +24,6 @@ const SnippetSchema = new mongoose.Schema({
     liked: {
         type: Boolean,
         default: false,
-        
     },
     mtitle: {
         type: String,

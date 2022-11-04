@@ -3,8 +3,8 @@ import cookie from 'js-cookie';
 import queryString from 'query-string';
 import { isAuth } from './auth';
 
-//let baseUrl = 'http://localhost:8000/api/v1';
-let baseUrl = 'https://snippetmasterdemo2.herokuapp.com/api/v1';
+let baseUrl = 'http://localhost:8000/api/v1';
+//let baseUrl = 'https://snippetmasterdemo2.herokuapp.com/api/v1';
 
 export const snippetCreate = (snippet, token) => {
 

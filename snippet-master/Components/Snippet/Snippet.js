@@ -237,15 +237,7 @@ function Snippet({ snippet }) {
     const likeSnippetHandler = (slug, snippedId) => {
         console.log('liked', liked);
         likeSnippet(slug, token, snippedId).then(data => {
-            data.likes.map(like => {
-                if(like === user._id) {
-                    //only set liked to true if the user id is in the likes array
-                    setLiked(true);
-                    if (!liked) {
-                        setLikeCount(likeCount + 1);
-                    }
-                } 
-            })
+            console.log('Likes data', data);
         }).catch(err => {});
     }
 

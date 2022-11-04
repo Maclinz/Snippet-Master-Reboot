@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
-//let baseUrl = 'http://localhost:8000/api/v1';
-let baseUrl = 'https://snippetmasterdemo2.herokuapp.com/api/v1';
+let baseUrl = 'http://localhost:8000/api/v1';
+//let baseUrl = 'https://snippetmasterdemo2.herokuapp.com/api/v1';
 
 
 export const createTag = (tag, token) => {

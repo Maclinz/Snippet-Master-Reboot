@@ -27,7 +27,7 @@ router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
     //like snippet
     .put('/snippet/like/:id', requireSignIn, authMiddleware, likeSnippet)
     //unlike snippet
-    .put('/snippet/unlike/:slug', requireSignIn, authMiddleware, unlikeSnippet)
+    .put('/snippet/unlike/:id', requireSignIn, authMiddleware, unlikeSnippet)
 
 
 
