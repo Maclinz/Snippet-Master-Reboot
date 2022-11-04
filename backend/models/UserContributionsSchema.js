@@ -14,7 +14,7 @@ const UserContributionsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-    snippet: {
+    snippets: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Snippet',
     },
