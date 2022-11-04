@@ -270,8 +270,45 @@ exports.listBookmarkedSnippets = (req, res) => {
 
 
 //like snippet
-exports.likeSnippet = (req, res) => {
-    SnippetSchema.findByIdAndUpdate(req.body.snippetId, { $push: { likes: req.auth._id } }, { new: true }).exec((err, result) => {
+exports.likeSnippet = (req, res) => { 
+
+
+    //check if user has already liked the snippet
+    SnippetSchema.findById(req.body.snippetId).exec((err, snippet) => {
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        //if user has already liked the snippet, unlike it
+        let existingLike = snippet.likes.find((like) => like.toString() === req.auth._id.toString());
+        if(existingLike){
+            //if user has already liked the snippet, unlike it
+            snippet.likes.pull(existingLike);
+            snippet.save((err, result) => {
+                if(err){
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    });
+                }
+                res.json(result);
+            })
+        } else {
+            //if user has not liked the snippet, like it
+            snippet.likes.push(req.auth._id);
+            snippet.save((err, result) => {
+                if(err){
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    });
+                }
+                res.json(result);
+            })
+        }
+    })
+
+
+    /*SnippetSchema.findByIdAndUpdate(req.body.snippetId, { $push: { likes: req.auth._id } }, { new: true }).exec((err, result) => {
         if(err){
             return res.status(400).json({
                 error: errorHandler(err)
@@ -280,7 +317,7 @@ exports.likeSnippet = (req, res) => {
             res.json(result);
             console.log(result);
         }
-    })
+    })*/
 };
 
 //unlike snippet

@@ -30,6 +30,7 @@ import { useSnippetContext } from '../../context/snippetContext';
 import ActionButton from '../ActionButton/ActionButton';
 import { unbookmarkSnippet, bookmarkSnippet, likeSnippet, unlikeSnippet, singleSnippet } from '../../actions/snippet';
 import Router from 'next/router';
+import { getUnique } from '../../utils/getUnique';
 
 
 function Snippet({ snippet }) {
@@ -235,22 +236,25 @@ function Snippet({ snippet }) {
 
     //like and unlike snippet
     const likeSnippetHandler = (slug, snippedId) => {
-        console.log('liked', liked);
         likeSnippet(slug, token, snippedId).then(data => {
-            console.log('Likes data', data);
+            console.log('Likes data', data.likes);
+            setLikeCount(data.likes.length);
         }).catch(err => {});
+
     }
+        console.log('liked', likeCount);
 
     //useEffect to get likes
     useEffect(() => {
         
-    }, [liked]);
+    }, []);
 
     //fetch single snippet when link is opened directly
     useEffect(() => {
-        //check if link has slug 
-    
-    }, [slug]);
+        //fetch if there is a like in the likes array
+        console.log('likes amount', likes);
+        
+    }, [likes.length]);
 
     return (
         <SnippetStyled theme={theme} rand={randomTagColorMemo} 
