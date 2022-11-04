@@ -240,10 +240,7 @@ function Snippet({ snippet }) {
             console.log('Likes data', data.likes);
             setLikeCount(data.likes.length);
         }).catch(err => {});
-
     }
-        console.log('liked', likeCount);
-
     //useEffect to get likes
     useEffect(() => {
         
