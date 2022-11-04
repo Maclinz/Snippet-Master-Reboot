@@ -272,7 +272,6 @@ exports.listBookmarkedSnippets = (req, res) => {
 //like snippet
 exports.likeSnippet = (req, res) => { 
 
-
     //check if user has already liked the snippet
     SnippetSchema.findById(req.body.snippetId).exec((err, snippet) => {
         if(err){
@@ -285,6 +284,10 @@ exports.likeSnippet = (req, res) => {
         if(existingLike){
             //if user has already liked the snippet, unlike it
             snippet.likes.pull(existingLike);
+
+            //set liked to false
+            snippet.liked = false;
+
             snippet.save((err, result) => {
                 if(err){
                     return res.status(400).json({
@@ -296,6 +299,10 @@ exports.likeSnippet = (req, res) => {
         } else {
             //if user has not liked the snippet, like it
             snippet.likes.push(req.auth._id);
+
+            //set liked to true
+            snippet.liked = true;
+
             snippet.save((err, result) => {
                 if(err){
                     return res.status(400).json({
