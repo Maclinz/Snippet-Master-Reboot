@@ -28,7 +28,7 @@ import Link from 'next/link';
 import { getCookie, isAuth } from '../../actions/auth';
 import { useSnippetContext } from '../../context/snippetContext';
 import ActionButton from '../ActionButton/ActionButton';
-import { unbookmarkSnippet, bookmarkSnippet, likeSnippet, unlikeSnippet, singleSnippet } from '../../actions/snippet';
+import { unbookmarkSnippet, bookmarkSnippet, likeSnippet, unlikeSnippet, singleSnippet, listBookmarks } from '../../actions/snippet';
 import Router from 'next/router';
 import { getUnique } from '../../utils/getUnique';
 
@@ -39,6 +39,7 @@ function Snippet({ snippet }) {
     const { deleteSnippet, getSingleSnippet, expandSnippet } = useSnippetContext()
     
     const {code, title, tags, postedBy, slug, language, likes, liked} = snippet;
+
 
     //snippet ref
     const snippetRef = React.useRef(null);
@@ -182,6 +183,7 @@ function Snippet({ snippet }) {
     const [likeCount, setLikeCount] = useState(likes.length);
     const [likesData, setLikesData] = useState([]);
     const [localLiked, setLocalLiked] = useState(liked);
+    const[toggleLike, setToggleLike] = useState(false);
 
     //console.log('likes', likesData)
 
@@ -242,6 +244,11 @@ function Snippet({ snippet }) {
 
             setLocalLiked(data.liked);
 
+            //check if user id is in likes array
+            /*const isLiked = data.likes.find(like => like === user._id);
+            setToggleLike(isLiked ? true : false);
+            console.log('isLiked', isLiked);*/
+
         }).catch(err => {});
     }
 
@@ -253,23 +260,12 @@ function Snippet({ snippet }) {
         }).catch(err => {});
     }
 
-    //useEffect to get likes
-    useEffect(() => {
-        
-    }, []);
-
-    //fetch single snippet when link is opened directly
-    useEffect(() => {
-        //fetch if there is a like in the likes array
-        console.log('likes amount', likes);
-        
-    }, [likes.length]);
-
     return (
         <SnippetStyled 
             theme={theme} rand={randomTagColorMemo} 
-            liked={localLiked}
+            toggleLike={toggleLike}
             expanded={expanded} 
+            token={token}
             ref={snippetRef}
             onDoubleClick={() =>{
                 getSingleSnippet(slug)
@@ -287,7 +283,7 @@ function Snippet({ snippet }) {
                             <h3 className="s-title2">
                                 {
                                     <Link href={`/profile/${!postedBy.username ? '' : postedBy.username}`}>
-                                        {postedBy.username}
+                                        {!postedBy.username ? '' : postedBy.username}
                                     </Link>
                                 }
                             </h3>
@@ -350,14 +346,18 @@ function Snippet({ snippet }) {
                     <div className="snippet-actions">
                         <div className="left-actions">
                             <Button
-                                name={`${likeCount} Likes`}
+                                name={`${likeCount} Like${likeCount === 1 ? '' : 's'}`}
                                 backgound={randomTagColorMemo}
                                 blob={'blob'}
                                 padding={'.6rem 1rem'}
                                 borderRad={'12px'}
                                 icon={heart}
                                 click={() => {
-                                    likeSnippetHandler(slug, snippet._id);
+                                    if(!isAuth()) {
+                                        Router.push('/login');
+                                    } else {
+                                        likeSnippetHandler(slug, snippet._id);
+                                    }
                                 }}
                             />
                         </div>
@@ -539,12 +539,12 @@ const SnippetStyled = styled.div`
                         transition: all .4s ease-in-out;
                         color: ${props => props.theme.colorGrey0};
                         i{
-                            color: ${props => props.liked ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
+                            color: ${props => props.toggleLike ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
                             transition: all .4s ease-in-out;
                         }
                     }
                     i{
-                        color: ${props => props.liked ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
+                        color: ${props => props.toggleLike ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
                     }
                 }
                 .right-actions{

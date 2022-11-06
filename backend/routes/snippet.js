@@ -24,6 +24,7 @@ router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
     .post('/snippet/unbookmark/:slug', requireSignIn, authMiddleware, unbookmarkUserSnippet)
     //get bookmarked snippets
     .get('/user/bookmarks', requireSignIn, authMiddleware, listBookmarkedSnippets)
+    //.put('/user/bookmark/:id', requireSignIn, authMiddleware, listBookmarkedSnippets)
     //like snippet
     .put('/snippet/like/:id', requireSignIn, authMiddleware, likeSnippet, )
     //unlike snippet

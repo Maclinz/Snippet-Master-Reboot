@@ -227,7 +227,9 @@ exports.searchSnippets = (req, res) => {
 //bookmark snippet
 exports.bookmarkUserSnippet = (req, res) => {
     //bookmark and unbookmark snippet
-    User.findById(req.auth._id).exec((err, user) => {
+    User.findById(req.auth._id)
+    .populate('bookmarks', '_id title slug mtitle code likes liked tags postedBy createdAt updatedAt')
+    .exec((err, user) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err)
@@ -287,13 +289,16 @@ exports.unbookmarkUserSnippet = (req, res) => {
 
 //list bookmarked snippets
 exports.listBookmarkedSnippets = (req, res) => {
-    User.findById(req.auth._id).select('bookmarks').populate('bookmarks').exec((err, result) => {
+    //list all bookmarked snippets for a user
+    User.findById(req.auth._id)
+    .populate('bookmarks', '_id title slug mtitle code likes liked language tags postedBy createdAt updatedAt')
+    .exec((err, user) => {
         if(err){
             return res.status(400).json({
                 error: errorHandler(err)
             });
         }
-        res.json(result);
+        res.json(user.bookmarks);
     })
 }
 

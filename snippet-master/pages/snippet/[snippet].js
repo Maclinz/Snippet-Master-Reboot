@@ -15,9 +15,6 @@ import { singleSnippet } from '../../actions/snippet'
 
 function SingleSnippet({snippet}) {
     const theme = useThemeContext()
-    //const {singleSnippet, loading} = useSnippetContext()
-
-    console.log('singleSnippet Initial Props', snippet)
 
     return (
         <Layout>

@@ -81,7 +81,6 @@ export const SnipetProvider = ({ children }) => {
         dispatch({ type: GET_SNIPPETS_BEGIN })
         listSnippetsandTags(skip, limit)
             .then(data => {
-                console.log(data);
                 dispatch({
                     type: GET_SNIPPETS_SUCCESS, 
                     payload: data
@@ -118,7 +117,6 @@ export const SnipetProvider = ({ children }) => {
         if(answer){
             snippetDelete(slug, token)
                 .then(data => {
-                    console.log(data);
                     dispatch({
                         type: DELETE_SNIPPET,
                         payload: data
@@ -137,7 +135,6 @@ export const SnipetProvider = ({ children }) => {
     const getSingleSnippet = (slug) => {
         
         singleSnippet(slug).then(data => {
-            console.log('Single Snippet', data);
             dispatch({
                 type: SINGLE_SNIPPET_SUCCES,
                 payload: data
@@ -181,7 +178,6 @@ export const SnipetProvider = ({ children }) => {
                 type: UNBOOKMARK_SNIPPET,
             })
             unbookmarkSnippet(slug, token, snippedId).then(data => {
-                //console.log('Unbookmarkedddd Snippet', data);
             }).catch(err => {
                 console.log(err);
             })
@@ -219,8 +215,6 @@ export const SnipetProvider = ({ children }) => {
                 })
             }
         )
-
-        console.log('skip', skip)
     }
     
     //handle search
@@ -263,8 +257,6 @@ export const SnipetProvider = ({ children }) => {
     } , [])
 
 
-    //console.log(isAuth())
-    //console.log('Snippet State', state)
     return (
         <SnippeContext.Provider value={{ 
             ...snippetValues, 
