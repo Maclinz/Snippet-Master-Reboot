@@ -110,7 +110,7 @@ const LayoutStyled = styled.div`
                 color: ${props => props.theme.colorIcons};
             }
             a{
-                transition: all .5s ease-in-out;
+                transition: all .3s ease-in-out;
             }
         }
     }

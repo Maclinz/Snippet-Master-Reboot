@@ -38,9 +38,9 @@ const SearchFormStyled = styled.form`
             border-radius: ${props => props.theme.borderRadiusSm};
             font-family: inherit;
             width: 400px;
-            transition: all .3s ease-in-out;
             color: ${props => props.theme.colorWhite};
             border: 1px solid ${props => props.theme.colorIcons3};
+            transition: all .3s ease-in-out;
             &:active{
                 width: 500px;
                 border: 1px solid ${props => props.theme.colorIcons};

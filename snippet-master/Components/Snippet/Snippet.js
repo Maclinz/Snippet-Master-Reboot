@@ -428,7 +428,7 @@ const SnippetStyled = styled.div`
     position: relative;
     z-index: 1;
     grid-column: ${props => props.expanded ? 'span 2' : 'span 1'};
-    transition: all .4s ease-in-out;
+    transition: all .2s ease-in-out;
     @media screen and (max-width: 1260px){
         grid-column: initial;
     }

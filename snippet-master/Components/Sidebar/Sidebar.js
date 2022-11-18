@@ -114,7 +114,7 @@ const SidebarStyled = styled.div`
                 position: relative;
                 &::after{
                     position: absolute;
-                    transition: all .4s ease-in-out;
+                    transition: all .3s ease-in-out;
                     content: '';
                     left: 0;
                     top: 0;
@@ -136,7 +136,7 @@ const SidebarStyled = styled.div`
 
                 a{
                     display: ${props => props.collapsed ? 'initial' : 'none'};
-                    transition: all .5s ease-in-out;
+                    transition: all .3s ease-in-out;
                 }
             }
         }
@@ -164,7 +164,7 @@ const SidebarStyled = styled.div`
                 color: transparent;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-                transition: all .5s ease-in-out;
+                transition: all .3s ease-in-out;
                 font-weight: 600;
                 font-size: 15px;
             }
