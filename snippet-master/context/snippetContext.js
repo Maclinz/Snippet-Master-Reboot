@@ -251,11 +251,15 @@ export const SnipetProvider = ({ children }) => {
         }
     }
 
+    
+
     useEffect(() => {
         listSnippets()
         listAllSnippetsAdmin()
     } , [])
 
+
+    console.log('state', state)
 
     return (
         <SnippeContext.Provider value={{ 

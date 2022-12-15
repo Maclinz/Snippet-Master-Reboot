@@ -15,12 +15,13 @@ export default function Home() {
   const theme = useThemeContext()
   const { snippets, loading, loadMore, expandSnippet } = useSnippetContext()
 
+
   return (
     <MainContentStyled theme={theme}>
       <Layout>
         <MainContent>
           <div className="categories-con">
-            <Categories />
+            <Categories  />
           </div>
           <div className="loading-con" style={{
             paddingTop: loading ? '2rem' : '0'

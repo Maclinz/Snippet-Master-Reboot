@@ -14,8 +14,8 @@ function Categories() {
 
     const handleCategoryClick = (category) => {
         setActiveCategory(category);
+        
     }
-
 
     return (
         <CategoriesStyled theme={theme}>

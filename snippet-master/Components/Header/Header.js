@@ -51,9 +51,9 @@ function Header() {
                 </div>
                 <button className="h-btn theme" onClick={() => {
                     //toggle theme
-                    setTheme(
-                        theme.name === 'light' ? 0 : 1
-                    )
+                    // setTheme(
+                    //     theme.name === 'light' ? 0 : 1
+                    // )
                 }}>
                     {moon}
                 </button>
