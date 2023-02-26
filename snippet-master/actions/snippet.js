@@ -175,7 +175,7 @@ export const listBookmarks = async (token) => {
 
 
 //like snippet
-export const likeSnippet = (slug, token, snippetId) => {
+export const likeSnippet = (token, snippetId, userId) => {
     return fetch(`${baseUrl}/snippet/like/${snippetId}`, {
         method: 'PUT',
         headers: {
@@ -183,7 +183,7 @@ export const likeSnippet = (slug, token, snippetId) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ snippetId })
+        body: JSON.stringify({ snippetId, userId })
     })
         .then((res) => {
             return res.json()

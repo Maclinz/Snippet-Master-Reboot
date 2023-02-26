@@ -282,6 +282,10 @@ const ProfileUpdateStyled = styled.div`
                 display: flex;
                 justify-content: space-between;
                 gap: 1.5rem;
+                @media screen and (max-width: 1143px){
+                    flex-direction: column;
+                    gap: 0;
+                }
             }
             .input-controller{
                 margin-bottom: 1.5rem;

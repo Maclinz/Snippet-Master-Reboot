@@ -180,7 +180,7 @@ function Snippet({ snippet }) {
     //bookmark state
     //const [bookmarked, setBookmarked] = useState(null);
     //const [liked, setLiked] = useState(null);
-    const [likeCount, setLikeCount] = useState(likes.length);
+    const [likeCount, setLikeCount] = useState(0);
     const [likesData, setLikesData] = useState([]);
     const [localLiked, setLocalLiked] = useState(liked);
     const[toggleLike, setToggleLike] = useState(false);
@@ -237,18 +237,9 @@ function Snippet({ snippet }) {
 
 
     //like and unlike snippet
-    const likeSnippetHandler = (slug, snippedId) => {
-        likeSnippet(slug, token, snippedId).then(data => {
-            console.log('Likes data', data.likes);
-            setLikeCount(data.likes.length);
-
-            setLocalLiked(data.liked);
-
-            //check if user id is in likes array
-            /*const isLiked = data.likes.find(like => like === user._id);
-            setToggleLike(isLiked ? true : false);
-            console.log('isLiked', isLiked);*/
-
+    const likeSnippetHandler = (snippedId, userId) => {
+        likeSnippet(token, snippedId, userId).then(data => {
+            console.log('Like data', data);
         }).catch(err => {});
     }
 
@@ -346,7 +337,7 @@ function Snippet({ snippet }) {
                     <div className="snippet-actions">
                         <div className="left-actions">
                             <Button
-                                name={`${likeCount} Like${likeCount === 1 ? '' : 's'}`}
+                                name={0}
                                 backgound={randomTagColorMemo}
                                 blob={'blob'}
                                 padding={'.6rem 1rem'}
@@ -356,7 +347,7 @@ function Snippet({ snippet }) {
                                     if(!isAuth()) {
                                         Router.push('/login');
                                     } else {
-                                        likeSnippetHandler(slug, snippet._id);
+                                        likeSnippetHandler(snippet._id, user._id);
                                     }
                                 }}
                             />

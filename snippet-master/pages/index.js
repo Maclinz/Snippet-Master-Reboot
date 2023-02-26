@@ -4,7 +4,6 @@ import Button from '../Components/Button/Button';
 import Categories from '../Components/Categories/Categories';
 import Layout from '../Components/Layout';
 import Loading from '../Components/Loading/Loading';
-import Main from '../Components/Main/Main';
 import MainContent from '../Components/MainContent/MainContent';
 import Snippet from '../Components/Snippet/Snippet';
 import { useSnippetContext } from '../context/snippetContext';

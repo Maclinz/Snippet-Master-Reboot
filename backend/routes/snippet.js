@@ -26,7 +26,7 @@ router.post('/create-snippet',  requireSignIn, adminMiddleware, create)
     .get('/user/bookmarks', requireSignIn, authMiddleware, listBookmarkedSnippets)
     //.put('/user/bookmark/:id', requireSignIn, authMiddleware, listBookmarkedSnippets)
     //like snippet
-    .put('/snippet/like/:id', requireSignIn, authMiddleware, likeSnippet, )
+    .put('/snippet/like/:id', requireSignIn, authMiddleware, likeSnippet )
     //unlike snippet
     .put('/snippet/unlike/:id', requireSignIn, authMiddleware, unlikeSnippet)
 

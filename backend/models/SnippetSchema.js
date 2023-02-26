@@ -8,22 +8,20 @@ const SnippetSchema = new mongoose.Schema({
         required: true,
         minlength: 3,
     },
-    slug: {
-        type: String,
-        index: true,
-        unique: true,
-    },
     code: {
-        type: {},
-        required: true,
-        min: 50,
-        max: 2000000,
+        type: String,
+        required: true
     },
     language: String,
-    likes: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
-    liked: {
-        type: Boolean,
-        default: false,
+    likes: {
+        type: Number,
+        default: 0
+    },
+    likedBy: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+    slug: {
+        type: String,
+        unique: true,
+        index: true
     },
     mtitle: {
         type: String,
