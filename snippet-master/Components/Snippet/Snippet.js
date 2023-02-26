@@ -40,7 +40,6 @@ function Snippet({ snippet }) {
     
     const {code, title, tags, postedBy, slug, language, likes, liked} = snippet;
 
-
     //snippet ref
     const snippetRef = React.useRef(null);
 
@@ -84,7 +83,6 @@ function Snippet({ snippet }) {
         { value: github, label: 'Github' },
 
     ]
-
 
     //Custom Select styles
     const customStyles = {
@@ -173,22 +171,13 @@ function Snippet({ snippet }) {
 
     //code theme state
     const [codeTheme, setCodeTheme] = useState(codeThemes[0]);
-
     //copied state
     const [copied, setCopied] = useState(false);
-
-    //bookmark state
-    //const [bookmarked, setBookmarked] = useState(null);
-    //const [liked, setLiked] = useState(null);
-    const [likeCount, setLikeCount] = useState(0);
-    const [likesData, setLikesData] = useState([]);
-    const [localLiked, setLocalLiked] = useState(liked);
-    const[toggleLike, setToggleLike] = useState(false);
-
-    //console.log('likes', likesData)
-
     //expand state
     const [expanded, setExpanded] = useState(false);
+
+    //loacl like
+    const [localLikes, setLocalLikes] = useState(likes);
 
 
     const changeCodeTheme = (e) => {
@@ -235,14 +224,14 @@ function Snippet({ snippet }) {
     //token
     const token =  getCookie('token');
 
-
     //like and unlike snippet
     const likeSnippetHandler = (snippedId, userId) => {
         likeSnippet(token, snippedId, userId).then(data => {
-            console.log('Like data', data);
-        }).catch(err => {});
+            setLocalLikes(data.likes);
+        }).catch(err => {
+            console.log('Error Liking Snippet', err);
+        });
     }
-
 
     const bookmarkHandler = (slug, snippedId) => {
         bookmarkSnippet(slug, token, snippedId).then(data => {
@@ -254,16 +243,12 @@ function Snippet({ snippet }) {
     return (
         <SnippetStyled 
             theme={theme} rand={randomTagColorMemo} 
-            toggleLike={toggleLike}
             expanded={expanded} 
             token={token}
             ref={snippetRef}
             onDoubleClick={() =>{
                 getSingleSnippet(slug)
-                
                 Router.push(`/snippet/${slug}`)
-                
-                
             }}
         >
             <div className="snippet-con">
@@ -337,7 +322,7 @@ function Snippet({ snippet }) {
                     <div className="snippet-actions">
                         <div className="left-actions">
                             <Button
-                                name={0}
+                                name={!localLikes ? '0' : localLikes}
                                 backgound={randomTagColorMemo}
                                 blob={'blob'}
                                 padding={'.6rem 1rem'}
@@ -530,12 +515,12 @@ const SnippetStyled = styled.div`
                         transition: all .4s ease-in-out;
                         color: ${props => props.theme.colorGrey0};
                         i{
-                            color: ${props => props.toggleLike ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
+                            color: ${props => props.theme.colorGrey0};
                             transition: all .4s ease-in-out;
                         }
                     }
                     i{
-                        color: ${props => props.toggleLike ? props.theme.colorPrimaryGreen : props => props.theme.colorGrey0 };
+                        color: ${props => props.theme.colorGrey0};
                     }
                 }
                 .right-actions{
