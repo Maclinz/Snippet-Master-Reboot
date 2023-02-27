@@ -32,7 +32,7 @@ export default function Home() {
           <div className="snippets-con">
             {
               snippets.map((snippet) =>{
-                return <Snippet key={snippet.id} snippet={snippet} />
+                return <Snippet key={snippet._id} snippet={snippet} />
               })
             }
           </div>

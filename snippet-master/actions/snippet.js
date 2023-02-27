@@ -116,6 +116,18 @@ export const singleSnippet = async (slug) => {
         })
 }
 
+export const singleSnippetById = async (snippetId) => {
+    return await fetch(`${baseUrl}/single-snippet/${snippetId}`, {
+        method: 'GET'
+    })
+        .then((res) => {
+            return res.json()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 //bookmark snippet
 export const bookmarkSnippet = (slug, token, snippetId) => {
     return fetch(`${baseUrl}/snippet/bookmark/${snippetId}`, {
@@ -134,45 +146,6 @@ export const bookmarkSnippet = (slug, token, snippetId) => {
             console.log(err)
         })
 }
-
-
-//unbookmark snippet
-export const unbookmarkSnippet = (slug, token, snippetId) => {
-    return fetch(`${baseUrl}/snippet/unbookmark/${slug}`, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ snippetId })
-    })
-        .then((res) => {
-            return res.json()
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-}
-
-//get all bookmarks
-export const listBookmarks = async (token) => {
-    return await fetch(`${baseUrl}/user/bookmarks`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-        }
-    })
-        .then((res) => {
-            return res.json()
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-}
-
 
 //like snippet
 export const likeSnippet = (token, snippetId, userId) => {
@@ -193,22 +166,4 @@ export const likeSnippet = (token, snippetId, userId) => {
         })
 }
 
-//unlike snippet
-export const unlikeSnippet = (slug, token, snippetId) => {
-    return fetch(`${baseUrl}/snippet/unlike/${slug}`, {
-        method: 'PUT',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ snippetId })
-    })
-        .then((res) => {
-            return res.json()
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-}
 

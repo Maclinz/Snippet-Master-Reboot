@@ -148,6 +148,26 @@ exports.readSnippet = (req, res) => {
         })
 }
 
+exports.readSnippetById = (req, res) => {
+    const {id}= req.params;
+    console.log(req.params)
+    SnippetSchema.findById(id)
+        .populate('tags', '_id name slug')
+        .populate('postedBy', '_id name username bookmarks profile')
+        .populate('slug', 'slug')
+        .select('_id title slug mtitle code likes liked bookmark language tags postedBy createdAt updatedAt')
+        .exec((err, data) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            res.json(data);
+            console.log(data)
+        })
+        
+}
+
 exports.removeSnippet = (req, res) => {
     const slug = req.params.slug.toLowerCase();
     SnippetSchema.findOneAndRemove({slug})
@@ -230,50 +250,44 @@ exports.searchSnippets = (req, res) => {
 }
 
 //bookmark snippet
-exports.bookmarkUserSnippet = (req, res) => {
-    //bookmark snippet clicked by user and add it to the user's bookmarks
-    User.findByIdAndUpdate(req.auth._id, {$push: {bookmarks: req.body.snippetId}},{new: true})
-        .exec((err, result) => {
-            if(err){
-                return res.status(400).json({
-                    error: errorHandler(err)
-                });
-            }
-            console.log(result.bookmarks);
-        }
-    )
-};
+exports.bookmarkUserSnippet = async (req, res) => {
+    const {snippetId} = req.body;
+    const userId = req.auth._id;
 
-//unbookmark snippet
-exports.unbookmarkUserSnippet = (req, res) => {
-    //if snippet is bookmarked, remove it from the user's bookmarks
-    User.findByIdAndUpdate(req.auth._id, {$pull: {bookmarks: req.body.snippetId}},{new: true}).exec((err, result) => {
-        if(err){
+    try {
+        const user = await User.findById(userId);
+
+        //check if user exists
+        if(!user){
             return res.status(400).json({
-                error: errorHandler(err)
+                error: 'User not found'
             });
         }
-        console.log(result);
-        
-    })
-};
 
-
-//list bookmarked snippets
-exports.listBookmarkedSnippets = (req, res) => {
-    //list all bookmarked snippets for a user
-    User.findById(req.auth._id)
-    .populate('bookmarks', '_id title slug mtitle code likes liked language tags postedBy createdAt updatedAt')
-    .exec((err, user) => {
-        if(err){
-            return res.status(400).json({
-                error: errorHandler(err)
+        //check if snippet is already bookmarked
+        const isBoomarked = user.bookmarks.includes(snippetId);
+        if(isBoomarked){
+            await User.findByIdAndUpdate(userId, {
+                $pull: {bookmarks: snippetId}
+            })
+            res.json({
+                message: 'Snippet removed from bookmarks'
+            });
+        }else{
+            await User.findByIdAndUpdate(userId, {
+                $push: {bookmarks: snippetId}
+            })
+            res.json({
+                message: 'Snippet added to bookmarks'
             });
         }
-        res.json(user.bookmarks);
-    })
-}
-
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            error: 'Server error'
+        })
+    }
+};
 
 
 //like snippet
@@ -308,10 +322,3 @@ exports.likeSnippet = async (req, res) => {
     }
 };
 
-
-
-
-//unlike snippet
-exports.unlikeSnippet = (req, res) => {
-    
-};

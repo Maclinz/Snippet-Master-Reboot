@@ -235,8 +235,7 @@ function Snippet({ snippet }) {
 
     const bookmarkHandler = (slug, snippedId) => {
         bookmarkSnippet(slug, token, snippedId).then(data => {
-            console.log('Bookmark data', data);
-            //setBookmarked(data.bookmarked);
+            console.log(data)
         }).catch(err => {});
     }
 

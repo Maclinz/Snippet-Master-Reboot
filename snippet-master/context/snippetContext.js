@@ -50,6 +50,9 @@ export const SnipetProvider = ({ children }) => {
                 code: "",
             }
         ],
+        postedBy: {
+            username: "",
+        },
         searchState:{
             search: undefined,
             message: '',
