@@ -36,12 +36,12 @@ import { getUnique } from '../../utils/getUnique';
 function Snippet({ snippet }) {
     const theme = useThemeContext();
 
-    const { deleteSnippet, getSingleSnippet, expandSnippet } = useSnippetContext()
+    const { deleteSnippet, getSingleSnippet, expandSnippet, loading } = useSnippetContext()
     
-    const {code, title, tags, postedBy, slug, language, likes, liked} = snippet;
-
+    const {code, title, tags, postedBy, slug, language, likes, liked, likedBy} = snippet;
+    
     //snippet ref
-    const snippetRef = React.useRef(null);
+    const snippetRef = React.useRef();
 
     //user
     const user = isAuth();
@@ -178,6 +178,22 @@ function Snippet({ snippet }) {
 
     //loacl like
     const [localLikes, setLocalLikes] = useState(likes);
+    const [likedByUser, setLikedByUser] = useState(() =>{
+        if(!likedBy ? [] : likedBy.includes(user?._id)){
+            return true
+        }else{
+            return false
+        }
+    });
+
+    const [isBookmarked, setIsBookmarked] = useState(() =>{
+        if(!user ? {} : user.bookmarks.includes(snippet._id)){
+            return true
+        }else{ 
+            return false
+        }
+    })
+
 
 
     const changeCodeTheme = (e) => {
@@ -228,6 +244,8 @@ function Snippet({ snippet }) {
     const likeSnippetHandler = (snippedId, userId) => {
         likeSnippet(token, snippedId, userId).then(data => {
             setLocalLikes(data.likes);
+            const liked = data.likedBy.find(user => user._id === userId);
+            setLikedByUser(liked ? true : false);
         }).catch(err => {
             console.log('Error Liking Snippet', err);
         });
@@ -235,14 +253,19 @@ function Snippet({ snippet }) {
 
     const bookmarkHandler = (slug, snippedId) => {
         bookmarkSnippet(slug, token, snippedId).then(data => {
-            console.log(data)
+            console.log('Bookmark Data', data)
         }).catch(err => {});
     }
+    
+
+    console.log('Snippet User', likedByUser)
 
     return (
         <SnippetStyled 
             theme={theme} rand={randomTagColorMemo} 
             expanded={expanded} 
+            likedByUser={likedByUser}
+            isBookmarked={isBookmarked}
             token={token}
             ref={snippetRef}
             onDoubleClick={() =>{
@@ -273,16 +296,18 @@ function Snippet({ snippet }) {
                                 setExpanded(!expanded);
                             }}
                         />
-                        <ActionButton
-                            icon={bookmarkIcon}
-                            background={randomTagColorMemo}
-                            //blob={'blob'}
-                            click={() => {
-                                //snippetBookmark(slug, snippet._id);
-                                //bookmarkSnippetHandler(slug, snippet._id);
-                                bookmarkHandler(slug, snippet._id);
-                            }}
-                        />
+                        <div className="bookmark">
+                            <ActionButton
+                                icon={bookmarkIcon}
+                                background={randomTagColorMemo}
+                                //blob={'blob'}
+                                click={() => {
+                                    //snippetBookmark(slug, snippet._id);
+                                    //bookmarkSnippetHandler(slug, snippet._id);
+                                    bookmarkHandler(slug, snippet._id);
+                                }}
+                            />
+                        </div>
                     </div>
                     <h3 className="s-title3">{title}</h3>
                     {/*<button onClick={() => snippetBookmark(slug)}>BookMArks</button>
@@ -406,6 +431,11 @@ const SnippetStyled = styled.div`
     transition: all .2s ease-in-out;
     @media screen and (max-width: 1260px){
         grid-column: initial;
+    }
+    .bookmark{
+        i{
+            color: ${props => props.isBookmarked ? props.theme.colorPrimaryGreen : props.theme.colorGrey0} !important;
+        }
     }
     .copy{
         background: linear-gradient(180.94deg, #F56693 26.59%, #6FCF97 86.88%);
@@ -549,6 +579,14 @@ const SnippetStyled = styled.div`
                         }
                     }
                 }
+            }
+        }
+    }
+
+    .left-actions{
+        button{
+            i{
+                color: ${props => props.likedByUser ? props.theme.colorPrimaryGreen : props.theme.colorGrey0} !important;
             }
         }
     }

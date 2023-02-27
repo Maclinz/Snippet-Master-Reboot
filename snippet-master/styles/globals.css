@@ -61,6 +61,17 @@ button, textarea, input{
   margin-bottom: .8rem;
   text-decoration: underline;
 }
+.page-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  z-index: 999;
+  animation: fadeOut 2s ease-in-out forwards;
+}
+
 
 .reg-link a:hover{
   color: #7263F3;

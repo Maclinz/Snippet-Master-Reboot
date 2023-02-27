@@ -15,6 +15,7 @@ import { singleSnippet } from '../../actions/snippet'
 
 function Profile({ user, snippets, snippet }) {
     const theme = useThemeContext()
+    const {loading} = useSnippetContext()
     return (
         <Layout>
             <MainContent >

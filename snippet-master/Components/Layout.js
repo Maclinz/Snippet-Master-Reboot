@@ -28,6 +28,7 @@ function Layout({children}) {
 
     return (
         <LayoutStyled theme={theme} showTopPanel={showTopPanel} >
+            {/*<div className="page-loader-overlay"></div>*/}
             <Header />
                 {modal && <ModalFull />}
             <div className="menu-panel">
@@ -70,6 +71,8 @@ function Layout({children}) {
 
 const LayoutStyled = styled.div`
     color:${props => props.theme.colorFontPrimary};
+    position: relative;
+
     .menu-panel{
         display: ${props => props.showTopPanel ? 'block' : 'none'};
         position: fixed;
