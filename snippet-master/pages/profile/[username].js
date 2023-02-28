@@ -12,10 +12,13 @@ import moment from 'moment'
 import Link from 'next/link'
 import  Router from 'next/router'
 import { singleSnippet } from '../../actions/snippet'
+import { useEffect } from 'react'
 
 function Profile({ user, snippets, snippet }) {
     const theme = useThemeContext()
     const {loading} = useSnippetContext()
+
+
     return (
         <Layout>
             <MainContent >

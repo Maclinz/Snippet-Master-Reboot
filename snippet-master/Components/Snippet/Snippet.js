@@ -31,10 +31,19 @@ import ActionButton from '../ActionButton/ActionButton';
 import { unbookmarkSnippet, bookmarkSnippet, likeSnippet, unlikeSnippet, singleSnippet, listBookmarks } from '../../actions/snippet';
 import Router from 'next/router';
 import { getUnique } from '../../utils/getUnique';
+import { userPublicProfile } from '../../actions/user';
 
 
 function Snippet({ snippet }) {
     const theme = useThemeContext();
+
+    const [localBookmarks, setLocalBookmarks] = useState([]);
+
+    useEffect(() => {
+        userPublicProfile(snippet.postedBy.username).then(data => {
+            setLocalBookmarks(data.user.bookmarks)
+        })
+    }, [])
 
     const { deleteSnippet, getSingleSnippet, expandSnippet, loading } = useSnippetContext()
     
@@ -187,7 +196,7 @@ function Snippet({ snippet }) {
     });
 
     const [isBookmarked, setIsBookmarked] = useState(() =>{
-        if(!user ? {} : user.bookmarks.includes(snippet._id)){
+        if(localBookmarks.includes(snippet._id)){
             return true
         }else{ 
             return false
@@ -253,12 +262,22 @@ function Snippet({ snippet }) {
 
     const bookmarkHandler = (slug, snippedId) => {
         bookmarkSnippet(slug, token, snippedId).then(data => {
-            console.log('Bookmark Data', data)
+            console.log('localBookmarks', localBookmarks)
+            setLocalBookmarks(() => {
+                if(localBookmarks.includes(snippedId)){
+                    set
+                    return localBookmarks.filter(id => id !== snippedId);
+                }else{
+                    return [...localBookmarks, snippedId];
+                }
+            });
         }).catch(err => {});
-    }
-    
 
-    console.log('Snippet User', likedByUser)
+        const bookmarked = localBookmarks.find(snippet => snippet === snippet._id);
+            
+        setIsBookmarked(bookmarked ? true : false);
+        console.log('isBookmarked', isBookmarked)
+    }
 
     return (
         <SnippetStyled 
@@ -271,6 +290,7 @@ function Snippet({ snippet }) {
             onDoubleClick={() =>{
                 getSingleSnippet(slug)
                 Router.push(`/snippet/${slug}`)
+                console.log('slug', slug)
             }}
         >
             <div className="snippet-con">

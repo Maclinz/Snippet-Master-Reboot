@@ -273,14 +273,15 @@ exports.bookmarkUserSnippet = async (req, res) => {
             res.json({
                 message: 'Snippet removed from bookmarks'
             });
+            console.log(user.bookmarks)
         }else{
             await User.findByIdAndUpdate(userId, {
                 $push: {bookmarks: snippetId}
             })
             res.json({
                 message: 'Snippet added to bookmarks',
-                snippetId
             });
+            console.log(user.bookmarks)
         }
     } catch (error) {
         console.log(error)
