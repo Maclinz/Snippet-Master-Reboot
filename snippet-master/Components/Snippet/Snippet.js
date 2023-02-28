@@ -47,7 +47,7 @@ function Snippet({ snippet }) {
 
     const { deleteSnippet, getSingleSnippet, expandSnippet, loading } = useSnippetContext()
     
-    const {code, title, tags, postedBy, slug, language, likes, liked, likedBy} = snippet;
+    const {code, title, tags, postedBy, slug, language, likes, icon, liked, likedBy} = snippet;
     
     //snippet ref
     const snippetRef = React.useRef();
@@ -230,6 +230,7 @@ function Snippet({ snippet }) {
         theme.buttonGradient14,
     ]
     
+
     //randomanize tag colors
     const randomTagColor = tagColors[Math.floor(Math.random() * tagColors.length)];
 
@@ -298,13 +299,15 @@ function Snippet({ snippet }) {
                     <div className="profile">
                         <Image src={avatar1} alt="avatar" width="64" height="64" className='profile-img' />
                         <div className="user-text">
-                            <h3 className="s-title2">
-                                {
-                                    <Link href={`/profile/${!postedBy.username ? '' : postedBy.username}`}>
-                                        {!postedBy.username ? '' : postedBy.username}
-                                    </Link>
-                                }
-                            </h3>
+                            <div className="name-con">
+                                <h3 className="s-title2">
+                                    {
+                                        <Link href={`/profile/${!postedBy.username ? '' : postedBy.username}`}>
+                                            {!postedBy.username ? '' : postedBy.username}
+                                        </Link>
+                                    }
+                                </h3>
+                            </div>
                             <p className="s-title">Programmer</p>
                         </div>
                     </div>
@@ -329,7 +332,12 @@ function Snippet({ snippet }) {
                             />
                         </div>
                     </div>
-                    <h3 className="s-title3">{title}</h3>
+                    <div className="title-lang">
+                        <h3 className="s-title3">{title}</h3>
+                        <div className="lang-icon">
+                            <Image src={icon} alt="js" width="24" height="24" />
+                        </div>
+                    </div>
                     {/*<button onClick={() => snippetBookmark(slug)}>BookMArks</button>
                     {/*<div className="language">
                         <p>Javascript</p>
@@ -449,6 +457,20 @@ const SnippetStyled = styled.div`
     z-index: 1;
     grid-column: ${props => props.expanded ? 'span 2' : 'span 1'};
     transition: all .2s ease-in-out;
+    .title-lang{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .lang-icon{
+            background: ${props => props.theme.colorBg3};
+            padding: .3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            border: 1px solid ${props => props.theme.colorIcons3};
+        }
+    }
     @media screen and (max-width: 1260px){
         grid-column: initial;
     }

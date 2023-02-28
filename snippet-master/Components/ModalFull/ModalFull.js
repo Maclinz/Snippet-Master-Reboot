@@ -15,6 +15,24 @@ import { useSnippetContext } from '../../context/snippetContext';
 import { useTagContext } from '../../context/tagsContext';
 import { snippetCreate } from '../../actions/snippet';
 import Select from 'react-select'
+import cLang from '../../assets/logos/c.svg'
+import python from '../../assets/logos/python.svg'
+import cpp from '../../assets/logos/cpp.svg'
+import csharp from '../../assets/logos/csharp.svg'
+import css from '../../assets/logos/css.svg'
+import go from '../../assets/logos/go-old.svg'
+import html from '../../assets/logos/html.svg'
+import haskell from '../../assets/logos/haskell.svg'
+import java from '../../assets/logos/java.svg'
+import javascript from '../../assets/logos/javascript.svg'
+import kotlin from '../../assets/logos/kotlin.svg'
+import php from '../../assets/logos/php.svg'
+import lua from '../../assets/logos/lua.svg'
+import ruby from '../../assets/logos/ruby.svg'
+import r from '../../assets/logos/r.svg'
+import swift from '../../assets/logos/swift.svg'
+import typescript from '../../assets/logos/typescript.svg'
+
 
 
 function ModalFull({router}) {
@@ -33,69 +51,45 @@ function ModalFull({router}) {
 
     //state 
     const [checkedTag, setCheckedTag] = useState([]);
+    const [icon, setIcon] = useState(null);
 
-    /*const codeLanguages = [
-        'javascript',
-        'css',
-        'html',
-        'profile',
-        'java',
-        'c',
-        'c++',
-        'c#',
-        'php',
-        'ruby',
-        'go',
-        'swift',
-        'kotlin',
-        'rust',
-        'scala',
-        'bash',
-        'sql',
-        'typescript',
-        'json',
-        'yaml',
-        'markdown',
-        'react',
-        'vue',
-        'angular',
-        'Elm',
-    ]
 
     const languages = [
-        { value: 'javascript', label: 'javascript' },
-        { value: 'css', label: 'css' },
-        { value: 'html', label: 'html' },
-        { value: 'profile', label: 'profile' },
-        { value: 'java', label: 'java' },
-        { value: 'c', label: 'c' },
-        { value: 'c++', label: 'c++' },
-        { value: 'c#', label: 'c#' },
-        { value: 'php', label: 'php' },
-        { value: 'ruby', label: 'ruby' },
-        { value: 'go', label: 'go' },
-        { value: 'swift', label: 'swift' },
-        { value: 'kotlin', label: 'kotlin' },
-        { value: 'rust', label: 'rust' },
-        { value: 'scala', label: 'scala' },
-        { value: 'bash', label: 'bash' },
-        { value: 'sql', label: 'sql' },
-        { value: 'typescript', label: 'typescript' },
-        { value: 'json', label: 'json' },
-        { value: 'yaml', label: 'yaml' },
-        { value: 'markdown', label: 'markdown' },
-        { value: 'react', label: 'react' },
-        { value: 'vue', label: 'vue' },
-        { value: 'angular', label: 'angular' },
-        { value: 'Elm', label: 'Elm' },
+        { value: 'javascript', icon: javascript, label: 'Javascript' },
+        { value: 'css', icon: css, label: 'CSS' },
+        { value: 'html', icon: html, label: 'HTML' },
+        { value: 'python', icon: python, label: 'Python' },
+        { value: 'java', icon: java, label: 'Java' },
+        { value: 'c', icon: cLang, label: 'C' },
+        { value: 'c++', icon: cpp, label: 'C++' },
+        { value: 'c#', icon: csharp , label: 'C#'},
+        { value: 'php', icon: php, label: 'PHP' },
+        { value: 'ruby', icon: ruby, label: 'Ruby' },
+        { value: 'lua', icon: lua, label: 'Lua' },
+        { value: 'haskell', icon: haskell, label: 'Haskell' },
+        { value: 'go', icon: go, label: 'Go' },
+        { value: 'swift', swift: swift, label: 'Swift' },
+        { value: 'kotlin', kotlin: kotlin, label: 'Kotlin' },
+        { value: 'sql', icon: cLang, label: 'SQL' },
+        { value: 'typescript', icon: typescript, label: 'Typescript' },
+        { value: 'react', icon: cLang, label: 'React' },
+        { value: 'vue', icon: cLang, label: 'Vue' },
+        { value: 'angular', icon: cLang, label: 'Angular' },
+        { value: 'r', icon: r, label: 'R' },
     ]
 
-    const [codeLanguage, setCodeLanguage] = useState(codeLanguages[0]);
+    const [codeLanguage, setCodeLanguage] = useState(languages[0].value);
+
+
+    useEffect(() => {
+        console.log('codeLanguage', codeLanguage);
+        console.log('icon', icon);
+    }, [codeLanguage]);
 
     const changeCodeLanguage = (e) => {
-        //set the code theme to the current value
-        setCodeLanguage(codeLanguages[languages.findIndex(language => language.value === e.value)]);
-    }*/
+        setCodeLanguage(e.value) 
+        setIcon(e.icon)
+    }
 
     //create Snippet 
     const createSnippet = (e) => {
@@ -105,14 +99,14 @@ function ModalFull({router}) {
             title,
             code,
             tags: checkedTag,
-            //language: codeLanguage
+            language: codeLanguage,
+            icon: icon.src
         }
 
         //validate form
 
         snippetCreate(snippet, token).then(data => {
-            //console.log('datad', data);
-            //validations 
+            console.log('create data', data)
             if (data.error) {
                 setSnippetValues({ ...snippetValues, error: data.error, loading: false })
             } else {
@@ -260,7 +254,7 @@ function ModalFull({router}) {
         <ModalFullStyled theme={theme} className={'snippet-form'}>
             <div className="modal-content">
                 <form action="" id="submitBtn">
-                    {/*<Select className='react-select-container' options={languages} onChange={changeCodeLanguage} styles={customStyles} placeholder={'Select A Language'} />*/}
+                    <Select className='react-select-container' options={languages} onChange={changeCodeLanguage} styles={customStyles} placeholder={'Select A Language'} />
                     <div className="input-control">
                         {
                             error && <div className="errors">

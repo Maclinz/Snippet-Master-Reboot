@@ -161,43 +161,6 @@ export const SnipetProvider = ({ children }) => {
     }
 
 
-    //boomark and unbookmark
-    
-    const bookmarkSnippetHandler = (slug, snippedId) => {
-        //check if snippet is bookmarked
-        if (state.bookmarked){
-            dispatch({
-                type: BOOKMARK_SNIPPET,
-            })
-            //bookmark
-            snippetBookmark(slug, token, snippedId).then(data => {
-                //console.log('Bookmarkedddd Snippet', data);
-            }).catch(err => {
-                console.log(err);
-            })
-        }else{
-            //unbookmark
-            dispatch({
-                type: UNBOOKMARK_SNIPPET,
-            })
-            unbookmarkSnippet(slug, token, snippedId).then(data => {
-            }).catch(err => {
-                console.log(err);
-            })
-        }
-    }
-
-    //list bookmarked snippets
-    const listBookmarkedSnippets = () => {
-        listBookmarks(token).then(data => {
-            //console.log('Bookmarked Snippets', data);
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-
-    //listBookmarkedSnippets()
-
     //load more snippets
     const loadMore = () => {
         let skip = state.skip

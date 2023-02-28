@@ -13,6 +13,7 @@ const SnippetSchema = new mongoose.Schema({
         required: true
     },
     language: String,
+    icon: String,
     likes: {
         type: Number,
         default: 0
