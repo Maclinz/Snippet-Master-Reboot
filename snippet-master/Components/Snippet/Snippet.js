@@ -266,7 +266,6 @@ function Snippet({ snippet }) {
             console.log('localBookmarks', localBookmarks)
             setLocalBookmarks(() => {
                 if(localBookmarks.includes(snippedId)){
-                    set
                     return localBookmarks.filter(id => id !== snippedId);
                 }else{
                     return [...localBookmarks, snippedId];
@@ -519,7 +518,7 @@ const SnippetStyled = styled.div`
             }
             .s-title3{
                 margin: 1rem 0;
-                background: linear-gradient(91deg,#F56693 0,#6FCF97 15.46%);
+                background: linear-gradient(91deg, #F56693,#6FCF97 55%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
