@@ -6,7 +6,7 @@
 
 ## Configuration
 
-1. Create a `.env` file in the root directory of your project.
+1. Create a `.env` file in the root directory of your project in server folder.
 2. Add the following environment variables to the `.env` file:
 
 PORT=8000
